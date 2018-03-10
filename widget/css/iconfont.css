@@ -1,0 +1,17 @@
+
+@font-face {font-family: "iconfont";
+  src:  url('iconfont.ttf?t=1520680628002') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1520680628002#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:24px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-qian:before { content: "\e632"; }
+
+.icon-fenlei:before { content: "\e60a"; }
