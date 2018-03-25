@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <title>title</title>
+      <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+      <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+      <style>
+      html,
+      body{
+          background: #f5f5f5;
+      }
+      header{
+        background:url(../image/header-bg1.png) bottom center !important;
+        color: #fff !important;
+      }
+      .aui-bar-nav.aui-bar-light .aui-iconfont {
+        color: #fff !important;
+      }
+      .entry-area{background: #fafafa;position: relative;}
+      .entry-area input{font-size: 13px;padding-left: 20px}
+      .entry-area img{position: absolute;right: 10px;top:12px;width: 22px;}
+      .attention{font-size: 12px;}
+      </style>
+  </head>
+  <body>
+    <header class="aui-bar aui-bar-nav aui-bar-light">
+      <a class="aui-pull-left aui-btn">
+          <span onclick="goback()" class="aui-iconfont aui-icon-left"></span>
+      </a>
+      <div class="aui-title">修改名称</div>>
+    </header>
+    <div class="entry-area ">
+      <input id="input" value="风起闲云" type="text"><img id="cancel" src="../image/cancel.png" alt="">
+    </div>
+    <p class="attention aui-margin-t-15 aui-margin-l-15 aui-margin-r-15">注意：昵称最多可输入12个字符</p>
+    <div class="aui-margin-t-15 aui-margin-l-15 aui-margin-r-15"><div id="save" class="aui-btn aui-btn-success aui-btn-block">保存</div></div>
+  </body>
+  <script type="text/javascript" src="../script/api.js"></script>
+  <script type="text/javascript" src="../script/aui-toast.js" ></script>
+  <script type="text/javascript">
+      apiready = function(){
+          //清空输入框
+          $api.addEvt($api.byId("cancel"), 'click', function(){
+            $api.val($api.byId("input"),'');
+          });
+
+          var toast = new auiToast({});
+
+          //保存后发送修改后的昵称至后台
+          $api.addEvt($api.byId("save"), 'click', function(){
+              var modified = $api.val($api.byId("input"));
+              api.ajax({
+                  url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=userupdate',
+                  method: 'post',
+                  data: {
+                      values: {
+                          userNick: modified
+                      }
+                  }
+              }, function(ret, err) {
+                  if (ret) {
+                    api.alert({ msg: JSON.stringify(ret) });
+                      if (ret.status==1) {
+                        toast.success({
+                           title:"修改成功",
+                           duration:1000
+                       });
+                       api.openFrame({
+                          name: 'user_data',
+                          url: './user_data.html',
+                          rect: {
+                              x: 0,
+                              y: 0,
+                              w: 'auto',
+                              h: 'auto'
+                          },
+                          reload:true
+                      });
+                      }
+                      // api.alert({ msg: JSON.stringify(ret) });
+                  } else {
+                      api.alert({ msg: JSON.stringify(err) });
+                  }
+              });
+          });
+
+      };
+
+      function goback(){
+        api.closeFrame();
+      }
+  </script>
+  </html>

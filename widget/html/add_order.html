@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <title>title</title>
+      <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+      <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+      <link rel="stylesheet" type="text/css" href="../css/iconfont.css"/>
+      <style>
+      html,
+      body{
+
+          background: #fff;
+          height: 100%;
+      }
+      header{
+        background:#ea620b !important;
+        color: #fff !important;
+      }
+      .aui-bar-nav.aui-bar-light .aui-iconfont {
+        color: #fff !important;
+      }
+      .add-area{position: relative;padding-top: 10px;}
+      .add-area .text{
+        width: 95%;
+        height:40px;
+        background: #fff;
+        display: block;
+        margin: 0 auto;
+        border-radius: 8px;
+        padding-left: 15%;
+        box-sizing: border-box;
+      }
+      .add-area .text:focus{
+        border: 0 !important;
+      }
+      .add-area .record-icon{position: absolute;width: 22px;left: 5%;top: 17px;}
+
+      .sure{
+        width: 95%;
+        height:40px;
+        line-height: 40px;
+        background: #ff6537 !important;
+        display: block;
+        margin: 10px auto 0;
+        border-radius: 8px;
+        text-align: center;
+        color: #fff;
+      }
+
+      .tip{color: #ff0101;font-size: 14px;line-height: 20px;width: 95%;margin: 20px auto 0;}
+
+      .exam{width: 100%;background: #fff;}
+      .exam img{width: 100%;margin-top: 20px;}
+      .bgf{background: #f5f5f5;padding-bottom: 15px;}
+      </style>
+  </head>
+  <body>
+    <header class="aui-bar aui-bar-nav aui-bar-light">
+      <a class="aui-pull-left aui-btn">
+          <span onclick="goback()" class="aui-iconfont aui-icon-left"></span>
+      </a>
+      <div class="aui-title">添加订单</div>
+      <a class="aui-pull-right aui-btn">
+        <i style="font-size:24px;" class="icon iconfont icon-kefu"></i>
+      </a>
+    </header>
+    <div class="bgf">
+      <div class="add-area">
+        <input id="order" class="text" type="text"><img class="record-icon" src="../image/record-icon.png" alt="">
+      </div>
+      <!-- <input class="sure" value="确认" type="text"> -->
+      <p id="sure" class="sure">确认</p>
+      <p class="tip">*如果系统十分钟未收录你的购物订单，可以自主提交你的淘宝订单号</p>
+    </div>
+    <div class="exam"><img src="../image/exam.png" alt=""></div>
+  </body>
+  <script type="text/javascript" src="../script/api.js"></script>
+  <script type="text/javascript">
+      apiready = function(){
+          $api.fixStatusBar($api.dom('header'));
+
+          $api.addEvt($api.byId("sure"), 'click', function(){
+            var orderNum = $api.val($api.byId("order"));
+            api.ajax({
+                  url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=orderupload',
+                  method: 'post',
+                  data: {
+                      values: {
+                          order: orderNum,
+                          uptype:2
+                      }
+                  }
+              }, function(ret, err) {
+                  if (ret) {
+                    if(ret.status==1){
+                      alert("订单提交成功");
+                      $api.val($api.byId("order"),'');
+                    }else {
+                      alert(ret.content);
+                    }
+                  } else {
+                      api.alert({ msg: JSON.stringify(err) });
+                  }
+              });
+          });
+
+      };
+      function goback(){
+        api.closeFrame();
+      }
+  </script>
+  </html>

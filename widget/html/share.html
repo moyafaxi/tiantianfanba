@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <title>title</title>
+      <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+      <style>
+          html,
+          body{
+            height: 100%;
+            background: #fc833c;
+          }
+          .top-area{
+            width: 100%;
+            height:600px;
+            background: url(../image/top-bg.png) bottom center;
+            background-size: 100% 100%;
+          }
+          .top-area .header{height: 40px;line-height: 40px;text-align: center;color: #fff;font-size: 22px;}
+          .top-area .header .img1{float: left;width: 15px;margin-left: 10px;margin-top: 5px;}
+          .top-area .header .img2{float: right;width: 20px;margin-right: 10px;margin-top: 8px;}
+          .top-area .share-btn{width: 92%;display: block;margin:420px auto 0;}
+          .out-wrap{
+            width: 300px;
+            background: rgba(255,255,255,.3);
+            height:55px;
+            margin: 10px auto 0;
+            border-radius: 5px;
+            box-sizing: content-box;
+            padding: 4px 0;
+          }
+          .out-wrap .in-wrap{width: 286px;background: #fff;margin: 0 auto 0;border-radius: 5px;height: 55px;}
+          .out-wrap .in-wrap .l{float:left;box-sizing: border-box;border-right: 1px solid #fdbea4;width: 50%;margin-top: 8px;}
+          .out-wrap .in-wrap .l p{text-align: center;}
+          .out-wrap .in-wrap .l .p1{font-size: 14px;}
+          .out-wrap .in-wrap .r{
+            float:right;box-sizing: border-box;width: 50%;border-left: 1px solid #fdbea4;position: relative;margin-top: 8px;}
+          .out-wrap .in-wrap .r p{text-align: center;}
+          .out-wrap .in-wrap .r .p1{font-size: 14px;}
+          .out-wrap .in-wrap .r img{position: absolute;right: 5px;top: 12px;width: 20px;}
+
+          .share-rule{border-top: 1px solid #ffffff;position: relative;background: #fc833c;padding-bottom: 60px;}
+          .share-rule .rulles-wrap{width: 95%;}
+          .share-rule .rulles-wrap h3{
+            width: 30%;
+            text-align: center;
+            position: relative;
+            top: -10px;
+            margin:0 auto;
+            color: #fff;
+            background: #fc833c;
+            font-size: 15px;
+          }
+          .share-rule .rulles-wrap ul li{color: #fff;font-size: 13px;position: relative;}
+          .share-rule .rulles-wrap ul li:after{
+            content:"";
+            display: block;
+            clear: both;
+          }
+          .share-rule .rulles-wrap ul li img{float: left;width: 10%;}
+          .share-rule .rulles-wrap ul li p{float: left;width: 90%;margin-top: 12px;}
+      </style>
+  </head>
+  <body>
+      <div class="top-area">
+         <div class="header clearfix"><img class="img1" onclick="goback()" src="../image/arrow-left.png" alt=""><span>分享</span><img class="img2" src="../image/close.png" alt=""></div>
+         <img id="share-btn" class="share-btn" src="../image/share-btn.png" alt="">
+         <div class="out-wrap">
+           <div class="in-wrap clearfix">
+             <div class="l">
+               <P class="p1">成功邀请好友数</P>
+               <P id="friNum" class="p2">0</P>
+             </div>
+             <div class="r">
+               <p class="p1">好友累计存入</p>
+               <p id="depositSum" class="p2">0</p>
+               <img src="../image/come-in.png" alt="">
+             </div>
+           </div>
+         </div>
+      </div>
+      <div class="share-rule">
+         <div class="rulles-wrap">
+           <h3>分享规则</h3>
+           <ul>
+             <li><img src="../image/circle-dot.png" alt=""><p>好友通过扫描你分享海报的二维码，下载天天返吧品牌app，并且在24小时后登陆天天饭返吧，领取新人200元红包，就算
+               成功邀请的好友，在天天返吧每消费存入金额10%</p></li>
+             <li><img src="../image/circle-dot.png" alt=""><p>好友通过扫描你分享海报的二维码，下载天天返吧品牌app</p></li>
+           </ul>
+         </div>
+      </div>
+  </body>
+  <script type="text/javascript" src="../script/api.js"></script>
+  <script type="text/javascript">
+      apiready = function(){
+
+          $api.fixStatusBar($api.dom('.top-area'));
+
+          //获取下级数据
+          api.ajax({
+              url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=alluserdown',
+              method: 'post',
+              data: {
+                  values: {
+                  }
+              }
+          }, function(ret, err) {
+              if (ret) {
+                  // if(ret.status==1){
+                    $api.text($api.byId("friNum"),ret.sum);
+                    $api.text($api.byId("depositSum"),ret.money);
+                  // }
+                  // api.alert({ msg: JSON.stringify(ret) });
+              } else {
+                  api.alert({ msg: JSON.stringify(err) });
+              }
+          });
+
+         $api.addEvt($api.byId("share-btn"), 'click', function(){
+           var sharedModule = api.require('shareAction');
+           sharedModule.share({
+           });
+         });
+
+      };
+
+      function goback(){
+        api.closeFrame();
+      }
+  </script>
+  </html>

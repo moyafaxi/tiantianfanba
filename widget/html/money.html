@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <title>title</title>
+      <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+      <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+      <link rel="stylesheet" type="text/css" href="../css/iconfont.css"/>
+      <style>
+          body{
+              background: #fff;
+          }
+          header{
+            background:#ea620b !important;
+            color: #fff !important;
+          }
+          .annual-income{
+            height:230px;
+            background: -webkit-linear-gradient(#fe8e4a, #fd6308); /* Safari 5.1 - 6.0 */
+            background: -o-linear-gradient(#fe8e4a, #fd6308); /* Opera 11.1 - 12.0 */
+            background: -moz-linear-gradient(#fe8e4a, #fd6308); /* Firefox 3.6 - 15 */
+            background: linear-gradient(#fe8e4a, #fd6308); /* 标准的语法 */
+
+            position: relative;
+          }
+
+          .annual-income .solid-circle{
+            width: 150px;
+            display: block;
+            margin: 0 auto;
+            position: relative;
+            top: 10px;
+            animation: 3s rotatefresh1 1;
+          }
+          .annual-income .dash-circle{width: 130px;display: block;margin: 0 auto;position: relative;top: -130px;animation: 4s rotatefresh 1;}
+          @keyframes rotatefresh {
+              from {
+                  transform: rotate(0deg);
+              }
+
+              to {
+                  transform: rotate(360deg);
+                  transition-duration: 0.6s;
+                  transition: 0.6s;
+              }
+          }
+
+
+          .annual-income .mask{position: absolute;bottom: 0;}
+          .annual-income  .income-detail {position: relative;width: 100px;margin: 0 auto;top: -235px;height: 90px;}
+          .annual-income  .income-detail p{text-align: center;color: #fff;}
+          .annual-income  .income-detail .p1{height: 20px;}
+          .annual-income  .income-detail .p2{height: 32px;font-weight: bold;font-size: 24px;}
+          .annual-income  .income-detail .p3{height: 30px;}
+
+          .annual-income .opt-btn{width: 90%;margin: 0 auto;top: -190px;position: relative;border-top: 1px solid #fff}
+          .annual-income .opt-btn .l{
+            float: left;
+            color: #fff;
+            width: 50%;
+            text-align: right;
+            box-sizing: border-box;
+            border-right: 1px solid #fff;
+            padding-right: 1px solid #fff;
+            padding-right: 20px;
+            margin-top: 6px;
+          }
+          .annual-income .opt-btn .r{float: right;color: #fff;width: 50%;text-align: left;padding-left: 20px;margin-top: 6px;}
+
+          .nowday-income{width: 100%;}
+          .nowday-income p{text-align: center;}
+          .nowday-income .p1{font-size: 24px;color: #fd6308;}
+          .nowday-income .p1 img{display: inline;width: 26px;}
+
+
+
+          .account-info{position: absolute;}
+          .account-info ul li{float: left;background-color: #ffe8db;width: 42.5%;height:80px;border-radius: 10px;margin-left:5%;margin-top: 20px;}
+          .account-info ul li::after{
+            display: block;
+            content: "";
+            clear: both;
+          }
+          .account-info ul li .l{float: left;width: 30px;margin-top: 24px;margin-left: 12px;}
+          .account-info ul li .r{float: left;margin-left: 10px;margin-top: 20px;}
+          .account-info ul li .r .p1{font-size: 20px;font-weight: bold;}
+          .account-info ul li .r .p2{font-size: 14px;}
+
+
+
+
+      </style>
+  </head>
+  <body>
+      <header class="aui-bar aui-bar-nav aui-bar-light">
+        <div class="aui-title">赚钱</div>
+        <a  id="customer-service" class="aui-pull-right aui-btn">
+            <i style="font-size:24px;" class="icon iconfont icon-kefu"></i>
+        </a>
+      </header>
+      <div id="wrap">
+        <div class="annual-income">
+             <img class="solid-circle" src="../image/solid-circle.png" alt="">
+             <img class="dash-circle" src="../image/dash-circle.png" alt="">
+             <div class="income-detail">
+               <p class="p1">年化收益 (%)</p>
+               <p class="p2" id="num1">00.00</p>
+               <p class="p3">2018.03.13</p>
+             </div>
+             <div class="opt-btn clearfix"><span onclick="openRateofYear()" tapmode class="l">年化收益率</span><span onclick="openWithDraw()" tapmode  class="r">余额提现</span></div>
+             <img class="mask" src="../image/mask.png" alt="">
+        </div>
+        <div class="nowday-income">
+          <p class="p1" id="num6">0.00<img src="../image/arrow-top.png" alt=""></p>
+          <p>今日收益 (元)</p>
+        </div>
+        <div class="account-info">
+          <ul class="clearfix">
+            <li onclick="openConsumeDetail()" tapmode>
+               <img class="l" src="../image/info-icon1.png" alt="">
+               <div class="r">
+                 <p class="p1" id="num2">0.00</p>
+                 <p class="p2">消费总存款 (元)</p>
+               </div>
+            </li>
+            <li  onclick="openUsable()" tapmode>
+               <img class="l" src="../image/info-icon2.png" alt="">
+               <div class="r">
+                 <p class="p1" id="num3">0.00</p>
+                 <p class="p2">可用余额 (元)</p>
+               </div>
+            </li>
+            <li onclick="openIncome()" tapmode>
+               <img class="l" src="../image/info-icon3.png" alt="">
+               <div class="r">
+                 <p class="p1" id="num4">0.000</p>
+                 <p class="p2">累计收益 (元)</p>
+               </div>
+            </li>
+            <li onclick="openDeposit()" tapmode>
+               <img class="l" src="../image/info-icon4.png" alt="">
+               <div class="r">
+                 <p class="p1" id="num5">0</p>
+                 <p class="p2">存款笔数 (笔)</p>
+               </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+  </body>
+  <script type="text/javascript" src="../script/api.js"></script>
+  <script type="text/javascript" src="../script/countUp.min.js"></script>
+  <script type="text/javascript">
+      //智齿客服
+      var zhiChiSobotMall = null;
+      var zhiChiSobot = null;
+      apiready = function(){
+
+
+        //智齿客服
+        zhiChiSobot = api.require('zhiChiSobotMall');
+        function startZhiChiSobot(){
+            var param = {
+                appkey:"108b0ed204874501ae98b8e0fc08a6b8",//必填
+                platformUnionId:"100x",//此id需要付费以后才能有。每个企业一个是必填
+                userId:"00002",
+                nickName:"Your user nickName",
+                phone:"Your user phone",
+                email:"Your user email",
+                customInfo:{"age":"18","uname":"智齿APICloud"},
+                isShowEvaluate:true,
+                isSettingSkillSet:false,
+                skillSetId:"",
+                isShowTansfer:true,
+                backgroundColor:"#f0f0f0",
+                topViewTextColor:"#FFFFFF",
+                isCustomLinkClick:false
+            };
+            zhiChiSobot.startZhiChiSobot(param);
+        }
+
+
+        $api.addEvt($api.byId("customer-service"), 'click', function(){
+          startZhiChiSobot()
+        });
+
+        $api.fixStatusBar($api.dom('header'));
+
+        function setText (el,val){
+          $api.text(el,val)
+        }
+
+
+        api.ajax({
+            url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=zhuan',
+            method: 'post',
+            data: {
+                // values: {
+                //     name: 'haha'
+                // }
+            }
+        }, function(ret, err) {
+            if (ret) {
+              if(ret.status==1){
+                setText($api.byId("num1"),ret.content.rate);
+                setText($api.byId("num2"),ret.content.credit);
+                setText($api.byId("num3"),ret.content.nowmoney);
+                setText($api.byId("num4"),ret.content.summoney);
+                setText($api.byId("num5"),ret.content.cunsum);
+                setText($api.byId("num6"),ret.content.money);
+
+                var options = {
+                  useEasing: true,
+                  useGrouping: true,
+                  separator: ',',
+                  decimal: '.',
+                };
+
+                var demo1 = new CountUp($api.byId("num1"), 0, ret.content.rate ? ret.content.rate : 0, 2, 2.5, options);
+                if (!demo1.error) {
+                  demo1.start();
+                } else {
+                  console.error(demo1.error);
+                }
+
+                var demo2 = new CountUp($api.byId("num2"), 0, ret.content.credit ? ret.content.credit : 0, 2, 2.5, options);
+                if (!demo2.error) {
+                  demo2.start();
+                } else {
+                  console.error(demo2.error);
+                }
+
+                var demo3 = new CountUp($api.byId("num3"), 0, ret.content.nowmoney ? ret.content.nowmoney : 0, 2, 2.5, options);
+                if (!demo3.error) {
+                  demo3.start();
+                } else {
+                  console.error(demo3.error);
+                }
+
+                var demo4 = new CountUp($api.byId("num4"), 0, ret.content.summoney ? ret.content.summoney : 0, 3, 2.5, options);
+                if (!demo4.error) {
+                  demo4.start();
+                } else {
+                  console.error(demo4.error);
+                }
+
+                var demo5 = new CountUp($api.byId("num5"), 0, ret.content.cunsum ? ret.content.cunsum : 0, 0, 2.5, options);
+                if (!demo5.error) {
+                  demo5.start();
+                } else {
+                  console.error(demo5.error);
+                }
+
+                var demo6 = new CountUp($api.byId("num6"), 0, ret.content.money ? ret.content.money : 0, 2, 2.5, options);
+                if (!demo6.error) {
+                  demo6.start();
+                } else {
+                  console.error(demo6.error);
+                }
+              }else if (ret.status==2) {
+                alert("请先登陆账号");
+                //先关闭首页
+                api.closeFrame({name: 'main'});
+                api.openFrame({
+                    name: 'login',
+                    url: './login.html',
+                    rect: {
+                        x: 0,
+                        y: 0,
+                        w: 'auto',
+                        h: 'auto'
+                    }
+                });
+              }
+
+            } else {
+                api.alert({ msg: JSON.stringify(err) });
+            }
+        });
+
+
+
+
+
+      };
+
+
+      //打开年利率页面
+      function openRateofYear (){
+        api.openFrame({
+            name: 'rateof_year',
+            url: './rateof_year.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: 'auto'
+            }
+        });
+      }
+
+      //打开累计收益页面
+      function openIncome (){
+        api.openFrame({
+            name: 'income',
+            url: './nowday_income.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: 'auto'
+            }
+        });
+      }
+
+      //打开消费详情页面
+      function openConsumeDetail (){
+        api.openFrame({
+            name: 'consume_detail',
+            url: './consume_detail.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: 'auto'
+            }
+        });
+      }
+
+
+      //打开可用余额页面
+      function openUsable (){
+        api.openFrame({
+            name: 'usable',
+            url: './usable.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: 'auto'
+            }
+        });
+      }
+
+
+      //打开存款笔数页面
+      function openDeposit (){
+        api.openFrame({
+            name: 'deposit',
+            url: './deposit.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: 'auto'
+            }
+        });
+      }
+
+
+      //打开提现页面
+      function openWithDraw (){
+        api.openFrame({
+            name: 'withdraw',
+            url: './withdraw.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: 'auto'
+            }
+        });
+      }
+
+
+
+      //重载数据
+      function reloadData(){
+        function setText (el,val){
+          $api.text(el,val)
+        }
+
+        api.ajax({
+            url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=zhuan',
+            method: 'post',
+            data: {
+                // values: {
+                //     name: 'haha'
+                // }
+            }
+        }, function(ret, err) {
+            if (ret) {
+              if(ret.status==1){
+                setText($api.byId("num1"),ret.content.rate);
+                setText($api.byId("num2"),ret.content.credit);
+                setText($api.byId("num3"),ret.content.nowmoney);
+                setText($api.byId("num4"),ret.content.summoney);
+                setText($api.byId("num5"),ret.content.cunsum);
+                setText($api.byId("num6"),ret.content.money);
+
+                var options = {
+                  useEasing: true,
+                  useGrouping: true,
+                  separator: ',',
+                  decimal: '.',
+                };
+
+                var demo1 = new CountUp($api.byId("num1"), 0, ret.content.rate ? ret.content.rate : 0, 2, 2.5, options);
+                if (!demo1.error) {
+                  demo1.start();
+                } else {
+                  console.error(demo1.error);
+                }
+
+                var demo2 = new CountUp($api.byId("num2"), 0, ret.content.credit ? ret.content.credit : 0, 2, 2.5, options);
+                if (!demo2.error) {
+                  demo2.start();
+                } else {
+                  console.error(demo2.error);
+                }
+
+                var demo3 = new CountUp($api.byId("num3"), 0, ret.content.nowmoney ? ret.content.nowmoney : 0, 2, 2.5, options);
+                if (!demo3.error) {
+                  demo3.start();
+                } else {
+                  console.error(demo3.error);
+                }
+
+                var demo4 = new CountUp($api.byId("num4"), 0, ret.content.summoney ? ret.content.summoney : 0, 3, 2.5, options);
+                if (!demo4.error) {
+                  demo4.start();
+                } else {
+                  console.error(demo4.error);
+                }
+
+                var demo5 = new CountUp($api.byId("num5"), 0, ret.content.cunsum ? ret.content.cunsum : 0, 0, 2.5, options);
+                if (!demo5.error) {
+                  demo5.start();
+                } else {
+                  console.error(demo5.error);
+                }
+
+                var demo6 = new CountUp($api.byId("num6"), 0, ret.content.money ? ret.content.money : 0, 2, 2.5, options);
+                if (!demo6.error) {
+                  demo6.start();
+                } else {
+                  console.error(demo6.error);
+                }
+              }else if (ret.status==2) {
+                alert("请先登陆账号");
+                //先关闭首页
+                api.closeFrame({name: 'main'});
+                api.openFrame({
+                    name: 'login',
+                    url: './login.html',
+                    rect: {
+                        x: 0,
+                        y: 0,
+                        w: 'auto',
+                        h: 'auto'
+                    }
+                });
+              }
+
+            } else {
+                api.alert({ msg: JSON.stringify(err) });
+            }
+        });
+      }
+  </script>
+  </html>

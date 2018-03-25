@@ -1,0 +1,347 @@
+@charset "utf-8";
+/*滚动条样式*/
+.scrollbar-none::-webkit-scrollbar {
+    /*滚动条宽度设置*/
+    width: 0px;
+    height: 0;
+}
+
+/*过渡时间*/
+.ts-3 {
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+}
+
+/*旋转*/
+.tf-180 {
+    -moz-transform: rotate(-180deg);
+    -webkit-transform: rotate(-180deg);
+    -ms-transform: rotate(-180deg);
+    -o-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+}
+
+/*display盒子*/
+.dis-box {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-box;
+    display: box;
+}
+.box-flex {
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    -ms-box-flex: 1;
+    box-flex: 1;
+    display: block;
+    width: 100%;
+}
+/*多个一行三个*/
+.w-3 {
+    width: 33.33%;
+    float: left;
+    padding: .6rem .4rem;
+    box-sizing: border-box;
+    position: relative;
+}
+.w-3:nth-child(3n+1) {
+    padding-left: 0;
+    padding-right: .8rem
+}
+.w-3:nth-child(3n) {
+    padding-left: .8rem;
+    padding-right: 0;
+}
+.warpe {
+    margin: 0 auto;
+    min-width: 320px;
+    max-width: 640px;
+    min-height: 560px;
+    color: #333;
+    font-size: 1.4rem;
+    position: relative;
+}
+.div {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    padding: 0 1rem;
+    height: 5rem;
+    box-sizing: border-box;
+    width: 100%;
+    background: #f5f5f5;
+}
+.div p {
+    border: 0;
+    height: 3rem;
+    line-height: 2rem;
+    background: #fff;
+    font-size: 1.4rem;
+    padding: .5rem 1rem;
+    font-size: 1.4rem;
+    margin-top: 1rem;
+    color: #555;
+    box-sizing: border-box;
+}
+.con {
+    position: absolute;
+    min-height: 100%;
+    width: 100%;
+}
+
+/*商品分类页*/
+.menu-left,
+.menu-right {
+    position: absolute;
+    left: 0;
+    top: 0rem;
+    bottom: 0;
+    overflow-y: scroll;
+}
+.menu-left {
+    background: #F6F6F9;
+    width: 25%;
+    height: 100%;
+}
+.menu-left ul li {
+    padding: 8px 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+    line-height: 2rem;
+    text-align: center;
+}
+.menu-left ul li.active {
+    background: #fff;
+    position: relative;
+}
+.menu-left ul li.active:before {
+    content: " ";
+    position: absolute;
+    display: block;
+    width: .3rem;
+    height: 100%;
+    background: #ff5400;
+    top: 0;
+    left: 0;
+}
+.menu-right {
+    background: #fff;
+    position: inherit;
+    margin-left: 0rem;
+    margin-top: 0rem;
+    right: 0;
+    bottom: 0;
+    left: 30%;
+    width: 70%;
+}
+.menu-right h5 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #666;
+    margin: 10px 10px 5px;
+    border-left: 4px solid #ff5400;
+    padding-left: 10px
+}
+.menu-right ul {
+    padding-bottom: 15px;
+    overflow: hidden;
+}
+.menu-right ul li {
+    text-align: center;
+}
+.menu-right ul li a {
+    display: block;
+}
+.menu-right ul li:nth-child(3n+1) a {
+    left: 0;
+    right: .7rem;
+}
+.menu-right ul li:nth-child(3n) a {
+    right: 0;
+    left: .7rem;
+}
+.menu-right ul li span {
+    display: block;
+    height: 20px;
+    line-height: 20px;
+    overflow: hidden;
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+}
+.menu-right ul li img {
+    width: 60px;
+    height: auto;
+}
+
+/*弹出搜索框*/
+.show-search-div .search-div {
+    top: 0;
+    opacity: 1;
+}
+.search-div {
+    background: #fff;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    min-width: 320px;
+    max-width: 640px;
+    min-height: 560px;
+    left: 0;
+    top: 100%;
+    right: 0;
+    bottom: 0;
+    z-index: 112;
+    opacity: 0;
+}
+
+/*搜索框*/
+.search {
+    padding: 0 1rem;
+    position: relative;
+    background: #F6F6F9;
+}
+.search .text-all {
+    border-bottom: 0;
+    border-bottom: 1px solid #F6F6F9;
+    padding: 1rem 0;
+    width: 100%;
+    overflow: hidden;
+}
+.search .text-all.active {
+    border-bottom: 1px solid #1CBB7F;
+}
+.search .input-texts {
+    position: relative;
+    padding: .3rem 0;
+    border-bottom: 0;
+    background: #fff;
+    background: #FFFFFF;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+.search .input-texts input {
+    border: 0;
+    height: 3rem;
+    line-height: 2rem;
+    padding: .5rem 3rem .5rem 1rem;
+    box-sizing: border-box;
+    width: 100%;
+    color: #555;
+    font-size: 1.4rem;
+    padding-left: 1rem;
+    height: 3.6rem;
+    line-height: 3.6rem;
+}
+.search .is-null {
+    font-size: 2.1rem;
+    color: #ddd;
+    position: absolute;
+    right: 0.2rem;top: 50%;
+    background: url("../images/shoplist-close.png") no-repeat;
+    background-size: 100% 100%;
+    width: 2rem;
+    height: 2rem;
+    margin-top: -1.05rem;
+    z-index: 10;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.1s;
+    -webkit-transition: all 0.1s;
+    -moz-transition: all 0.1s;
+    -o-transition: all 0.1s;
+    transition: all 0.1s;
+}
+.search .is-null.active {
+    visibility: visible;
+    opacity: 1;
+}
+.search .btn-submit {
+    display: block;
+    width: 6rem;
+    border-radius: 0px 4px 4px 0;
+    font-size: 1.4rem;
+    color: #fff;
+    text-align: center;
+    background: #1CBB7F;
+    border: 1px solid #13AB53;
+}
+.search-con {
+    padding: 2rem 1rem;
+    padding-bottom: 0;
+    background: #fff;
+}
+.search-con ul {
+    overflow: hidden;
+}
+.search-con ul li {
+    width: 33.33%;
+    float: left;
+    padding: .6rem .4rem;
+    box-sizing: border-box;
+    position: relative;
+}
+.search-con ul li:nth-child(3n+1) {
+    padding-left: 0;
+    padding-right: .8rem
+}
+.search-con ul li:nth-child(3n) {
+    padding-left: .8rem;
+    padding-right: 0;
+}
+.search-con ul a {
+    color: #666;
+    display: block;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+}
+.search-con ul li span {
+    height: 2.6rem;
+    line-height: 2.6rem;
+    font-size: 1.3rem;
+    display: block;
+    border: 1px solid #efefef;
+    border-radius: 4px;
+}
+.search-con p.hos-search {
+    overflow: hidden;
+    font-size: 1.4rem;
+    padding-bottom: 1rem;
+    clear: both;
+    color: #999;
+    font-weight: 600;
+    margin-top: 2rem;
+    line-height: 2rem;
+}
+.search-con p.hos-search span {
+    width: 7rem;
+    text-align: right;
+    font-size: 1.2rem;
+    font-weight: normal;
+    color: #ccc;
+}
+
+.close-search {
+    height: 4rem;
+    line-height: 4rem;
+    color: #999;
+    position: absolute;
+    bottom: 0;
+    font-size: 1.4rem;
+    text-align: center;
+    width: 100%;
+}
+
+/*弹出层中关闭*/
+.show-div-guanbi {
+    font-size: 2.1rem;
+    color: #999;
+    margin-left: 1rem;
+}

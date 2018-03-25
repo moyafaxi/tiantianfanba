@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <title>title</title>
+      <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+      <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+      <link rel="stylesheet" type="text/css" href="../css/iconfont.css"/>
+      <style>
+          body{
+
+          }
+          header{
+            background:#ea620b !important;
+            color: #fff !important;
+          }
+          .aui-bar-nav.aui-bar-light .aui-iconfont {
+            color: #fff !important;
+          }
+
+          .title{color: #ee2e41;text-align: center;height: 40px;line-height: 40px;background: #fff;border-bottom: 1px solid #ddd;}
+
+          .cont img{display: block;}
+      </style>
+  </head>
+  <body>
+    <header class="aui-bar aui-bar-nav aui-bar-light">
+      <a class="aui-pull-left aui-btn">
+          <span onclick="goback()" class="aui-iconfont aui-icon-left"></span>
+      </a>
+      <div class="aui-title">查券教程</div>
+      <a class="aui-pull-right aui-btn">
+        <i class="icon iconfont icon-cha"></i>
+      </a>
+    </header>
+    <!-- <div class="title">如何搜索商品优惠券</div> -->
+    <div class="cont">
+      <img src="../image/jc1.png" alt="">
+      <img src="../image/jc2.png" alt="">
+      <img src="../image/jc3.png" alt="">
+    </div>
+  </body>
+  <script type="text/javascript" src="../script/api.js"></script>
+  <script type="text/javascript">
+      apiready = function(){
+
+      };
+      function goback(){
+        api.closeFrame();
+      }
+  </script>
+  </html>

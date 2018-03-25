@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <title>title</title>
+      <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+      <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+      <link rel="stylesheet" type="text/css" href="../css/iconfont.css"/>
+      <style>
+        body{
+            background: #fff;
+        }
+        header{
+          background:#ea620b !important;
+          color: #fff !important;
+          /*position: fixed !important;*/
+        }
+
+        .top{
+          width: 100%;
+          position: fixed;
+        }
+
+        .order-wrap{background: #f5f5f5;padding-top: 10px;}
+        .order-item{background: #fff;padding: 0 10px;margin-bottom: 10px; }
+        .order-item .order-identifier{height: 40px;line-height: 40px;}
+        .order-item .order-identifier .order-num{float: left;color: #aaaaaa;font-size: 14px;}
+        .order-item .order-identifier .order-status1{float: right;color: #ffb66b;font-size: 14px;}
+        .order-item .order-identifier .order-status2{float: right;color: #51c742;font-size: 14px;}
+        .order-item .order-identifier .order-status3{float: right;color: #999999;font-size: 14px;}
+        .order-item .order-goods .l{float: left;width: 20%;}
+        .order-item .order-goods .m{float: left;width: 60%;margin-left: 15px;margin-top: 12px;}
+        .order-item .order-goods .r{float: right;width: 6%;margin-top: 25px;margin-right: 10px;}
+        .order-item .time-money {height: 40px;line-height: 40px;}
+        .order-item .time-money .l{float: left;color: #aaa;font-size: 14px;}
+        .order-item .time-money .r{float: right;color: #a9a7a7;font-size: 14px;}
+        .order-item .time-money .r i{color: #eb4444;font-size: 16px;}
+
+        #add-btn{position: fixed;right: 10px;bottom:8%;width: 40px;}
+      </style>
+  </head>
+  <body>
+      <div class="top">
+        <header id="header" class="aui-bar aui-bar-nav aui-bar-light">
+          <div class="aui-title">订单</div>
+          <a id="customer-service" class="aui-pull-right aui-btn">
+            <i style="font-size:24px;" class="icon iconfont icon-kefu"></i>
+          </a>
+        </header>
+        <div class="aui-tab" id="tab">
+            <div class="aui-tab-item aui-active">全部</div>
+            <div class="aui-tab-item"><div></div>待存入</div>
+            <div class="aui-tab-item">已存入</div>
+            <div class="aui-tab-item">已失效</div>
+        </div>
+      </div>
+      <img id="add-btn" src="../image/add-order.png" alt="">
+      <div class="order-wrap" id="order-wrap">
+
+        <!-- <div class="order-item">
+          <div class="order-identifier clearfix"><span class="order-num">订单号：0000000000000000000</span><span class="order-status">已存入</span></div>
+          <div class="order-goods clearfix">
+            <img class="l" src="../image/order-img1.png" alt="">
+            <p class="m">vivo9s手机壳步步高 x9plus 套女款全包边防摔薄款</p>
+            <img class="r" src="../image/goin.png" alt="">
+          </div>
+          <div class="time-money clearfix"><span class="l">18-03-06 13:14</span><span class="r">已存入：<i>8.88</i>元</span></div>
+        </div>
+        <div class="order-item">
+          <div class="order-identifier clearfix"><span class="order-num">订单号：0000000000000000000</span><span class="order-status">已存入</span></div>
+          <div class="order-goods clearfix">
+            <img class="l" src="../image/order-img1.png" alt="">
+            <p class="m">vivo9s手机壳步步高 x9plus 套女款全包边防摔薄款</p>
+            <img class="r" src="../image/goin.png" alt="">
+          </div>
+          <div class="time-money clearfix"><span class="l">18-03-06 13:14</span><span class="r">已存入：<i>8.88</i>元</span></div>
+        </div> -->
+
+      </div>
+  </body>
+  <script  type="text/template"  id="tpl" >
+    {{~ it:data }}
+        <div class="order-item">
+          <div class="order-identifier clearfix"><span class="order-num">{{=data.orderID? "订单号："+data.orderID : data.remark}}</span>
+            {{? !data.status}}
+            {{?? data.status == 1}}
+            <span class="order-status1">未存入</span>
+            {{?? data.status == 2}}
+            <span class="order-status2">已存入</span>
+            {{?? data.status == 3}}
+            <span class="order-status3">失效</span>
+            {{?}}
+            <!-- <span class="order-status">已存入</span> -->
+          </div>
+          <div class="order-goods clearfix">
+            <img class="l" src="{{=data.imgurl}}" alt="">
+            <p class="m">{{=data.title}}</p>
+            <img class="r" src="../image/goin.png" alt="">
+          </div>
+          <div class="time-money clearfix"><span class="l">{{=data.createtime}}</span><span class="r">已存入：<i>{{=data.money}}</i>元</span></div>
+        </div>
+  {{~}}
+  </script>
+  <script type="text/javascript" src="../script/api.js"></script>
+  <script type="text/javascript" src="../script/aui-tab.js" ></script>
+  <script type="text/javascript" src="../script/doT.min.js" ></script>
+  <script type="text/javascript">
+      //智齿客服
+      var zhiChiSobotMall = null;
+      var zhiChiSobot = null;
+      apiready = function(){
+
+        $api.fixStatusBar($api.dom('#header'));
+        $api.css($api.dom('.order-wrap'),"padding-top:"+$api.offset($api.dom('.top')).h+"px");
+
+        //智齿客服
+        zhiChiSobot = api.require('zhiChiSobotMall');
+        function startZhiChiSobot(){
+            var param = {
+                appkey:"108b0ed204874501ae98b8e0fc08a6b8",//必填
+                platformUnionId:"100x",//此id需要付费以后才能有。每个企业一个是必填
+                userId:"00002",
+                nickName:"Your user nickName",
+                phone:"Your user phone",
+                email:"Your user email",
+                customInfo:{"age":"18","uname":"智齿APICloud"},
+                isShowEvaluate:true,
+                isSettingSkillSet:false,
+                skillSetId:"",
+                isShowTansfer:true,
+                backgroundColor:"#f0f0f0",
+                topViewTextColor:"#FFFFFF",
+                isCustomLinkClick:false
+            };
+            zhiChiSobot.startZhiChiSobot(param);
+        }
+
+
+        $api.addEvt($api.byId("customer-service"), 'click', function(){
+          startZhiChiSobot()
+        });
+
+
+
+
+        getOrder(4);
+
+        //tab栏
+         var tab = new auiTab({
+             element:document.getElementById("tab"),
+             index:1,
+             repeatClick:false
+         },function(ret){
+            //  alert(ret.index);
+             switch (ret.index) {
+               case 1:
+                 getOrder(4)
+                 break;
+               case 2:
+                 getOrder(1)
+                 break;
+               case 3:
+                 getOrder(2)
+                 break;
+               case 4:
+                 getOrder(3)
+                 break;
+               default:
+
+             }
+         });
+
+
+        //打开添加订单页面
+        function openAddOrder(){
+            api.openFrame({
+                name: 'add_order',
+                url: './add_order.html',
+                rect: {
+                    x: 0,
+                    y: 0,
+                    w: 'auto',
+                    h: 'auto'
+                }
+            });
+        }
+
+        $api.addEvt($api.byId("add-btn"), 'click', function(){
+          openAddOrder();
+        });
+
+
+        //获取订单
+         function getOrder (index){
+           api.ajax({
+           url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=orders',
+           method: 'post',
+           data: {
+               values: {
+                   status: index
+               }
+           }
+        }, function(ret, err) {
+           if (ret) {
+               if(ret.status==1){
+                //  alert(ret.content)
+                  if(ret.content){
+                    var tpl= doT.template( $api.byId("tpl").innerHTML );
+                    $api.byId("order-wrap").innerHTML=tpl(ret.content);
+                  }else{
+                    $api.byId("order-wrap").innerHTML="<div style='background:#fff;padding:10px 0 0 10px;'>暂无数据</div>"
+                  }
+
+               }else if (ret.status==2) {
+                  alert("请先登陆账号");
+                  //先关闭首页
+                  api.closeFrame({name: 'main'});
+                  api.openFrame({
+                      name: 'login',
+                      url: './login.html',
+                      rect: {
+                          x: 0,
+                          y: 0,
+                          w: 'auto',
+                          h: 'auto'
+                      }
+                  });
+               }
+              //  api.alert({ msg: JSON.stringify(ret) });
+           } else {
+               api.alert({ msg: JSON.stringify(err) });
+           }
+        });
+    }
+
+
+}
+
+      // function uploadOrder(){
+      //   api.ajax({
+      //       url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=orderupload',
+      //       method: 'post',
+      //       data: {
+      //         values: {
+      //               order: '123456'
+      //           }
+      //       }
+      //   }, function(ret, err) {
+      //       if (ret) {
+      //           api.alert({ msg: JSON.stringify(ret) });
+      //       } else {
+      //           api.alert({ msg: JSON.stringify(err) });
+      //       }
+      //   });
+      // }
+
+
+      //获取订单
+       function reloadData (index){
+         api.ajax({
+         url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=orders',
+         method: 'post',
+         data: {
+             values: {
+                 status: index
+             }
+         }
+      }, function(ret, err) {
+         if (ret) {
+             if(ret.status==1){
+                var tpl= doT.template( $api.byId("tpl").innerHTML );
+                $api.byId("order-wrap").innerHTML=tpl(ret.content);
+             }else if (ret.status==2) {
+                alert("请先登陆账号");
+                //先关闭首页
+                api.closeFrame({name: 'main'});
+                api.openFrame({
+                    name: 'login',
+                    url: './login.html',
+                    rect: {
+                        x: 0,
+                        y: 0,
+                        w: 'auto',
+                        h: 'auto'
+                    }
+                });
+             }
+            //  api.alert({ msg: JSON.stringify(ret) });
+         } else {
+             api.alert({ msg: JSON.stringify(err) });
+         }
+      });
+  }
+  </script>
+  </html>

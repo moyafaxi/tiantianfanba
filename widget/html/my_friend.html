@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <title>title</title>
+      <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+      <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+      <style>
+      html,
+      body{
+        background: #f2f2f2;
+        height: 100%;
+      }
+      header{
+        background:url(../image/header-bg1.png) bottom center !important;
+        color: #fff !important;
+      }
+      .aui-bar-nav.aui-bar-light .aui-iconfont {
+        color: #fff !important;
+      }
+
+      #list-wrap{border-top: 1px solid #d6d6d6;}
+      #list-wrap .fri-item{background: #fff;height: 70px;border-bottom: 1px solid #d6d6d6;}
+      #list-wrap .fri-item .left{float: left;width: 20%;}
+      #list-wrap .fri-item .left .img-wrap{
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-top: 10px;
+        margin-left: 10px;
+      }
+      #list-wrap .fri-item .right{float: left;width: 78%;margin-left: ]2%;}
+      #list-wrap .fri-item .right .p1{color: #000;margin-top: 15px;font-size: 14px;}
+      #list-wrap .fri-item .right .p2 {margin-top: 5px;}
+      #list-wrap .fri-item .right .p2 .l{float: left;font-size: 12px;}
+      #list-wrap .fri-item .right .p2 .r{float: right;font-size: 12px;}
+      #list-wrap .fri-item .right .p2 .r span{color: #fd6309;}
+      </style>
+  </head>
+  <body>
+    <header class="aui-bar aui-bar-nav aui-bar-light">
+      <a class="aui-pull-left aui-btn">
+          <span onclick="goback()" class="aui-iconfont aui-icon-left" ></span>
+      </a>
+      <div class="aui-title">我的好友</div>
+    </header>
+    <div class="aui-tab" id="tab">
+        <div class="aui-tab-item aui-active">一级好友</div>
+        <div class="aui-tab-item"><div></div>二级好友</div>
+        <div class="aui-tab-item">三级好友</div>
+    </div>
+    <div id="list-wrap">
+       <!-- <div class="fri-item clearfix">
+         <div class="left">
+           <div class="img-wrap">
+           <img src="../image/touxiang.jpg" alt="">
+           </div>
+         </div>
+         <div class="right">
+           <p class="p1">天天返吧</p>
+           <p class="p2 clearfix"><span class="l">存入总额(元)：16.68</span><span class="r">返佣(元)：<span>00.06</span></span></p>
+         </div>
+       </div> -->
+    </div>
+  </body>
+  <script  type="text/template"  id="tpl" >
+    {{~ it:data }}
+    <div class="fri-item clearfix">
+      <div class="left">
+        <div class="img-wrap">
+        <img src="../image/touxiang.jpg" alt="">
+        </div>
+      </div>
+      <div class="right">
+        <p class="p1">{{=data.userNick}}</p>
+        <p class="p2 clearfix"><span class="l">存入总额(元)：{{=data.credit}}</span><span class="r">返佣(元)：<span>{{=data.yong}}</span></span></p>
+      </div>
+    </div>
+    {{~}}
+  </script>
+  <script type="text/javascript" src="../script/api.js"></script>
+  <script type="text/javascript" src="../script/aui-tab.js" ></script>
+  <script type="text/javascript" src="../script/doT.min.js" ></script>
+  <script type="text/javascript">
+      apiready = function(){
+
+       $api.fixStatusBar($api.dom('header'));
+
+       getData(1)
+
+        //获取数据
+        function getData(index){
+          api.ajax({
+              url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=userdown',
+              method: 'post',
+              data: {
+                  values: {
+                      rank: index
+                  }
+              }
+          }, function(ret, err) {
+              if (ret) {
+                  if(ret.status==1){
+                    // alert(rert.content);
+                    var tpl= doT.template( $api.byId("tpl").innerHTML );
+                    $api.byId("list-wrap").innerHTML=tpl(ret.content);
+                  }
+                  // api.alert({ msg: JSON.stringify(ret) });
+              } else {
+                  api.alert({ msg: JSON.stringify(err) });
+              }
+          });
+        }
+
+
+
+
+
+
+
+
+        //tab栏
+         var tab = new auiTab({
+             element:document.getElementById("tab"),
+             index:1,
+             repeatClick:false
+         },function(ret){
+            //  alert(ret.index);
+             getData(ret.index)
+         });
+      };
+
+      function goback(){
+        api.closeFrame();
+      }
+  </script>
+  </html>

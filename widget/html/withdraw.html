@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <title>title</title>
+      <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+      <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+      <style>
+          html,
+          body{
+            background: #f2f2f2;
+            height: 100%;
+          }
+          header{
+            background:url(../image/header-bg1.png) bottom center !important;
+            color: #fff !important;
+          }
+          .aui-bar-nav.aui-bar-light .aui-iconfont {
+            color: #fff !important;
+          }
+
+          .banner{width: 100%;height: 150px;padding-bottom: 20px}
+          .banner img{width: 100%;height: 100%;}
+
+          .aui-list-item-input input{width: 70%;display: inline-block;}
+          .aui-list-item-input span{text-align: right;color: #ff6537;float: right;margin-top: 14px;font-size: 14px;}
+
+          .can-wdraw{color: #898383;}
+
+          .warm-prompt{font-size: 12px;text-align: center;}
+          .warm-prompt span{color: #fe2422;}
+      </style>
+  </head>
+  <body>
+    <header class="aui-bar aui-bar-nav aui-bar-light">
+      <a class="aui-pull-left aui-btn">
+          <span onclick="goback()" class="aui-iconfont aui-icon-left"></span>
+      </a>
+      <div class="aui-title">提现</div>
+      <a onclick="openWithDrawDet()" tapmode class="aui-pull-right aui-btn">
+          提现记录
+      </a>
+    </header>
+    <div class="banner">
+      <img src="../image/alipay.jpg" alt="">
+    </div>
+    <div class="aui-content aui-margin-b-15">
+      <ul class="aui-list aui-form-list">
+          <li class="aui-list-item">
+              <div class="aui-list-item-inner">
+                  <div class="aui-list-item-label">
+                      支付宝:
+                  </div>
+                  <div class="aui-list-item-input">
+                      <input id="pay" type="text" placeholder=""><span>更换</span>
+                  </div>
+              </div>
+          </li>
+          <li class="aui-list-item">
+              <div class="aui-list-item-inner">
+                  <div class="aui-list-item-label">
+                      手机号：
+                  </div>
+                  <div class="aui-list-item-input">
+                      <input id="mobile" type="text" placeholder=""><span>更换</span>
+                  </div>
+              </div>
+          </li>
+          <li class="aui-list-item">
+              <div class="aui-list-item-inner">
+                  <div class="aui-list-item-label">
+                      提现金额：
+                  </div>
+                  <div class="aui-list-item-input">
+                      <input id="money" type="number" placeholder="请输入提现金额">
+                  </div>
+              </div>
+          </li>
+
+        </ul>
+        <div class="aui-margin-t-10 aui-margin-l-15 aui-margin-r-15 can-wdraw">可提现金额：<span id="canWdraw">1.06</span> 元</div>
+      <p class="aui-margin-t-15"><div id="withdraw" tapmode class="aui-btn aui-btn-success aui-btn-block">提交申请</div></p>
+      <div class="aui-margin-t-15 warm-prompt"><span>温馨提示：</span>最低提现金额为1元</div>
+      </div>
+  </body>
+  <script type="text/javascript" src="../script/api.js"></script>
+  <script type="text/javascript">
+      apiready = function(){
+          // $api.text($api.byId("canWdraw"),api.pageParam.drawnum);
+
+          $api.fixStatusBar($api.dom('header'));
+
+          api.ajax({
+              url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=userdowns',
+              method: 'post',
+              data: {
+                  values: {
+                  }
+              }
+          }, function(ret, err) {
+              if (ret) {
+                  $api.text($api.byId("canWdraw"),ret.content.money);
+
+                  if(ret.status==1){
+                    if(ret.content.alipay&&ret.content.mobile){
+                      $api.val($api.byId("pay"),ret.content.alipay);
+                      $api.val($api.byId("mobile"),ret.content.mobile);
+                    }else if(!ret.content.mobile){
+                      alert("请先绑定手机号");
+                      api.openFrame({
+                          name: 'bind_tel',
+                          url: './bind_tel.html',
+                          rect: {
+                              x: 0,
+                              y: 0,
+                              w: 'auto',
+                              h: 'auto'
+                          }
+                      });
+                    }else{
+                      alert("请先绑定支付宝");
+                      api.openFrame({
+                          name: 'pay',
+                          url: './pay.html',
+                          rect: {
+                              x: 0,
+                              y: 0,
+                              w: 'auto',
+                              h: 'auto'
+                          }
+                      });
+                    }
+                  }
+                  // api.alert({ msg: JSON.stringify(ret) });
+              } else {
+                  api.alert({ msg: JSON.stringify(err) });
+              }
+          });
+
+          $api.addEvt($api.byId("withdraw"), 'click', function(){
+              var money = $api.val($api.byId("money"));
+
+              api.ajax({
+                  url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=withdraw',
+                  method: 'post',
+                  data: {
+                      values: {
+                          money: money
+                      }
+                  }
+              }, function(ret, err) {
+                  if (ret) {
+
+                      api.alert({ msg: JSON.stringify(ret) });
+                  } else {
+                      api.alert({ msg: JSON.stringify(err) });
+                  }
+              });
+          });
+
+
+
+
+      };
+
+       //打开提现记录
+       function openWithDrawDet(){
+         api.openFrame({
+            name: 'withdraw_detail',
+            url: './withdraw_detail.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: 'auto'
+            }
+        });
+       }
+
+      function goback(){
+        var jsfun = 'reloadData();';
+        api.execScript({
+            frameName: 'person_center',
+            script: jsfun
+        });
+        api.execScript({
+            frameName: 'money',
+            script: jsfun
+        });
+        api.closeFrame();
+
+      }
+  </script>
+  </html>

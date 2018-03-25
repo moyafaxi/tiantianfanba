@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <title>title</title>
+      <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+      <style>
+          body{
+            background: #fff;
+          }
+          .top{background: url(../image/per-center-bg1.jpg) center bottom;height:190px;position: relative;}
+          .top .mask{position: absolute;bottom: 0;width: 100%;}
+          .top .title{text-align: center;height: 40px;line-height: 40px;color: #fff;font-size: 20px;}
+          .set{margin-top: 10px;}
+          .set img{float: right;width: 20px;margin-right: 20px;}
+
+          .person-info{}
+          .person-info .l{float: left;width:80px;height: 80px;border-radius: 50%;overflow: hidden;margin-left: 10px;}
+          .person-info .l img{width: 100%;}
+          .person-info .m{float: left;width: 40%;margin-left: 20px;}
+          .person-info .m p.p1{color: #fff;font-size: 16px;margin-top: 30px;}
+          .person-info .m p.p2{color: #fff;font-size: 13px;}
+          .person-info .r{float: right;width: 25%;color: #fff;font-size: 12px;margin-top: 50px;margin-right: 10px;}
+
+          .draw{padding-bottom: 10px;}
+          .draw .l{float: left;width: 50%;box-sizing: border-box;border-right: 2px solid #ddd;}
+          .draw .l p.p1{text-align: center;font-size: 13px;color: #aaa;height: 25px;line-height: 25px;}
+          .draw .l p.p2{text-align: center;font-size: 16px;color: #fd6308;}
+          .draw .r{float: right;width: 50%;}
+          .draw .r span{color:#fd6308;display: inline-block;border: 1px solid #fd6308;width: 95px;text-align: center;border-radius: 10px;margin-left: 45px;margin-top: 10px;}
+
+
+          .enjoy-share{
+            height: 110px;
+            width: 100%;
+            background: #f5f5f5;
+          }
+          .enjoy-share img{
+            width: 95%;
+            display: block;
+            margin: 0 auto;
+          }
+
+          .other-opt{}
+          .other-opt ul li{float: left;width: 25%;height: 90px;border-right: 1px solid #f5f5f5;border-bottom: 1px solid #f5f5f5;box-sizing: border-box;}
+          .other-opt ul li img{display: block;width: 30%;margin: 20px auto 0;}
+          .other-opt ul li p{display: block;text-align: center;font-size: 13px;margin-top: 10px;}
+      </style>
+  </head>
+  <body>
+      <div class="top">
+        <div class="title">个人中心</div>
+        <div onclick="openUserData()" tapmode class="set clearfix"><img src="../image/set-icon.png" alt=""></div>
+        <div class="person-info clearfix">
+          <div class="l">
+            <img id="touxiang" src="" alt="">
+          </div>
+          <div class="m">
+            <p id="name" class="p1">风气闲云</p>
+            <p  class="p2"><span id="level">默认等级</span></p>
+          </div>
+          <!-- <div class="r">
+            <p>ID 3ED888888</p>
+          </div> -->
+        </div>
+
+        <img class="mask" src="../image/mask.png" alt="">
+      </div>
+      <div class="draw clearfix">
+        <div class="l">
+          <p class="p1">可提金额 (元)</p>
+          <p class="p2" id="drawNum"></p>
+        </div>
+        <div class="r">
+          <span onclick="openWithDraw()" tapmode>提现</span>
+        </div>
+      </div>
+      <div class="enjoy-share">
+         <img src="../image/enjoy-share.png" alt="">
+      </div>
+      <div class="other-opt">
+        <ul>
+          <li onclick="openShare()" tapmode>
+            <img src="../image/opt-icon1.png" alt="">
+            <p>分享赚存款</p>
+          </li>
+          <li onclick="openMyFriend()" tapmode >
+            <img src="../image/opt-icon2.png" alt="">
+            <p>我的好友</p>
+          </li>
+          <li onclick="openIncome()" tapmode >
+            <img src="../image/opt-icon3.png" alt="">
+            <p>我的收益</p>
+          </li>
+          <li onclick="openPay()">
+            <img src="../image/opt-icon4.png" alt="">
+            <p>我的支付宝</p>
+          </li>
+          <li onclick="openRateofYear()" tapmode >
+            <img src="../image/opt-icon5.png" alt="">
+            <p>年化利率</p>
+          </li>
+          <li>
+            <img src="../image/opt-icon6.png" alt="">
+            <p>常见问题</p>
+          </li>
+          <li>
+            <img src="../image/opt-icon7.png" alt="">
+            <p>人工客服</p>
+          </li>
+          <li  onclick="openFeedBack()" tapmode >
+            <img src="../image/opt-icon8.png" alt="">
+            <p>意见反馈</p>
+          </li>
+        </ul>
+      </div>
+  </body>
+  <script type="text/javascript" src="../script/api.js"></script>
+  <script type="text/javascript" src="../script/countUp.min.js"></script>
+  <script type="text/javascript">
+      apiready = function(){
+
+        $api.fixStatusBar($api.dom('.top'));
+
+        api.ajax({
+             url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=userdowns',
+             method: 'post',
+             data: {
+                 values: {
+                 }
+             }
+         }, function(ret, err) {
+             if (ret) {
+                 if(ret.status==1){
+                   $api.attr($api.byId("touxiang"),"src",ret.content.avatarUrl);
+                   $api.text($api.byId("name"),ret.content.userNick);
+                   $api.text($api.byId("level"),ret.content.levelname);
+                   $api.text($api.byId("drawNum"),ret.content.money);
+
+
+
+                    //设置数字滚动
+                    var options = {
+                       useEasing: true,
+                       useGrouping: true,
+                       separator: ',',
+                       decimal: '.',
+                     };
+                     var demo = new CountUp($api.byId("drawNum"), 0, ret.content.money, 2, 2.5, options);
+                     if (!demo.error) {
+                       demo.start();
+                     } else {
+                       console.error(demo.error);
+                     }
+                 }else if (ret.status==2) {
+                   alert("请先登陆账号");
+                   //先关闭首页
+                   api.closeFrame({name: 'main'});
+                   api.openFrame({
+                       name: 'login',
+                       url: './login.html',
+                       rect: {
+                           x: 0,
+                           y: 0,
+                           w: 'auto',
+                           h: 'auto'
+                       }
+                   });
+                 }
+                //  api.alert({ msg: JSON.stringify(ret) });
+             } else {
+                 api.alert({ msg: JSON.stringify(err) });
+             }
+         });
+
+
+
+      };
+
+      //打开用户信息页面
+      function openUserData(){
+            api.openFrame({
+              name: 'user_data',
+              url: './user_data.html',
+              rect: {
+                  x: 0,
+                  y: 0,
+                  w: 'auto',
+                  h: 'auto'
+              }
+          });
+      }
+
+      //打开提现页面
+      function openWithDraw(){
+            api.openFrame({
+              name: 'withdraw',
+              url: './withdraw.html',
+              rect: {
+                  x: 0,
+                  y: 0,
+                  w: 'auto',
+                  h: 'auto'
+              }
+          });
+      }
+
+      //打开分享页面
+      function openShare(){
+            api.openFrame({
+              name: 'share',
+              url: './share.html',
+              rect: {
+                  x: 0,
+                  y: 0,
+                  w: 'auto',
+                  h: 'auto'
+              }
+          });
+      }
+
+
+      //打开我的好友页面
+      function openMyFriend(){
+        api.openFrame({
+            name: 'my_friend',
+            url: './my_friend.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: 'auto'
+            }
+        });
+      }
+
+      //打开意见反馈页面
+      function openFeedBack(){
+        api.openFrame({
+            name: 'feedback',
+            url: './feedback.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: 'auto'
+            }
+        });
+      }
+
+
+      //打开年利率页面
+      function openRateofYear (){
+        api.openFrame({
+            name: 'rateof_year',
+            url: './rateof_year.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: 'auto'
+            }
+        });
+      }
+
+
+
+      //打开累计收益页面
+      function openIncome (){
+        api.openFrame({
+            name: 'income',
+            url: './nowday_income.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: 'auto'
+            }
+        });
+      }
+
+
+      //打开支付宝页面
+      function openPay(){
+          api.ajax({
+              url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=userdowns',
+              method: 'post',
+              data: {
+                  values: {
+                  }
+              }
+          }, function(ret, err) {
+              if (ret) {
+                if(ret.status==1){
+                  if(!ret.content.mobile){
+                    alert("请绑定手机号");
+                    api.openFrame({
+                       name: 'modify_tel',
+                       url: './modify_tel.html',
+                       rect: {
+                           x: 0,
+                           y: 0,
+                           w: 'auto',
+                           h: 'auto'
+                       }
+                    });
+                  }else if (!ret.content.alipay) {
+                    alert("请绑定支付宝账号");
+                    api.openFrame({
+                       name: 'bind_pay',
+                       url: './bind_pay.html',
+                       rect: {
+                           x: 0,
+                           y: 0,
+                           w: 'auto',
+                           h: 'auto'
+                       }
+                    });
+                  }else {
+                    api.openFrame({
+                       name: 'pay',
+                       url: './pay.html',
+                       rect: {
+                           x: 0,
+                           y: 0,
+                           w: 'auto',
+                           h: 'auto'
+                       }
+                    });
+                  }
+                }
+                  // api.alert({ msg: JSON.stringify(ret) });
+              } else {
+                  api.alert({ msg: JSON.stringify(err) });
+              }
+          });
+      }
+
+
+
+      function reloadData(){
+        api.ajax({
+             url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=userdowns',
+             method: 'post',
+             data: {
+                 values: {
+                 }
+             }
+         }, function(ret, err) {
+             if (ret) {
+                 if(ret.status==1){
+                   $api.attr($api.byId("touxiang"),"src",ret.content.avatarUrl);
+                   $api.text($api.byId("name"),ret.content.userNick);
+                   $api.text($api.byId("level"),ret.content.levelname);
+                   $api.text($api.byId("drawNum"),ret.content.money);
+
+
+
+                    //设置数字滚动
+                    var options = {
+                       useEasing: true,
+                       useGrouping: true,
+                       separator: ',',
+                       decimal: '.',
+                     };
+                     var demo = new CountUp($api.byId("drawNum"), 0, ret.content.money, 2, 2.5, options);
+                     if (!demo.error) {
+                       demo.start();
+                     } else {
+                       console.error(demo.error);
+                     }
+                 }else if (ret.status==2) {
+                   alert("请先登陆账号");
+                   //先关闭首页
+                   api.closeFrame({name: 'main'});
+                   api.openFrame({
+                       name: 'login',
+                       url: './login.html',
+                       rect: {
+                           x: 0,
+                           y: 0,
+                           w: 'auto',
+                           h: 'auto'
+                       }
+                   });
+                 }
+                //  api.alert({ msg: JSON.stringify(ret) });
+             } else {
+                 api.alert({ msg: JSON.stringify(err) });
+             }
+         });
+      }
+
+
+
+  </script>
+  </html>

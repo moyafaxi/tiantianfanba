@@ -1,16 +1,21 @@
 
 @font-face {font-family: "iconfont";
-  src:  url('iconfont.ttf?t=1520680628002') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1520680628002#iconfont') format('svg'); /* iOS 4.1- */
+  src:
+  url('iconfont.ttf?t=1521446754865') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1521446754865#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
   font-family:"iconfont" !important;
-  font-size:24px;
+  font-size:22px;
   font-style:normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.icon-kefu:before { content: "\e65a"; }
+
+.icon-cha:before { content: "\e605"; }
 
 .icon-qian:before { content: "\e632"; }
 

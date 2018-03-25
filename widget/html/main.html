@@ -1,71 +1,593 @@
-<!DOCTYPE HTML>
+<!doctype html>
 <html>
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
-    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <title>Hello APP</title>
     <link rel="stylesheet" type="text/css" href="../css/api.css" />
-    <style>
-        label {
-            margin: 10px;
-            font-size: 24px;
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../css/iconfont.css" />
+    <style type="text/css">
+        html,
+        body {
+            height: 100%;
         }
 
-        ul {
-            margin-bottom: 10px;
+         #header{background: #b30009;}
+        .search-pic{position: absolute;z-index: 999;margin-left:12%;margin-top:20px;width: 75%;}
+
+        .swipe {
+               overflow: hidden;
+               visibility: hidden;
+               position: relative;
+               padding-bottom: 16px;
+               background: #fff;
+
+           }
+           .swipe .mask{
+             width: 100%;
+             position: absolute;
+             bottom: 16px;
+           }
+           .swipe-wrap {
+               overflow: hidden;
+               position: relative;
+               width: 100%;
+           }
+
+           .swipe-wrap > div {
+               float: left;
+               width: 100%;
+               position: relative;
+           }
+
+           #swipeIndicator {
+               position: absolute;
+               left: 50%;
+               bottom: 30px;
+               -webkit-transform: translateX(-50%);
+               transform: translateX(-50%);
+           }
+
+           #swipeIndicator li {
+               height: 12px;
+               line-height: 12px;
+               width: 12px;
+               float: left;
+               border-radius: 50%;
+               background-color: #FFF;
+               margin: 0 10px 10px
+           }
+
+           #swipeIndicator li.active {
+               background-color: #DA70D6;
+           }
+
+           .slide_1 {
+               height: 200px;
+               width: 100%;
+           }
+           .slide_1 img{
+               height: 100%;
+               width: 100%;
+           }
+
+
+        /*header {
+            height: 44px;
+            width: 100%;
+            text-align: center;
+            background-color: #81a9c3;
+            color: #fff;
+            line-height: 44px;
+            font-size: 20px;
+        }*/
+
+
+
+
+        #kinds {background: #fff;}
+        #kinds ul:after{
+          content: "";
+          display: block;
+          clear: both;
+        }
+        #kinds ul li{
+          float: left;
+          width: 20%;
+          margin: 8px 0
+        }
+        #kinds ul li img{
+          height: 45px;
+          display: block;
+          margin: 0 auto;
         }
 
-        ul li {
-            margin: 5px 10px;
-            padding: 5px;
-            color: #000;
-            word-wrap: break-word;
+
+        #explain{
+          height: 110px;
+          width: 100%;
+          background: #f5f5f5;
         }
+        #explain img{
+          width: 95%;
+          display: block;
+          margin: 0 auto;
+        }
+
+        #modu{
+          background: #fff;
+        }
+        #modu .left{float: left;width: 40%;border-right: 1px solid #ededed;box-sizing: border-box;}
+        #modu .left img{width: 75%;display: block;margin: 32px auto 0;}
+
+        #modu .right{float: right;width: 60%;}
+        #modu .top{height: 50%;border-bottom: 1px solid #ededed;box-sizing: border-box;}
+        #modu .top img{width: 80%;display: block;margin: 18px auto 0;}
+        #modu .bot .l{float: left;width: 50%;border-right: 1px solid #ededed;box-sizing: border-box;}
+        #modu .bot .l img{width:80%;display: block;margin: 10px auto 0;}
+        #modu .bot .r{float: right;width: 50%;}
+        #modu .bot .r img{width:80%;display: block;margin: 14px auto 0;}
+
+        #hot-recom {background: #f5f5f5;}
+        #hot-recom .title{width: 100%;background: #fff;border-top: 10px solid #f5f5f5;border-bottom: 3px solid #f5f5f5;}
+        #hot-recom .title .title-wrap{width: 30%;margin: 0 auto;height:70px;line-height: 70px;font-size: 14px;color:#000;}
+        #hot-recom .title .title-wrap img{vertical-align: middle;width: 20px;margin-left:12%;margin-right:6%;display: inline;}
+
+
+        #hot-recom .item{background: #FFF;height: 142px;border-bottom: 3px solid #f5f5f5;}
+        #hot-recom .item .left{float: left;width: 20%;margin-top: 25px;margin-left: 10px;}
+        #hot-recom .item .right{float: right;width: 75%;}
+        #hot-recom .item .right h3{margin-top: 10px;font-size: 14px;}
+        #hot-recom .item .right .wrap .l{float: left;width: 60%;}
+        #hot-recom .item .right .wrap .l .p1 {font-size:10px;color: #939393;margin-top: 6px;}
+        #hot-recom .item .right .wrap .l .p1 .p-l{float: left;margin-top: 2px;}
+        #hot-recom .item .right .wrap .l .p1 .p-r{float: left;margin-left: 5px;font-size:10px;}
+        #hot-recom .item .right .wrap .l .p1 .p-r span{color: #fd6308;font-size:12px;}
+        #hot-recom .item .right .wrap .l .p2 {font-size:10px;color: #939393;}
+        #hot-recom .item .right .wrap .l .p3 {font-size:10px;color: #fd6308;margin-top: 6px;}
+        #hot-recom .item .right .wrap .l .p3 span{font-size: 14px;}
+
+
+        #hot-recom .item .right .wrap .r{float: right;width: 40%;}
+        #hot-recom .item .right .wrap .r .span1{
+          display: block;
+          border: 1px solid #fd6308;
+          color: #959292;
+          font-size: 10px;
+          width: 95%;
+          margin-top: 10px;
+          border-radius: 15px;
+          text-align: center;
+        }
+        #hot-recom .item .right .wrap .r .span2{
+          display: block;
+          background: #fd6308;
+          font-size: 12px;
+          float: left;
+          width: 95%;
+          margin-top: 10px;
+          color:#FFF;
+          margin-top: 12px;
+          text-align: center;
+          height:30px;
+          line-height: 30px;
+          border-radius: 3px;
+        }
+
+
+
+
     </style>
 </head>
 
-<body>
-    <label>Hello APP</label>
-    <div id='sys-info'></div>
+<body class="wrap">
+
+    <section class="flex-1">
+    <div id="header">
+      <img id="search-pic" class="search-pic" src="../image/search-bar.png" alt="" >
+      <div id="swipe" class="swipe">
+              <div class="swipe-wrap">
+                  <div class=" swipe-page">
+                      <div class="slide_1">
+                          <img src="../image/index-lunbo1.jpg" alt="">
+                      </div>
+                  </div>
+                  <div class=" swipe-page">
+                      <div class="slide_1">
+                          <img src="../image/index-lunbo1.jpg" alt="">
+                      </div>
+                  </div>
+                  <div class=" swipe-page">
+                      <div class="slide_1">
+                          <img src="../image/index-lunbo1.jpg" alt="">
+                      </div>
+                  </div>
+                  <div class=" swipe-page">
+                      <div class="slide_1">
+                          <img src="../image/index-lunbo1.jpg" alt="">
+                      </div>
+                  </div>
+              </div>
+              <ul id="swipeIndicator">
+                  <li class="active"></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+              </ul>
+              <img class="mask" src="../image/mask.png" alt="">
+      </div>
+    </div>
+    <div id="kinds">
+       <ul id="kind">
+          <li><img src="../image/nvzhuang.png" alt=""></li>
+          <li><img src="../image/nanzhuang.png" alt=""></li>
+          <li><img src="../image/meishi.png" alt=""></li>
+          <li><img src="../image/neiyi.png" alt=""></li>
+          <li><img src="../image/muyin.png" alt=""></li>
+          <li><img src="../image/huazhuang.png" alt=""></li>
+          <li><img src="../image/jujia.png" alt=""></li>
+          <li><img src="../image/xiebao.png" alt=""></li>
+          <li><img src="../image/wenti.png" alt=""></li>
+          <li><img src="../image/shuma.png" alt=""></li>
+       </ul>
+    </div>
+    <div id="explain">
+       <img src="../image/explain.png" alt="">
+    </div>
+    <div id="modu" class="clearfix">
+        <div class="left">
+          <img onclick="openShoplist(11)" tapmode src="../image/tqg.png" alt="">
+        </div>
+        <div class="right">
+          <div class="top">
+            <img onclick="openShoplist(12)" tapmode  src="../image/jhs.png" alt="">
+          </div>
+          <div class="bot clearfix">
+             <div class="l">
+               <img onclick="openShoplist(13)" tapmode  src="../image/jkjby.png" alt="">
+             </div>
+             <div class="r">
+               <img onclick="openShoplist(14)"  src="../image/hqzb.png" alt="">
+             </div>
+          </div>
+        </div>
+    </div>
+
+    <div id="hot-recom">
+       <div class="title">
+          <div class="title-wrap">
+             <img src="../image/hot-recom.png" alt=""><span>热卖推荐</span>
+          </div>
+       </div>
+       <div class="item-list" id="tpl-wrap">
+
+       </div>
+
+    </div>
+    </section>
 </body>
+<script  type="text/template"  id="tpl" >
+  {{~ it:data }}
+          <div class="item clearfix">
+             <img class="left" src="{{=data.itempic}}" alt="">
+             <div class="right">
+               <h3>{{=data.itemtitle.substring(0,26)}}...</h3>
+               <div class="wrap clearfix">
+                 <div class="l">
+                    <P class="p1 clearfix"><span class="p-l">天猫价￥{{=data.itemprice}}</span><span class="p-r">立减<span>{{=data.couponmoney}}</span>元</span></P>
+                    <P class="p2">剩余 {{=data.couponsurplus}}</P>
+                    <P class="p3">券后价<span>￥{{=((data.itemprice*100-data.couponmoney*100)/100).toFixed(2)}}</span></P>
+                 </div>
+                 <div class="r">
+                   <span class="span1">存入比例：{{=data.tkrates}}%</span>
+                   <span couponurl="{{=data.couponurl}}" onclick="openCouponUrl(this)" class="span2">领券购买</span>
+                 </div>
+               </div>
+             </div>
+          </div>
+
+  {{~}}
+</script>
 <script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/swipe.js"></script>
+<script type="text/javascript" src="../script/doT.min.js" ></script>
+
 <script type="text/javascript">
+
     apiready = function() {
-        var ver = api.version;
-        var sType = api.systemType;
-        var sVer = api.systemVersion;
-        var id = api.deviceId;
-        var model = api.deviceModel;
-        var name = api.deviceName;
-        var cType = api.connectionType;
-        var winName = api.winName;
-        var winWidth = api.winWidth;
-        var winHeight = api.winHeight;
-        var frameName = api.frameName || '';
-        var frameWidth = api.frameWidth || '';
-        var frameHeight = api.frameHeight || '';
+      $api.fixStatusBar($api.byId("header"));
 
-        var str = '<ul>';
-        str += '<li>引擎版本信息: ' + ver + '</li>';
-        str += '<li>系统类型: ' + sType + '</li>';
-        str += '<li>系统版本: ' + sVer + '</li>';
-        str += '<li>设备标识: ' + id + '</li>';
-        str += '<li>设备型号: ' + model + '</li>';
-        str += '<li>设备名称: ' + name + '</li>';
-        str += '<li>网络状态: ' + cType + '</li>';
-        str += '<li>主窗口名字: ' + winName + '</li>';
-        str += '<li>主窗口宽度: ' + winWidth + '</li>';
-        str += '<li>主窗口高度: ' + winHeight + '</li>';
-        str += '<li>子窗口名字: ' + frameName + '</li>';
-        str += '<li>子窗口宽度: ' + frameWidth + '</li>';
-        str += '<li>子窗口高度: ' + frameHeight + '</li>';
-        str += '</ul>';
 
-        $api.byId('sys-info').innerHTML = str;
+      var clipBoard = api.require('clipBoard');
+      clipBoard.setListener(function(ret, err) {
+          if (ret) {
+              alert(JSON.stringify(ret));
+          } else {
+              alert(JSON.stringify(err));
+          }
+      });
+
+
+      //商品分类
+      var tabItems = $api.byId("kind").children;
+      for(var i=0; i<tabItems.length; i++){
+        tabItems[i].setAttribute("tapmode","");
+        tabItems[i].setAttribute("data-item-order",i);
+        tabItems[i].onclick = function(e){
+            // alert(parseInt(this.getAttribute("data-item-order")));
+            var num = parseInt(this.getAttribute("data-item-order"));
+            api.openFrame({
+                name: 'shoplist',
+                url: './shoplist.html',
+                rect: {
+                    x: 0,
+                    y: 0,
+                    w: 'auto',
+                    h: 'auto'
+                },
+                pageParam: {
+                    num: num
+                }
+            });
+        }
+      }
+
+
+
+
+
+
+    //   api.openFrame({
+    //     name: 'share',
+    //     url: './share.html',
+    //     rect: {
+    //         x: 0,
+    //         y: 0,
+    //         w: 'auto',
+    //         h: 'auto'
+    //     },
+    //     pageParam: {
+    //         name: 'test'
+    //     }
+    // });
+
+
+
+
+      alibaichuan = api.require('alibaichuan');
+        var param = {
+            isvcode: "feeling"
+        };
+        alibaichuan.initTaeSDK(param, function(ret, err) {
+            if (ret) {
+                // alert(JSON.stringify(ret));
+            } else {
+                // alert(JSON.stringify(err));
+            }
+        });
+
+        // alibaichuan.logout(function(ret, err) {
+        //     if (ret) {
+        //         alert("ret - " + JSON.stringify(ret));
+        //     } else {
+        //         alert("err - " + JSON.stringify(err));
+        //     }
+        // });
+
+      fnChange();
+      getData(0,0);
+
+
+      api.setRefreshHeaderInfo({
+          loadingImg: 'widget://image/refresh.png',
+          bgColor: '#ccc',
+          textColor: '#fff',
+          textDown: '下拉刷新...',
+          textUp: '松开刷新...'
+      }, function(ret, err) {
+          //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+        getData(0,0);
+
+      });
+
+      $api.addEvt($api.byId('search-pic'), 'click', function(){
+        var footerHeight = api.getPrefs({sync: true,key: 'footerHeight'});
+        api.openFrame({
+            name: 'search',
+            url: './search.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: api.winWidth,
+                h: api.winHeight-footerHeight
+            }
+        });
+
+      });
+
+
+
+      function getData(num,type){
+        var num = num||1;
+        var type = type||1;
+        api.ajax({
+            url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=homegoods',
+            method: 'post',
+            data:{
+              values:{
+                goodspage:1,
+                goodstype:0
+              }
+            }
+        }, function(ret, err) {
+            if (ret) {
+                // api.alert({ msg: JSON.stringify(ret) });
+                if(ret.status==1){
+                  var tpl= doT.template( $api.byId("tpl").innerHTML );
+                   $api.append($api.byId("tpl-wrap"),tpl(ret.content));
+                   api.refreshHeaderLoadDone();
+                }
+
+
+            } else {
+                api.alert({ msg: JSON.stringify(err) });
+            }
+        });
+      }
+
+      var pageNum = 0;
+      api.addEventListener({
+         name:'scrolltobottom',
+         extra:{
+             threshold:0           //设置距离底部多少距离时触发，默认值为0，数字类型
+         }
+      }, function(ret, err){
+         pageNum++;
+         getData(pageNum,0);
+      });
+
+
+
+    //   //向上滑动事件
+    //   api.addEventListener({
+    //          name:'swipeup'
+    //          }, function(ret, err){
+    //             if($api.offset($api.byId("go-top")).t>api.winHeight*0.9){
+    //               $api.css($api.byId("go-top"),"display:block;")
+    //             }
+    //          });
+     //
+    //  //向下滑动事件
+    //  api.addEventListener({
+    //            name:'swipedown'
+    //        }, function(ret, err){
+    //          if($api.offset($api.byId("go-top")).t<api.winHeight){
+    //            $api.css($api.byId("go-top"),"display:none;")
+    //          }
+    //        });
+
+
+
+     //搜索框模块
+         var UISearchBar = api.require('UISearchBar');
+         function openSearch (){
+             UISearchBar.open({
+               placeholder: '请输入搜索关键字',
+               historyCount: 10,
+               showRecordBtn: false,
+               texts: {
+                   cancelText: '取消',
+                   clearText: '清除搜索记录'
+               },
+               styles: {
+                   navBar: {
+                       bgColor: '#FFFFFF',
+                       borderColor: '#ccc'
+                   },
+                   searchBox: {
+                       bgImg: '',
+                       color: '#000',
+                       height: 44
+                   },
+                   cancel: {
+                       bg: 'rgba(0,0,0,0)',
+                       color: '#D2691E',
+                       size: 16
+                   },
+                   list: {
+                       color: '#696969',
+                       bgColor: '#FFFFFF',
+                       borderColor: '#eee',
+                       size: 16
+                   },
+                   clear: {
+                       color: '#000000',
+                       borderColor: '#ccc',
+                       size: 16
+                   }
+               }
+           }, function(ret, err) {
+               if (ret) {
+                   alert(JSON.stringify(ret));
+               } else {
+                   alert(JSON.stringify(err));
+               }
+           });
+         }
+
+
+        //轮播图
+        function fnChange() {
+              var swipe = $api.byId('swipe'),
+                  swipeIndicator = $api.byId('swipeIndicator'),
+                  indicators = $api.domAll(swipeIndicator, 'li');
+
+              new Swipe(swipe, {
+                  auto: 3000,
+                  callback: function(index) {
+                      for (var i = 0; i < indicators.length; i++) {
+                          if (index == i) {
+                              $api.addCls(indicators[i], 'active');
+                          } else {
+                              $api.removeCls(indicators[i], 'active');
+                          }
+                      }
+                  }
+              });
+          }
+
+
 
     };
+
+
+    //打开优惠券地址
+    function openCouponUrl(obj){
+        var tarUrl = $api.attr(obj,"couponurl");
+        var param = {
+            url: tarUrl,
+            mmpid: "mm_127434669_0_0",
+            nativeview: false
+        };
+        alibaichuan.showDetailByURL(param, function(ret, err) {
+            if (ret) {
+                alert(JSON.stringify(ret));
+            } else {
+                alert(JSON.stringify(err));
+            }
+        });
+
+    }
+
+
+
+    //打开活动商品页面
+    function openShoplist(num){
+      api.openFrame({
+          name: 'shoplist',
+          url: './shoplist.html',
+          rect: {
+              x: 0,
+              y: 0,
+              w: 'auto',
+              h: 'auto'
+          },
+          pageParam: {
+              num: num
+          }
+      });
+    }
+
+
+
+
+
+
+
+
 </script>
 
 </html>

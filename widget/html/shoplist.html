@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <title>title</title>
+      <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+      <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+      <style>
+          body{
+
+          }
+          .top{
+            width: 100%;
+            position: fixed;
+            top: 0;
+            background: #fd6308;0
+          }
+          header{background: #fd6308;height: 50px;position: relative;}
+          header .img1{position: absolute;left: 15px;width: 12px;top: 15px;}
+          header .img2{display: block;margin: 0 auto;width: 75%;padding-top: 12px;}
+
+          .list-wrap{margin-top: 10px;}
+          .list-wrap .item{background: #FFF;height: 142px;border-bottom: 3px solid #f5f5f5;}
+          .list-wrap .item .left{float: left;width: 20%;margin-top: 25px;margin-left: 10px;}
+          .list-wrap .item .right{float: right;width: 75%;}
+          .list-wrap .item .right h3{margin-top: 10px;font-size: 14px;}
+          .list-wrap .item .right .wrap .l{float: left;width: 60%;}
+          .list-wrap .item .right .wrap .l .p1 {font-size:10px;color: #939393;margin-top: 6px;}
+          .list-wrap .item .right .wrap .l .p1 .p-l{float: left;margin-top: 2px;}
+          .list-wrap .item .right .wrap .l .p1 .p-r{float: left;margin-left: 5px;font-size:10px;}
+          .list-wrap .item .right .wrap .l .p1 .p-r span{color: #fd6308;font-size:12px;}
+          .list-wrap .item .right .wrap .l .p2 {font-size:10px;color: #939393;}
+          .list-wrap .item .right .wrap .l .p3 {font-size:10px;color: #fd6308;margin-top: 6px;}
+          .list-wrap .item .right .wrap .l .p3 span{font-size: 14px;}
+
+
+          .list-wrap .item .right .wrap .r{float: right;width: 40%;}
+          .list-wrap .item .right .wrap .r .span1{
+            display: block;
+            border: 1px solid #fd6308;
+            color: #959292;
+            font-size: 10px;
+            width: 95%;
+            margin-top: 10px;
+            border-radius: 15px;
+            text-align: center;
+          }
+          .list-wrap .item .right .wrap .r .span2{
+            display: block;
+            background: #fd6308;
+            font-size: 12px;
+            float: left;
+            width: 95%;
+            margin-top: 10px;
+            color:#FFF;
+            margin-top: 12px;
+            text-align: center;
+            height:30px;
+            line-height: 30px;
+            border-radius: 3px;
+          }
+
+          #go-top{position: fixed;right: 10px;bottom: 10%;z-index: 999;width: 40px;height: 40px;}
+      </style>
+  </head>
+  <body>
+    <img id="go-top" src="../image/go-top.png" alt="">
+    <div class="top">
+      <header id="header">
+         <img onclick="goback()" class="img1" src="../image/arrow-left.png" alt="">
+         <img class="img2" src="../image/search-bar.png" alt="" >
+      </header>
+      <div class="aui-tab" id="tab" style="border-bottom:1px solid #ddd;">
+          <div class="aui-tab-item aui-active">综合</div>
+          <div class="aui-tab-item"><div></div>热销</div>
+          <div class="aui-tab-item">券额</div>
+          <div class="aui-tab-item">价格</div>
+      </div>
+    </div>
+    <div id="tpl-wrap" class="list-wrap">
+
+    </div>
+  </body>
+  <script  type="text/template"  id="tpl" >
+    {{~ it:data }}
+            <div class="item clearfix">
+               <img class="left" src="{{=data.itempic}}" alt="">
+               <div class="right">
+                 <h3>{{=data.itemtitle.substring(0,26)}}...</h3>
+                 <div class="wrap clearfix">
+                   <div class="l">
+                      <P class="p1 clearfix"><span class="p-l">天猫价￥{{=data.itemprice}}</span><span class="p-r">立减<span>{{=data.couponmoney}}</span>元</span></P>
+                      <P class="p2">剩余 {{=data.couponsurplus}}</P>
+                      <P class="p3">券后价<span>￥{{=((data.itemprice*100-data.couponmoney*100)/100).toFixed(2)}}</span></P>
+                   </div>
+                   <div class="r">
+                     <span class="span1">存入比例：{{=data.tkrates}}%</span>
+                     <span couponurl="{{=data.couponurl}}" onclick="openCouponUrl(this)" class="span2">领券购买</span>
+                   </div>
+                 </div>
+               </div>
+            </div>
+
+    {{~}}
+  </script>
+  <script type="text/javascript" src="../script/api.js"></script>
+  <script type="text/javascript" src="../script/aui-tab.js" ></script>
+  <script type="text/javascript" src="../script/doT.min.js" ></script>
+  <script type="text/javascript">
+      apiready = function(){
+        $api.fixStatusBar($api.dom('.top'));
+        $api.css($api.dom('.list-wrap'),"padding-top:"+$api.offset($api.dom('.top')).h+"px");
+
+
+        //回到顶部
+        $api.addEvt($api.byId("go-top"), 'click', function(){
+          api.pageUp({top:true},function(ret, err) {});
+        });
+
+        alibaichuan = api.require('alibaichuan');
+          var param = {
+              isvcode: "feeling"
+          };
+          alibaichuan.initTaeSDK(param, function(ret, err) {
+              if (ret) {
+                  // alert(JSON.stringify(ret));
+              } else {
+                  // alert(JSON.stringify(err));
+              }
+          });
+
+        //默认筛选条件为综合
+        api.setPrefs({
+                 key: 'sort',
+                 value: 1
+             });
+       //获取搜索关键词
+       var keyword = api.pageParam.keyword;
+      //  alert(keyword);
+
+       var num = api.pageParam.num ? api.pageParam.num : -1;
+
+
+       switch (num) {
+         case -1:
+           getData(1,1,undefined,keyword)
+           break;
+         case 0:
+           getData(1,1)
+           break;
+         case 1:
+           getData(1,9)
+           break;
+         case 2:
+           getData(1,6)
+           break;
+         case 3:
+           getData(1,10)
+           break;
+         case 4:
+           getData(1,2)
+           break;
+         case 5:
+           getData(1,3)
+           break;
+         case 6:
+           getData(1,4)
+           break;
+         case 7:
+           getData(1,5)
+           break;
+         case 8:
+           getData(1,7)
+           break;
+         case 9:
+           getData(1,8)
+           break;
+         case 11:
+           getData(1,11)
+           break;
+         case 12:
+           getData(1,12)
+           break;
+         case 13:
+           getData(1,13)
+           break;
+         case 14:
+           getData(1,14)
+           break;
+         default:
+
+       }
+
+
+       //滚动至底部
+       var pageNum = 1;
+       api.addEventListener({
+          name:'scrolltobottom',
+          extra:{
+              threshold:0           //设置距离底部多少距离时触发，默认值为0，数字类型
+          }
+       }, function(ret, err){
+          pageNum++;
+
+          switch (num) {
+            case -1:
+              getData(pageNum,1,api.getPrefs({sync: true,key: 'userName'}),keyword)
+              break;
+            case 0:
+              getData(pageNum,1,api.getPrefs({sync: true,key: 'userName'}))
+              break;
+            case 1:
+              getData(pageNum,9,api.getPrefs({sync: true,key: 'userName'}))
+              break;
+            case 2:
+              getData(pageNum,6,api.getPrefs({sync: true,key: 'userName'}))
+              break;
+            case 3:
+              getData(pageNum,10,api.getPrefs({sync: true,key: 'userName'}))
+              break;
+            case 4:
+              getData(pageNum,2,api.getPrefs({sync: true,key: 'userName'}))
+              break;
+            case 5:
+              getData(pageNum,3,api.getPrefs({sync: true,key: 'userName'}))
+              break;
+            case 6:
+              getData(pageNum,4,api.getPrefs({sync: true,key: 'userName'}))
+              break;
+            case 7:
+              getData(pageNum,5,api.getPrefs({sync: true,key: 'userName'}))
+              break;
+            case 8:
+              getData(pageNum,7,api.getPrefs({sync: true,key: 'userName'}))
+              break;
+            case 9:
+              getData(pageNum,8,api.getPrefs({sync: true,key: 'userName'}))
+              break;
+            case 11:
+              getData(pageNum,11,api.getPrefs({sync: true,key: 'userName'}))
+              break;
+            case 12:
+              getData(pageNum,12,api.getPrefs({sync: true,key: 'userName'}))
+              break;
+            case 13:
+              getData(pageNum,13,api.getPrefs({sync: true,key: 'userName'}))
+              break;
+            case 14:
+              getData(pageNum,14,api.getPrefs({sync: true,key: 'userName'}))
+              break;
+            default:
+
+          }
+          // getData(pageNum,type);
+       });
+
+
+        function getData(num,type,sort,keyword){
+          var num = num||1;
+          var type = type||1;
+          var sort = sort||1;
+          var keyword = keyword;
+          api.ajax({
+              url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=homegoods',
+              method: 'post',
+              data:{
+                values:{
+                  goodspage:num,
+                  goodstype:type,
+                  sort:sort,
+                  keyword:keyword
+                }
+              }
+          }, function(ret, err) {
+              if (ret) {
+                  // api.alert({ msg: JSON.stringify(ret) });
+                  if(ret.status==1){
+                    var tpl= doT.template( $api.byId("tpl").innerHTML );
+                     $api.append($api.byId("tpl-wrap"),tpl(ret.content));
+
+
+                  }
+
+
+              } else {
+                  api.alert({ msg: JSON.stringify(err) });
+              }
+          });
+        }
+
+
+        function changeDataType(num,type,sort,keyword){
+          var num = num||1;
+          var type = type||1;
+          var sort = sort||1;
+          api.ajax({
+              url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=homegoods',
+              method: 'post',
+              data:{
+                values:{
+                  goodspage:num,
+                  goodstype:type,
+                  sort:sort,
+                  keyword:keyword
+                }
+              }
+          }, function(ret, err) {
+              if (ret) {
+                  // api.alert({ msg: JSON.stringify(ret) });
+                  if(ret.status==1){
+                    var tpl = doT.template( $api.byId("tpl").innerHTML );
+                    $api.byId("tpl-wrap").innerHTML = tpl(ret.content);
+                    // $api.append($api.byId("tpl-wrap"),tpl(ret.content));
+                  }
+
+
+              } else {
+                  api.alert({ msg: JSON.stringify(err) });
+              }
+          });
+        }
+
+        //tab栏
+         var tab = new auiTab({
+             element:document.getElementById("tab"),
+             index:1,
+             repeatClick:false
+         },function(ret){
+            //  alert(ret.index);
+            api.setPrefs({
+                     key: 'sort',
+                     value: ret.index
+                 });
+
+             switch (num) {
+               case -1:
+                 changeDataType(1,1,ret.index,keyword)
+                 break;
+               case 0:
+                 changeDataType(1,1,ret.index)
+                 break;
+               case 1:
+                 changeDataType(1,9,ret.index)
+                 break;
+               case 2:
+                 changeDataType(1,6,ret.index)
+                 break;
+               case 3:
+                 changeDataType(1,10,ret.index)
+                 break;
+               case 4:
+                 changeDataType(1,2,ret.index)
+                 break;
+               case 5:
+                 changeDataType(1,3,ret.index)
+                 break;
+               case 6:
+                 changeDataType(1,4,ret.index)
+                 break;
+               case 7:
+                 changeDataType(1,5,ret.index)
+                 break;
+               case 8:
+                 changeDataType(1,7,ret.index)
+                 break;
+               case 9:
+                 changeDataType(1,8,ret.index)
+                 break;
+               case 11:
+                 changeDataType(1,11,ret.index)
+                 break;
+               case 12:
+                 changeDataType(1,12,ret.index)
+                 break;
+               case 13:
+                 changeDataType(1,13,ret.index)
+                 break;
+               case 14:
+                 changeDataType(1,14,ret.index)
+                 break;
+               default:
+
+             }
+              // alert(ret.index);
+         });
+
+
+
+      };
+
+      //打开优惠券地址
+      function openCouponUrl(obj){
+          var tarUrl = $api.attr(obj,"couponurl");
+          var param = {
+              url: tarUrl,
+              mmpid: "mm_127434669_0_0",
+              nativeview: false
+          };
+          alibaichuan.showDetailByURL(param, function(ret, err) {
+              if (ret) {
+                  alert(JSON.stringify(ret));
+              } else {
+                  alert(JSON.stringify(err));
+              }
+          });
+
+      }
+
+      function goback(){
+
+        var jsfun = 'loadSearchHistory();';
+        api.execScript({
+            frameName: 'search',
+            script: jsfun
+        });
+        api.closeFrame();
+        api.setPrefs({
+                 key: 'sort',
+                 value: 1
+             });
+        // api.removePrefs({
+        //      key: 'keyword'
+        //  });
+      }
+  </script>
+  </html>

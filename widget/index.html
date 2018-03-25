@@ -1,412 +1,127 @@
 <!doctype html>
 <html>
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>Hello APP</title>
+    <title>底部导航</title>
     <link rel="stylesheet" type="text/css" href="./css/api.css" />
     <link rel="stylesheet" type="text/css" href="./css/aui.css" />
     <link rel="stylesheet" type="text/css" href="./css/iconfont.css" />
-    <style type="text/css">
-        html,
-        body {
-            height: 100%;
-        }
+    <style>
 
-
-        .swipe {
-               overflow: hidden;
-               visibility: hidden;
-               position: relative;
-               padding-bottom: 16px;
-
-           }
-           .swipe .mask{
-             width: 100%;
-             position: absolute;
-             bottom: 16px;
-           }
-           .swipe-wrap {
-               overflow: hidden;
-               position: relative;
-               width: 100%;
-           }
-
-           .swipe-wrap > div {
-               float: left;
-               width: 100%;
-               position: relative;
-           }
-
-           #swipeIndicator {
-               position: absolute;
-               left: 50%;
-               bottom: 30px;
-               -webkit-transform: translateX(-50%);
-               transform: translateX(-50%);
-           }
-
-           #swipeIndicator li {
-               height: 12px;
-               line-height: 12px;
-               width: 12px;
-               float: left;
-               border-radius: 50%;
-               background-color: #FFF;
-               margin: 0 10px 10px
-           }
-
-           #swipeIndicator li.active {
-               background-color: #DA70D6;
-           }
-
-           .slide_1 {
-               height: 250px;
-               width: 100%;
-           }
-           .slide_1 img{
-               height: 100%;
-               width: 100%;
-           }
-
-
-        /*header {
-            height: 44px;
-            width: 100%;
-            text-align: center;
-            background-color: #81a9c3;
-            color: #fff;
-            line-height: 44px;
-            font-size: 20px;
-        }*/
-
-
-
-
-        #kinds {background: #fff;}
-        #kinds ul:after{
-          content: "";
-          display: block;
-          clear: both;
-        }
-        #kinds ul li{
-          float: left;
-          width: 20%;
-          margin: 8px 0
-        }
-        #kinds ul li img{
-          height: 45px;
-          display: block;
-          margin: 0 auto;
-        }
-
-
-        #explain{
-          height: 110px;
-          width: 100%;
-          background: #f5f5f5;
-        }
-        #explain img{
-          width: 95%;
-          display: block;
-          margin: 0 auto;
-        }
-
-        #modu{
-          background: #fff;
-        }
-        #modu .left{float: left;width: 40%;border-right: 0.5% solid #ededed;}
-        #modu .left img{width: 75%;display: block;margin: 22px auto 0;}
-
-        #modu .right{float: right;width: 59.5%;}
-        #modu .top{height: 50%;}
-        #modu .top img{width: 80%;display: block;margin: 18px auto 0;}
-        #modu .bot{height: 49.5%;}
-        #modu .bot .l{float: left;width: 49.5%;}
-        #modu .bot .l img{width:80%;display: block;margin: 10px auto 0;}
-        #modu .bot .r{float: right;width: 50%;}
-        #modu .bot .r img{width:80%;display: block;margin: 14px auto 0;}
-
-        #hot-recom {background: #f5f5f5;}
-        #hot-recom .title{width: 100%;background: #fff;border-top: 10px solid #f5f5f5;border-bottom: 3px solid #f5f5f5;}
-        #hot-recom .title .title-wrap{width: 30%;margin: 0 auto;height:70px;line-height: 70px;font-size: 14px;color:#000;}
-        #hot-recom .title .title-wrap img{vertical-align: middle;width: 20px;margin-left:12%;margin-right:6%;display: inline;}
-
-
-        #hot-recom .item{background: #FFF;height: 142px;border-bottom: 3px solid #f5f5f5;}
-        #hot-recom .item .left{float: left;width: 20%;margin-top: 10px;margin-left: 10px;}
-        #hot-recom .item .right{float: right;width: 75%;}
-        #hot-recom .item .right h3{margin-top: 10px;}
-        #hot-recom .item .right .wrap .l{float: left;width: 60%;}
-        #hot-recom .item .right .wrap .l .p1 {font-size:12px;color: #939393;margin-top: 6px;}
-        #hot-recom .item .right .wrap .l .p1 .p-l{float: left;}
-        #hot-recom .item .right .wrap .l .p1 .p-r{float: left;margin-left: 15px;}
-        #hot-recom .item .right .wrap .l .p1 .p-r span{color: #fd6308;font-size: 14px;}
-        #hot-recom .item .right .wrap .l .p2 {font-size:12px;color: #939393;}
-        #hot-recom .item .right .wrap .l .p3 {font-size:12px;color: #fd6308;margin-top: 6px;}
-        #hot-recom .item .right .wrap .l .p3 span{font-size: 14px;}
-
-
-        #hot-recom .item .right .wrap .r{float: right;width: 40%;}
-        #hot-recom .item .right .wrap .r .span1{
-          display: block;
-          border: 1px solid #fd6308;
-          color: #959292;
-          font-size: 12px;
-          width: 85%;
-          border-radius: 15px;
-          text-align: center;
-        }
-        #hot-recom .item .right .wrap .r .span2{
-          display: block;
-          background: #fd6308;
-          font-size: 12px;
-          float: left;
-          width: 85%;
-          color:#FFF;
-          margin-top: 12px;
-          text-align: center;
-          height:30px;
-          line-height: 30px;
-          border-radius: 3px;
-        }
     </style>
 </head>
-
-<body class="wrap">
-
-    <section class="flex-1">
-    <div id="swipe" class="swipe">
-            <div class="swipe-wrap">
-                <div class=" swipe-page">
-                    <div class="slide_1">
-                        <img src="./image/index-lunbo1.jpg" alt="">
-                    </div>
-                </div>
-                <div class=" swipe-page">
-                    <div class="slide_1">
-                        <img src="./image/index-lunbo1.jpg" alt="">
-                    </div>
-                </div>
-                <div class=" swipe-page">
-                    <div class="slide_1">
-                        <img src="./image/index-lunbo1.jpg" alt="">
-                    </div>
-                </div>
-                <div class=" swipe-page">
-                    <div class="slide_1">
-                        <img src="./image/index-lunbo1.jpg" alt="">
-                    </div>
-                </div>
-            </div>
-            <ul id="swipeIndicator">
-                <li class="active"></li>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-            <img class="mask" src="./image/mask.png" alt="">
-    </div>
-    <div id="kinds">
-       <ul>
-          <li><img src="./image/nvzhuang.png" alt=""></li>
-          <li><img src="./image/nanzhuang.png" alt=""></li>
-          <li><img src="./image/meishi.png" alt=""></li>
-          <li><img src="./image/neiyi.png" alt=""></li>
-          <li><img src="./image/muyin.png" alt=""></li>
-          <li><img src="./image/huazhuang.png" alt=""></li>
-          <li><img src="./image/jujia.png" alt=""></li>
-          <li><img src="./image/xiebao.png" alt=""></li>
-          <li><img src="./image/wenti.png" alt=""></li>
-          <li><img src="./image/shuma.png" alt=""></li>
-       </ul>
-    </div>
-    <div id="explain">
-       <img src="./image/explain.png" alt="">
-    </div>
-    <div id="modu" class="clearfix">
-        <div class="left">
-          <img src="./image/tqg.png" alt="">
-        </div>
-        <div class="right">
-          <div class="top">
-            <img src="./image/jhs.png" alt="">
-          </div>
-          <div class="bot clearfix">
-             <div class="l">
-               <img src="./image/jkjby.png" alt="">
-             </div>
-             <div class="r">
-               <img src="./image/hqzb.png" alt="">
-             </div>
-          </div>
-        </div>
-    </div>
-
-    <div id="hot-recom">
-       <div class="title">
-          <div class="title-wrap">
-             <img src="./image/hot-recom.png" alt=""><span>热卖推荐</span>
-          </div>
-       </div>
-       <div class="item-list" id="tpl-wrap">
-
-       </div>
-
-    </div>
-    </section>
-    <footer class="aui-bar aui-bar-tab" id="footer">
-        <div class="aui-bar-tab-item aui-active" tapmode>
-            <i class="aui-iconfont aui-icon-home"></i>
-            <div class="aui-bar-tab-label">首页</div>
-        </div>
-        <div class="aui-bar-tab-item" tapmode>
-            <i class="icon iconfont icon-fenlei"></i>
-            <div class="aui-bar-tab-label">商品分类</div>
-        </div>
-        <div class="aui-bar-tab-item" tapmode>
-            <div class="aui-badge">99</div>
-            <i class="aui-iconfont aui-icon-cart"></i>
-            <div class="aui-bar-tab-label">订单</div>
-        </div>
-        <div class="aui-bar-tab-item" tapmode>
-            <div class="aui-dot"></div>
-            <i   class="icon iconfont icon-qian"></i>
-            <div class="aui-bar-tab-label">赚钱</div>
-        </div>
-        <div class="aui-bar-tab-item" tapmode>
-            <div class="aui-dot"></div>
-            <i class="aui-iconfont aui-icon-my"></i>
-            <div class="aui-bar-tab-label">个人中心</div>
-        </div>
-    </footer>
+<body>
+  <footer class="aui-bar aui-bar-tab" id="footer">
+      <div class="aui-bar-tab-item aui-active" tapmode>
+          <i class="aui-iconfont aui-icon-home"></i>
+          <div class="aui-bar-tab-label">首页</div>
+      </div>
+      <div class="aui-bar-tab-item" tapmode>
+          <i class="aui-iconfont aui-icon-search"></i>
+          <div class="aui-bar-tab-label">搜索</div>
+      </div>
+      <div class="aui-bar-tab-item" tapmode>
+          <div class="aui-badge">99</div>
+          <i class="aui-iconfont aui-icon-cart"></i>
+          <div class="aui-bar-tab-label">订单</div>
+      </div>
+      <div class="aui-bar-tab-item" tapmode>
+          <div class="aui-dot"></div>
+          <i style="font-size:24px;"   class="icon iconfont icon-qian"></i>
+          <div class="aui-bar-tab-label">赚钱</div>
+      </div>
+      <div class="aui-bar-tab-item" tapmode>
+          <div class="aui-dot"></div>
+          <i class="aui-iconfont aui-icon-my"></i>
+          <div class="aui-bar-tab-label">个人中心</div>
+      </div>
+  </footer>
 </body>
-<script  type="text/template"  id="tpl" >
-  {{~ it:data }}
-          <div class="item clearfix">
-             <img class="left" src="{{=data.itempic}}" alt="">
-             <div class="right">
-               <h3>{{=data.itemtitle}}</h3>
-               <div class="wrap clearfix">
-                 <div class="l">
-                    <P class="p1 clearfix"><span class="p-l">天猫价￥{{=data.itemprice}}</span><span class="p-r">立减<span>{{=data.couponmoney}}</span>元</span></P>
-                    <P class="p2">剩余 {{=data.couponmoney}}</P>
-                    <P class="p3">券后价<span>￥34</span></P>
-                 </div>
-                 <div class="r">
-                   <span class="span1">存入比例：{{=data.tkrates}}</span>
-                   <span class="span2">领券购买</span>
-                 </div>
-               </div>
-             </div>
-          </div>
-
-  {{~}}
-</script>
-<script type="text/javascript" src="./script/api.js"></script>
-<script type="text/javascript" src="./script/swipe.js"></script>
-<script type="text/javascript" src="./script/aui-tab.js" ></script>
-<script type="text/javascript" src="./script/doT.min.js" ></script>
-
-<script type="text/javascript">
-    apiready = function() {
-
-      fnChange();
-      getData();
-
-      function getData(){
-        api.ajax({
-            url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=homegoods',
-            method: 'get'
-        }, function(ret, err) {
-            if (ret) {
-                // api.alert({ msg: JSON.stringify(ret) });
-                var data = JSON.stringify(ret);
-                var tpl= doT.template( $api.byId("tpl").innerHTML );
-                 $api.byId("tpl-wrap").innerHTML=tpl(ret);
-
-            } else {
-                api.alert({ msg: JSON.stringify(err) });
-            }
-        });
-      }
-
-
-      api.addEventListener({
-         name:'scrolltobottom',
-         extra:{
-             threshold:10           //设置距离底部多少距离时触发，默认值为0，数字类型
-         }
-      }, function(ret, err){
-         alert('已滚动到底部');
-      });
-
-        // api.openFrame({
-        //     name: 'main',
-        //     url: 'html/main.html',
-        //     bounces: true,
-        //     rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
-        //         marginTop: headerH, // main页面距离win顶部的高度
-        //         marginBottom: footerH, // main页面距离win底部的高度
-        //         w: 'auto' // main页面的宽度 自适应屏幕宽度
-        //     }
-        // });
-
-
-
-        var tab = new auiTab({
-            element:document.getElementById("footer"),
-            index:1,
-            repeatClick:false
-        },function(ret){
-            alert(ret.index);
-        });
-
-        function fnChange() {
-              var swipe = $api.byId('swipe'),
-                  swipeIndicator = $api.byId('swipeIndicator'),
-                  indicators = $api.domAll(swipeIndicator, 'li');
-
-              new Swipe(swipe, {
-                  auto: 3000,
-                  callback: function(index) {
-                      for (var i = 0; i < indicators.length; i++) {
-                          if (index == i) {
-                              $api.addCls(indicators[i], 'active');
-                          } else {
-                              $api.removeCls(indicators[i], 'active');
-                          }
-                      }
-                  }
-              });
-          }
-
-
-
-    };
-    // 随意切换按钮
-   function randomSwitchBtn(tag){
-       if( tag == $api.dom('#footer li.active') )return;
-       var eFootLis = $api.domAll('#footer li'),
-           index = 0;
-       for (var i = 0,len = eFootLis.length; i < len; i++) {
-           if( tag == eFootLis[i] ){
-               index = i;
-           }else{
-               $api.removeCls(eFootLis[i], 'active');
-           }
-       }
-       $api.addCls( eFootLis[index], 'active');
-   }
-
-
-
-
-
-
-
-</script>
-
 </html>
+<script type="text/javascript" src="script/api.js"></script>
+<script type="text/javascript" src="script/aui-tab.js" ></script>
+<script type="text/javascript">
+    apiready = function () {
+      api.setFrameAttr({
+       name: 'index'
+    });
+
+      //存储底部高度
+      api.setPrefs({
+         key: 'footerHeight',
+         value: $api.offset($api.byId('footer')).h
+      });
+       api.openFrame({
+           name: 'main',
+           url: './html/main.html',
+           rect: {
+               x: 0,
+               y: 0,
+               w: api.winWidth,
+               h: api.winHeight - $api.offset($api.byId('footer')).h
+           }
+         });
+        funIniGroup();
+    }
+    //初始化frame组
+    function funIniGroup(){
+        framesName = ['main','search','order','money','person_center'];
+        // frames = [];
+        // for (var i = 0,len = framesName.length;i<len; i++) {
+        //   frames.push({
+        //     name: framesName[i],
+        //     url: './html/'+framesName[i]+'.html',
+        //     bgColor : 'rgba(0,0,0,.2)',
+        //     bounces:true
+        //   })
+        // }
+
+        //底部tab栏
+         var tab = new auiTab({
+             element:document.getElementById("footer"),
+             index:1,
+             repeatClick:false
+         },function(ret){
+           api.openFrame({
+                name: framesName[ret.index-1],
+                url: './html/'+framesName[ret.index-1]+'.html',
+                rect: {
+                    x: 0,
+                    y: 0,
+                    w: api.winWidth,
+                    h: api.winHeight - $api.offset($api.byId('footer')).h
+                }
+              });
+         });
+
+        // api.openFrameGroup({
+        //     name: 'group',
+        //     scrollEnabled: false,
+        //     rect: {
+        //         x: 0,
+        //         y: 0,
+        //         w: api.winWidth,
+        //         h: api.winHeight - $api.offset($api.byId('footer')).h
+        //     },
+        //     index: 0,
+        //     frames: frames
+        // }, function (ret, err) {
+        //
+        // });
+    }
+
+    // //底部tab栏
+    //  var tab = new auiTab({
+    //      element:document.getElementById("footer"),
+    //      index:1,
+    //      repeatClick:false
+    //  },function(ret){
+    //      api.setFrameGroupIndex({
+    //          name: 'group',
+    //          index: ret.index-1
+    //      });
+    //  });
+
+</script>
