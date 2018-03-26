@@ -118,52 +118,52 @@
           });
 
 
-         //分享图片
-         $api.addEvt($api.byId("share-btn"), 'click', function(){
-
-
-           api.ajax({
-               url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=getewm&m=tiger_newhu',
-               method: 'post',
-               data: {
-                   values: {
-                     userid:5
-                   }
-               }
-           }, function(ret, err) {
-               if (ret) {
-                   if(ret.status==1){
-                     api.download({
-                          url: ret.content,
-                          report: true,
-                          cache: true,
-                          allowResume: true
-                      }, function(ret, err) {
-                          if (ret.state == 1) {
-                              //下载成功
-                              realPath = ret.savePath;
-                              var share = api.require('sharePics');
-                              var array = new Array();
-                              array.push(realPath);
-                              // array.push(realPath);
-
-                              var param = {
-                                  title: "testing!",
-                                  list: array
-                              };
-
-                              share.shareToTimeLine(param);
-                          }
-                      });
-                   }
-                   // api.alert({ msg: JSON.stringify(ret) });
-               } else {
-                   api.alert({ msg: JSON.stringify(err) });
-               }
-           });
-
-
-         });
+        //  //分享图片
+        //  $api.addEvt($api.byId("share-btn"), 'click', function(){
+         //
+         //
+        //    api.ajax({
+        //        url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=getewm&m=tiger_newhu',
+        //        method: 'post',
+        //        data: {
+        //            values: {
+        //              userid:5
+        //            }
+        //        }
+        //    }, function(ret, err) {
+        //        if (ret) {
+        //            if(ret.status==1){
+        //              api.download({
+        //                   url: ret.content,
+        //                   report: true,
+        //                   cache: true,
+        //                   allowResume: true
+        //               }, function(ret, err) {
+        //                   if (ret.state == 1) {
+        //                       //下载成功
+        //                       realPath = ret.savePath;
+        //                       var share = api.require('sharePics');
+        //                       var array = new Array();
+        //                       array.push(realPath);
+        //                       // array.push(realPath);
+         //
+        //                       var param = {
+        //                           title: "testing!",
+        //                           list: array
+        //                       };
+         //
+        //                       share.shareToTimeLine(param);
+        //                   }
+        //               });
+        //            }
+        //            // api.alert({ msg: JSON.stringify(ret) });
+        //        } else {
+        //            api.alert({ msg: JSON.stringify(err) });
+        //        }
+        //    });
+         //
+         //
+        //  });
 
 
         //  //打开我的好友页面
