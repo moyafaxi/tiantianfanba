@@ -36,7 +36,7 @@
         <a class="aui-pull-left aui-btn">
             <span onclick="goback()" class="aui-iconfont aui-icon-left"></span>
         </a>
-        <div class="aui-title">修改密码</div>>
+        <div class="aui-title">修改密码</div>
       </header>
       <div class="aui-content">
         <ul class="aui-list aui-form-list aui-margin-t-15">
@@ -66,7 +66,7 @@
                         验证码：
                     </div>
                     <div class="aui-list-item-input">
-                        <input id="code" type="password" placeholder="请输入验证码"><span>获取验证码</span>
+                        <input id="code" type="password" placeholder="请输入验证码"><span readonly onclick="getCode(this)" >获取验证码</span>
                     </div>
                 </div>
             </li>
@@ -79,6 +79,12 @@
   <script type="text/javascript">
       apiready = function(){
 
+        $api.fixStatusBar($api.dom('header'));
+
+        var tel = api.pageParam.tel ? api.pageParam.tel : '未绑定';
+
+        $api.val($api.byId("tel"),tel);
+
 
         var toast = new auiToast({});
         $api.addEvt($api.byId("sure"), 'click', function(){
@@ -90,29 +96,31 @@
                method: 'post',
                data: {
                    values: {
-                       mobile: mobile,
-                           pw:pw,
+                         password:pw,
                          code: code
                    }
                }
               }, function(ret, err) {
                if (ret) {
                   if(ret.status==1){
+                    // alert(1);
                     toast.success({
                        title:"修改成功",
                        duration:1000
                      });
-                     api.openFrame({
-                        name: 'user_data',
-                        url: './user_data.html',
-                        rect: {
-                            x: 0,
-                            y: 0,
-                            w: 'auto',
-                            h: 'auto'
-                        },
-                        reload:true
-                    });
+                    //  api.openFrame({
+                    //     name: 'user_data',
+                    //     url: './user_data.html',
+                    //     rect: {
+                    //         x: 0,
+                    //         y: 0,
+                    //         w: 'auto',
+                    //         h: 'auto'
+                    //     },
+                    //     reload:true
+                    // });
+                  }else {
+                    alert(ret.content)
                   }
                   //  api.alert({ msg: JSON.stringify(ret) });
 
@@ -122,6 +130,51 @@
               });
         });
       };
+
+      //获取验证码
+      function getCode(obj){
+        var mobile = $api.val($api.byId("tel"));
+        if(!mobile){
+          alert("请填写手机号");
+          return false;
+        }
+        if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(mobile))){
+            alert("请填写正确的手机号");
+            return false;
+        }
+        function autostop(){
+        var distime=60;
+        var timer=setInterval(function(){
+            distime--;
+            $api.val(obj,distime+'秒后重新获取');
+            $api.attr(obj,"disabled",true);
+            $api.css(obj,'background:#ddd;border:0;color: #fff;');
+            if(distime<1){
+                clearInterval(timer);
+                $api.attr(obj,"disabled",false);
+                $api.val(obj,'获取验证码');
+                $api.css(obj,'background:#ff6537;color: #fff;');
+            }
+        },1000);
+        }
+        autostop()
+        api.ajax({
+            url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=messages',
+            method: 'post',
+            data: {
+                values: {
+                    mobile: mobile
+                }
+            }
+        }, function(ret, err) {
+            if (ret) {
+                api.alert({ msg: JSON.stringify(ret) });
+
+            } else {
+                api.alert({ msg: JSON.stringify(err) });
+            }
+        });
+      }
 
 
       function goback(){

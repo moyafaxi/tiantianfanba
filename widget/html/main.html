@@ -234,23 +234,23 @@
           <li><img src="../image/shuma.png" alt=""></li>
        </ul>
     </div>
-    <div id="explain">
+    <div onclick="openOperationGuide()" tapmode id="explain">
        <img src="../image/explain.png" alt="">
     </div>
     <div id="modu" class="clearfix">
         <div class="left">
-          <img onclick="openShoplist(11)" tapmode src="../image/tqg.png" alt="">
+          <img onclick="openShoplist(11,'淘抢购')" tapmode src="../image/tqg.png" alt="">
         </div>
         <div class="right">
           <div class="top">
-            <img onclick="openShoplist(12)" tapmode  src="../image/jhs.png" alt="">
+            <img onclick="openShoplist(12,'聚划算')" tapmode  src="../image/jhs.png" alt="">
           </div>
           <div class="bot clearfix">
              <div class="l">
-               <img onclick="openShoplist(13)" tapmode  src="../image/jkjby.png" alt="">
+               <img onclick="openShoplist(13,'9快9包邮')" tapmode  src="../image/jkjby.png" alt="">
              </div>
              <div class="r">
-               <img onclick="openShoplist(14)"  src="../image/hqzb.png" alt="">
+               <img onclick="openShoplist(14,'好劝直播')"  src="../image/hqzb.png" alt="">
              </div>
           </div>
         </div>
@@ -288,8 +288,7 @@
                </div>
              </div>
           </div>
-
-  {{~}}
+{{~}}
 </script>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/swipe.js"></script>
@@ -313,6 +312,7 @@
 
       //商品分类
       var tabItems = $api.byId("kind").children;
+      var typeArr = ['女装','男装','美食','内衣','母婴','化妆品','居家','鞋包配饰','文体车品','数码家电']
       for(var i=0; i<tabItems.length; i++){
         tabItems[i].setAttribute("tapmode","");
         tabItems[i].setAttribute("data-item-order",i);
@@ -329,7 +329,8 @@
                     h: 'auto'
                 },
                 pageParam: {
-                    num: num
+                    num: num,
+                    keyword:typeArr[num]
                 }
             });
         }
@@ -341,8 +342,8 @@
 
 
     //   api.openFrame({
-    //     name: 'share',
-    //     url: './share.html',
+    //     name: 'shoplist',
+    //     url: './shoplist.html',
     //     rect: {
     //         x: 0,
     //         y: 0,
@@ -451,72 +452,53 @@
 
 
 
-    //   //向上滑动事件
-    //   api.addEventListener({
-    //          name:'swipeup'
-    //          }, function(ret, err){
-    //             if($api.offset($api.byId("go-top")).t>api.winHeight*0.9){
-    //               $api.css($api.byId("go-top"),"display:block;")
-    //             }
-    //          });
-     //
-    //  //向下滑动事件
-    //  api.addEventListener({
-    //            name:'swipedown'
-    //        }, function(ret, err){
-    //          if($api.offset($api.byId("go-top")).t<api.winHeight){
-    //            $api.css($api.byId("go-top"),"display:none;")
-    //          }
-    //        });
-
-
 
      //搜索框模块
-         var UISearchBar = api.require('UISearchBar');
-         function openSearch (){
-             UISearchBar.open({
-               placeholder: '请输入搜索关键字',
-               historyCount: 10,
-               showRecordBtn: false,
-               texts: {
-                   cancelText: '取消',
-                   clearText: '清除搜索记录'
-               },
-               styles: {
-                   navBar: {
-                       bgColor: '#FFFFFF',
-                       borderColor: '#ccc'
-                   },
-                   searchBox: {
-                       bgImg: '',
-                       color: '#000',
-                       height: 44
-                   },
-                   cancel: {
-                       bg: 'rgba(0,0,0,0)',
-                       color: '#D2691E',
-                       size: 16
-                   },
-                   list: {
-                       color: '#696969',
-                       bgColor: '#FFFFFF',
-                       borderColor: '#eee',
-                       size: 16
-                   },
-                   clear: {
-                       color: '#000000',
-                       borderColor: '#ccc',
-                       size: 16
-                   }
-               }
-           }, function(ret, err) {
-               if (ret) {
-                   alert(JSON.stringify(ret));
-               } else {
-                   alert(JSON.stringify(err));
-               }
-           });
-         }
+        //  var UISearchBar = api.require('UISearchBar');
+        //  function openSearch (){
+        //      UISearchBar.open({
+        //        placeholder: '请输入搜索关键字',
+        //        historyCount: 10,
+        //        showRecordBtn: false,
+        //        texts: {
+        //            cancelText: '取消',
+        //            clearText: '清除搜索记录'
+        //        },
+        //        styles: {
+        //            navBar: {
+        //                bgColor: '#FFFFFF',
+        //                borderColor: '#ccc'
+        //            },
+        //            searchBox: {
+        //                bgImg: '',
+        //                color: '#000',
+        //                height: 44
+        //            },
+        //            cancel: {
+        //                bg: 'rgba(0,0,0,0)',
+        //                color: '#D2691E',
+        //                size: 16
+        //            },
+        //            list: {
+        //                color: '#696969',
+        //                bgColor: '#FFFFFF',
+        //                borderColor: '#eee',
+        //                size: 16
+        //            },
+        //            clear: {
+        //                color: '#000000',
+        //                borderColor: '#ccc',
+        //                size: 16
+        //            }
+        //        }
+        //    }, function(ret, err) {
+        //        if (ret) {
+        //            alert(JSON.stringify(ret));
+        //        } else {
+        //            alert(JSON.stringify(err));
+        //        }
+        //    });
+        //  }
 
 
         //轮播图
@@ -554,7 +536,23 @@
         };
         alibaichuan.showDetailByURL(param, function(ret, err) {
             if (ret) {
-                alert(JSON.stringify(ret));
+              api.ajax({
+                url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=orderupload',
+                method: 'post',
+                data: {
+                    values: {
+                        order: ret.ordercode,
+                        uptype:1
+                    }
+                }
+              }, function(ret, err) {
+                if (ret) {
+                    api.alert({ msg: JSON.stringify(ret) });
+                } else {
+                    api.alert({ msg: JSON.stringify(err) });
+                }
+              });
+                // alert(JSON.stringify(ret));
             } else {
                 alert(JSON.stringify(err));
             }
@@ -565,7 +563,7 @@
 
 
     //打开活动商品页面
-    function openShoplist(num){
+    function openShoplist(num,type){
       api.openFrame({
           name: 'shoplist',
           url: './shoplist.html',
@@ -576,7 +574,24 @@
               h: 'auto'
           },
           pageParam: {
-              num: num
+              num: num,
+              keyword:type
+          }
+      });
+    }
+
+
+
+    //打开操作指南页面
+    function openOperationGuide(){
+      api.openFrame({
+          name: 'operation_guide',
+          url: './operation_guide.html',
+          rect: {
+              x: 0,
+              y: 0,
+              w: 'auto',
+              h: 'auto'
           }
       });
     }

@@ -39,11 +39,11 @@
   </head>
   <body>
     <header class="aui-bar aui-bar-nav aui-bar-light">
-      <a class="aui-pull-left aui-btn">
+      <a onclick="goback()" class="aui-pull-left aui-btn">
           <span class="aui-iconfont aui-icon-left"></span>
       </a>
       <div class="aui-title">新用户注册</div>
-      <a class="aui-pull-right aui-btn">
+      <a id="customer-service" class="aui-pull-right aui-btn">
           <span class="aui-iconfont aui-icon-phone"></span>
       </a>
     </header>
@@ -75,6 +75,16 @@
           <li class="aui-list-item">
               <div class="aui-list-item-inner">
                   <div class="aui-list-item-label">
+                      确认密码：
+                  </div>
+                  <div class="aui-list-item-input">
+                      <input id="pw-check" type="password" placeholder="">
+                  </div>
+              </div>
+          </li>
+          <li class="aui-list-item">
+              <div class="aui-list-item-inner">
+                  <div class="aui-list-item-label">
                       验证码：
                   </div>
                   <div class="aui-list-item-input">
@@ -89,13 +99,46 @@
       <p class="aui-margin-t-15"><div id="sign-in" tapmode class="aui-btn aui-btn-success aui-btn-block">提交注册</div></p>
       </div>
       <div class="aui-list-item-inner aui-margin-l-15 aui-margin-r-15 yhxy clearfix">
-            <label><input id="checkUserAgre"  class="aui-checkbox" type="checkbox" name="checkbox" > 注册即代表您同意<span onclick="openUserAgree()">《用户服务协议》</span></label>
+            <label><input id="checkUserAgre"  class="aui-checkbox" type="checkbox" name="checkbox"> 注册即代表您同意<span onclick="openUserAgree()">《用户服务协议》</span></label>
             <span onclick="openSign()">立即登陆</span>
       </div>
   </body>
   <script type="text/javascript" src="../script/api.js"></script>
   <script type="text/javascript">
+      //智齿客服
+      var zhiChiSobotMall = null;
+      var zhiChiSobot = null;
       apiready = function(){
+            $api.fixStatusBar($api.dom('header'));
+
+            //智齿客服
+            zhiChiSobot = api.require('zhiChiSobotMall');
+            function startZhiChiSobot(){
+                var param = {
+                    appkey:"108b0ed204874501ae98b8e0fc08a6b8",//必填
+                    platformUnionId:"100x",//此id需要付费以后才能有。每个企业一个是必填
+                    userId:"00002",
+                    nickName:"Your user nickName",
+                    phone:"Your user phone",
+                    email:"Your user email",
+                    customInfo:{"age":"18","uname":"智齿APICloud"},
+                    isShowEvaluate:true,
+                    isSettingSkillSet:false,
+                    skillSetId:"",
+                    isShowTansfer:true,
+                    backgroundColor:"#f0f0f0",
+                    topViewTextColor:"#FFFFFF",
+                    isCustomLinkClick:false
+                };
+                zhiChiSobot.startZhiChiSobot(param);
+            }
+
+
+            $api.addEvt($api.byId("customer-service"), 'click', function(){
+              startZhiChiSobot()
+            });
+
+
             //检测手机号码
             function checkMobile(tel){
               if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(tel))){
@@ -107,8 +150,9 @@
             $api.addEvt($api.byId("sign-in"), 'click', function(){
                 var mobile = $api.val($api.byId("tel"));
                 var password = $api.val($api.byId("pw"));
+                var passwordCheck = $api.val($api.byId("pw-check"));
                 var code = $api.val($api.byId("code"));
-                var isChecked = $api.attr($api.byId("checkUserAgre"),"checked");
+                var isChecked = $api.byId("checkUserAgre").checked;
 
                 if(!mobile){
                    alert('请输入手机号');
@@ -120,6 +164,14 @@
                 }
                 if(!password){
                    alert('请输入密码');
+                   return false;
+                }
+                if(!password){
+                   alert('请输入密码');
+                   return false;
+                }
+                if(password!==passwordCheck){
+                   alert('两次密码不一致,请重新设置');
                    return false;
                 }
 
@@ -209,8 +261,8 @@
         });
       }
 
-      //打开注册页面
-      function openSign(){
+      //打开登陆页面
+      function openLogin(){
         api.openFrame({
             name: 'login',
             url: './login.html',
@@ -222,6 +274,21 @@
             }
         });
       }
+
+
+      //回到首页
+      // function goIndex(){
+      //   api.openFrame({
+      //       name: 'index',
+      //       url: '../index.html',
+      //       rect: {
+      //           x: 0,
+      //           y: 0,
+      //           w: 'auto',
+      //           h: 'auto'
+      //       }
+      //   });
+      // }
 
 
       //打开用户服务协议页面
@@ -237,6 +304,12 @@
                 h: 'auto'
             }
         });
+      }
+
+
+
+      function goback(){
+        api.closeFrame();
       }
   </script>
   </html>

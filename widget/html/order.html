@@ -111,6 +111,11 @@
       var zhiChiSobot = null;
       apiready = function(){
 
+        //设置frame属性
+        api.setFrameAttr({
+         name: 'order'
+        });
+
         $api.fixStatusBar($api.dom('#header'));
         $api.css($api.dom('.order-wrap'),"padding-top:"+$api.offset($api.dom('.top')).h+"px");
 

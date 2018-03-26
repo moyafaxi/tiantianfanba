@@ -157,6 +157,10 @@
       var zhiChiSobot = null;
       apiready = function(){
 
+        //设置frame属性
+        api.setFrameAttr({
+         name: 'money'
+        });
 
         //智齿客服
         zhiChiSobot = api.require('zhiChiSobotMall');

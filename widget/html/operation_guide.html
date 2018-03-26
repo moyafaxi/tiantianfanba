@@ -17,9 +17,7 @@
           .aui-bar-nav.aui-bar-light .aui-iconfont {
             color: #fff !important;
           }
-          .cont-wrap{background: #fff;}
-          .cont-wrap .cont{width: 92%;margin: 0 auto;}
-          .cont p{text-indent: 2em;margin-top: 10px;}
+          .cont{width: 96%;margin: 0 auto;}
       </style>
   </head>
   <body>
@@ -27,22 +25,16 @@
       <a class="aui-pull-left aui-btn">
           <span onclick="goback()" class="aui-iconfont aui-icon-left"></span>
       </a>
-      <div class="aui-title">用户许可协议</div>
+      <div class="aui-title">操作指南</div>
     </header>
-    <div class="cont-wrap">
-       <div class="cont">
-          <p>
-            1.1、任何通过本App搜索的搜索结果所有内容，均系该第三方网站提供（以下简称"第三方"）。该等搜索结果和第三方网页均系搜索引擎技术自动搜录所得，并不是也不反映之任何意见和主张，也不表示同意或支持该等第三方网页上的任何内容、主张或立场。对第三方网页中内容之合法性、准确性、真实性、适用性、安全性等概不负责，也无法负责。
-          </p>
-        </div>
+    <div class="cont">
+
     </div>
   </body>
   <script type="text/javascript" src="../script/api.js"></script>
   <script type="text/javascript">
       apiready = function(){
-
-        $api.fixStatusBar($api.dom('header'));
-
+          $api.fixStatusBar($api.dom("header"));
       };
 
 

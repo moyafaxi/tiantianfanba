@@ -21,11 +21,11 @@
   </head>
   <body>
     <header class="aui-bar aui-bar-nav aui-bar-light">
-      <a class="aui-pull-left aui-btn">
+      <a onclick="goIndex()" class="aui-pull-left aui-btn">
           <span class="aui-iconfont aui-icon-left"></span>
       </a>
       <div class="aui-title">用户登陆</div>
-      <a class="aui-pull-right aui-btn">
+      <a id="customer-service" class="aui-pull-right aui-btn">
           <span class="aui-iconfont aui-icon-phone"></span>
       </a>
     </header>
@@ -68,7 +68,55 @@
   </body>
   <script type="text/javascript" src="../script/api.js"></script>
   <script type="text/javascript">
+      //智齿客服
+      var zhiChiSobotMall = null;
+      var zhiChiSobot = null;
       apiready = function(){
+
+        api.setFrameAttr({
+         name: 'login'
+      });
+
+
+      //智齿客服
+      zhiChiSobot = api.require('zhiChiSobotMall');
+      function startZhiChiSobot(){
+          var param = {
+              appkey:"108b0ed204874501ae98b8e0fc08a6b8",//必填
+              platformUnionId:"100x",//此id需要付费以后才能有。每个企业一个是必填
+              userId:"00002",
+              nickName:"Your user nickName",
+              phone:"Your user phone",
+              email:"Your user email",
+              customInfo:{"age":"18","uname":"智齿APICloud"},
+              isShowEvaluate:true,
+              isSettingSkillSet:false,
+              skillSetId:"",
+              isShowTansfer:true,
+              backgroundColor:"#f0f0f0",
+              topViewTextColor:"#FFFFFF",
+              isCustomLinkClick:false
+          };
+          zhiChiSobot.startZhiChiSobot(param);
+      }
+
+
+      $api.addEvt($api.byId("customer-service"), 'click', function(){
+        startZhiChiSobot()
+      });
+
+        api.closeFrame({
+            name: 'order'
+        });
+        api.closeFrame({
+            name: 'money'
+        });
+        api.closeFrame({
+            name: 'person_center'
+        });
+        api.closeFrame({
+            name: 'index'
+        });
 
         $api.fixStatusBar($api.dom('header'));
 
@@ -205,6 +253,21 @@
                   h: 'auto'
               }
           });
+      }
+
+
+      function goIndex(){
+        api.openFrame({
+            name: 'index',
+            url: '../index.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: api.winWidth,
+                h: api.winHeight
+            },
+            reload:true
+        });
       }
   </script>
   </html>

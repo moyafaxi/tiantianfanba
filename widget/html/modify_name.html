@@ -29,10 +29,10 @@
       <a class="aui-pull-left aui-btn">
           <span onclick="goback()" class="aui-iconfont aui-icon-left"></span>
       </a>
-      <div class="aui-title">修改名称</div>>
+      <div class="aui-title">修改名称</div>
     </header>
     <div class="entry-area ">
-      <input id="input" value="风起闲云" type="text"><img id="cancel" src="../image/cancel.png" alt="">
+      <input id="input" value="" type="text"><img id="cancel" src="../image/cancel.png" alt="">
     </div>
     <p class="attention aui-margin-t-15 aui-margin-l-15 aui-margin-r-15">注意：昵称最多可输入12个字符</p>
     <div class="aui-margin-t-15 aui-margin-l-15 aui-margin-r-15"><div id="save" class="aui-btn aui-btn-success aui-btn-block">保存</div></div>
@@ -41,6 +41,13 @@
   <script type="text/javascript" src="../script/aui-toast.js" ></script>
   <script type="text/javascript">
       apiready = function(){
+
+          var name = api.pageParam.name;
+
+          $api.val($api.byId("input"),name);
+
+          $api.fixStatusBar($api.dom('header'));
+
           //清空输入框
           $api.addEvt($api.byId("cancel"), 'click', function(){
             $api.val($api.byId("input"),'');

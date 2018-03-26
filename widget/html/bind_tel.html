@@ -71,6 +71,12 @@
   <script type="text/javascript">
       apiready = function(){
 
+        $api.fixStatusBar($api.dom('header'));
+
+        var tel = api.pageParam.tel ? api.pageParam.tel : '未绑定';
+
+        $api.val($api.byId("tel"),tel);
+
           var toast = new auiToast({});
           $api.addEvt($api.byId("sure"), 'click', function(){
                 var mobile = $api.val($api.byId("tel"));

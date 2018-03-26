@@ -11,7 +11,7 @@
           }
           .top{background: url(../image/per-center-bg1.jpg) center bottom;height:190px;position: relative;}
           .top .mask{position: absolute;bottom: 0;width: 100%;}
-          .top .title{text-align: center;height: 40px;line-height: 40px;color: #fff;font-size: 20px;}
+          .top .title{text-align: center;height: 40px;line-height: 40px;color: #fff;font-size: 18px;}
           .set{margin-top: 10px;}
           .set img{float: right;width: 20px;margin-right: 20px;}
 
@@ -105,9 +105,9 @@
             <img src="../image/opt-icon6.png" alt="">
             <p>常见问题</p>
           </li>
-          <li>
+          <li id="customer-service">
             <img src="../image/opt-icon7.png" alt="">
-            <p>人工客服</p>
+            <p >人工客服</p>
           </li>
           <li  onclick="openFeedBack()" tapmode >
             <img src="../image/opt-icon8.png" alt="">
@@ -119,60 +119,116 @@
   <script type="text/javascript" src="../script/api.js"></script>
   <script type="text/javascript" src="../script/countUp.min.js"></script>
   <script type="text/javascript">
+
+      //智齿客服
+      var zhiChiSobotMall = null;
+      var zhiChiSobot = null;
       apiready = function(){
+
+        //设置frame属性
+        api.setFrameAttr({
+         name: 'person_center'
+        });
 
         $api.fixStatusBar($api.dom('.top'));
 
-        api.ajax({
-             url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=userdowns',
-             method: 'post',
-             data: {
-                 values: {
-                 }
-             }
-         }, function(ret, err) {
-             if (ret) {
-                 if(ret.status==1){
-                   $api.attr($api.byId("touxiang"),"src",ret.content.avatarUrl);
-                   $api.text($api.byId("name"),ret.content.userNick);
-                   $api.text($api.byId("level"),ret.content.levelname);
-                   $api.text($api.byId("drawNum"),ret.content.money);
+        //智齿客服
+        zhiChiSobot = api.require('zhiChiSobotMall');
+        function startZhiChiSobot(){
+            var param = {
+                appkey:"108b0ed204874501ae98b8e0fc08a6b8",//必填
+                platformUnionId:"100x",//此id需要付费以后才能有。每个企业一个是必填
+                userId:"00002",
+                nickName:"Your user nickName",
+                phone:"Your user phone",
+                email:"Your user email",
+                customInfo:{"age":"18","uname":"智齿APICloud"},
+                isShowEvaluate:true,
+                isSettingSkillSet:false,
+                skillSetId:"",
+                isShowTansfer:true,
+                backgroundColor:"#f0f0f0",
+                topViewTextColor:"#FFFFFF",
+                isCustomLinkClick:false
+            };
+            zhiChiSobot.startZhiChiSobot(param);
+        }
+
+
+        $api.addEvt($api.byId("customer-service"), 'click', function(){
+          startZhiChiSobot()
+        });
+
+
+        //下拉刷新
+        api.setRefreshHeaderInfo({
+            loadingImg: 'widget://image/refresh.png',
+            bgColor: '#ccc',
+            textColor: '#fff',
+            textDown: '下拉刷新...',
+            textUp: '松开刷新...'
+        }, function(ret, err) {
+            //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+          getData();
+
+        });
+
+        getData();
+        function getData(){
+          api.ajax({
+               url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=userdowns',
+               method: 'post',
+               data: {
+                   values: {
+                   }
+               }
+           }, function(ret, err) {
+               if (ret) {
+                   if(ret.status==1){
+                     $api.attr($api.byId("touxiang"),"src",ret.content.avatarUrl);
+                     $api.text($api.byId("name"),ret.content.userNick);
+                     $api.text($api.byId("level"),ret.content.levelname);
+                     $api.text($api.byId("drawNum"),ret.content.money);
 
 
 
-                    //设置数字滚动
-                    var options = {
-                       useEasing: true,
-                       useGrouping: true,
-                       separator: ',',
-                       decimal: '.',
-                     };
-                     var demo = new CountUp($api.byId("drawNum"), 0, ret.content.money, 2, 2.5, options);
-                     if (!demo.error) {
-                       demo.start();
-                     } else {
-                       console.error(demo.error);
-                     }
-                 }else if (ret.status==2) {
-                   alert("请先登陆账号");
-                   //先关闭首页
-                   api.closeFrame({name: 'main'});
-                   api.openFrame({
-                       name: 'login',
-                       url: './login.html',
-                       rect: {
-                           x: 0,
-                           y: 0,
-                           w: 'auto',
-                           h: 'auto'
+                      //设置数字滚动
+                      var options = {
+                         useEasing: true,
+                         useGrouping: true,
+                         separator: ',',
+                         decimal: '.',
+                       };
+                       var demo = new CountUp($api.byId("drawNum"), 0, ret.content.money, 2, 2.5, options);
+                       if (!demo.error) {
+                         demo.start();
+                       } else {
+                         console.error(demo.error);
                        }
-                   });
-                 }
-                //  api.alert({ msg: JSON.stringify(ret) });
-             } else {
-                 api.alert({ msg: JSON.stringify(err) });
-             }
-         });
+
+                       api.refreshHeaderLoadDone();
+                   }else if (ret.status==2) {
+                     alert("请先登陆账号");
+                     //先关闭首页
+                     api.closeFrame({name: 'main'});
+                     api.openFrame({
+                         name: 'login',
+                         url: './login.html',
+                         rect: {
+                             x: 0,
+                             y: 0,
+                             w: 'auto',
+                             h: 'auto'
+                         }
+                     });
+                   }
+                  //  api.alert({ msg: JSON.stringify(ret) });
+               } else {
+                   api.alert({ msg: JSON.stringify(err) });
+               }
+           });
+        }
+
 
 
 

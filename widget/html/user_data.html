@@ -52,7 +52,7 @@
                 <div class="aui-list-item-inner aui-list-item-arrow">
                     <div class="aui-list-item-title">昵称</div>
                     <div class="aui-list-item-right">
-                        <div id="name" onclick="openName()" class="" style="position:relative;top:0; right:0">天天返吧</div>
+                        <div id="name" onclick="openName()" class="" style="position:relative;top:0; right:0"></div>
                     </div>
                 </div>
             </li>
@@ -60,7 +60,7 @@
                 <div class="aui-list-item-inner aui-list-item-arrow">
                     <div class="aui-list-item-title">电话</div>
                     <div class="aui-list-item-right">
-                        <div id="tel" onclick="openBindTel()" class="" style="position:relative;top:0; right:0">12345678</div>
+                        <div id="tel" onclick="openBindTel()" class="" style="position:relative;top:0; right:0"></div>
                     </div>
                 </div>
             </li>
@@ -91,7 +91,7 @@
                 </div>
             </li>
             <li class="aui-list-item">
-                <div class="aui-list-item-inner aui-list-item-arrow" onclick="openModifyPwd()">
+                <div class="aui-list-item-inner aui-list-item-arrow" onclick="openUserAgree()">
                     <div class="aui-list-item-title">用户许可协议</div>
                     <div class="aui-list-item-right">
                         <div class="" style="position:relative;top:0; right:0"></div>
@@ -376,12 +376,15 @@
               y: 0,
               w: 'auto',
               h: 'auto'
+          },
+          pageParam: {
+              name: $api.text($api.byId("name"))
           }
       });
     }
 
 
-    //打开修改昵称页面
+    //打开修改电话页面
     function openBindTel(){
       api.openFrame({
           name: 'bind_tel',
@@ -391,6 +394,9 @@
               y: 0,
               w: 'auto',
               h: 'auto'
+          },
+          pageParam: {
+              tel: $api.text($api.byId("tel"))
           }
       });
     }
@@ -406,13 +412,16 @@
               y: 0,
               w: 'auto',
               h: 'auto'
+          },
+          pageParam: {
+              tel: $api.text($api.byId("tel"))
           }
       });
     }
 
 
     //打开用户协议页面
-    function openModifyPwd(){
+    function openUserAgree(){
       api.openFrame({
           name: 'user_agree',
           url: './user_agree.html',

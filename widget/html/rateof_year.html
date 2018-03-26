@@ -41,31 +41,67 @@
        <div class="wrap clearfix">
          <div class="left">
            <p class="p1">年利率 (%)</p>
-           <p class="p2">19.9</p>
+           <p id="rate" class="p2">19.9</p>
          </div>
        </div>
     </div>
     <div class="detail-list">
-      <div class="detail-item clearfix">
+      <!-- <div class="detail-item clearfix">
         <div class="l">
           <p class="p1">新人加息包</p>
           <p class="p2">有效期：2018-01-30 至 2018-03-30</p>
         </div>
         <span class="r">19.9</span>
-      </div>
-      <div class="detail-item clearfix">
-        <div class="l">
-          <p class="p1">新人加息包</p>
-          <p class="p2">有效期：2018-01-30 至 2018-03-30</p>
-        </div>
-        <span class="r">19.9</span>
-      </div>
+      </div> -->
     </div>
   </body>
+  <script  type="text/template"  id="tpl" >
+    {{~ it:data }}
+      <!-- <div class="detail-item clearfix">
+        <div class="l">
+          <p class="p1">每日利息</p>
+          <p class="p2">{{=data.time}}</p>
+        </div>
+        <span class="r">{{=data.money}}</span>
+      </div> -->
+      <div class="detail-item clearfix">
+        <div class="l">
+          <p class="p1">新人加息包</p>
+          <p class="p2">{{=data.time}}</p>
+        </div>
+        <span class="r">{{=data.rate}}%</span>
+      </div>
+  {{~}}
+  </script>
   <script type="text/javascript" src="../script/api.js"></script>
+  <script type="text/javascript" src="../script/doT.min.js" ></script>
   <script type="text/javascript">
       apiready = function(){
+
          $api.fixStatusBar($api.dom('.top-area'));
+
+         api.ajax({
+           url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=zhuandata',
+           method: 'post',
+           data: {
+               values: {
+                   datatype: 6
+               }
+           }
+         }, function(ret, err) {
+           if (ret) {
+               if(ret.status==1){
+                 $api.text($api.byId("rate"),ret.content.todaymoney);
+                 var tpl= doT.template( $api.byId("tpl").innerHTML );
+                 $api.dom(".detail-list").innerHTML=tpl(ret.content.list);
+               }else{
+                 alert(ret.content)
+               }
+              //  api.alert({ msg: JSON.stringify(ret) });
+           } else {
+               api.alert({ msg: JSON.stringify(err) });
+           }
+         });
       };
 
 

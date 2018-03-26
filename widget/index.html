@@ -13,7 +13,7 @@
     </style>
 </head>
 <body>
-  <footer class="aui-bar aui-bar-tab" id="footer">
+  <footer class="aui-bar aui-bar-tab" id="footer" style="border-top:1px solid #ddd;">
       <div class="aui-bar-tab-item aui-active" tapmode>
           <i class="aui-iconfont aui-icon-home"></i>
           <div class="aui-bar-tab-label">首页</div>
@@ -23,17 +23,17 @@
           <div class="aui-bar-tab-label">搜索</div>
       </div>
       <div class="aui-bar-tab-item" tapmode>
-          <div class="aui-badge">99</div>
+          <!-- <div class="aui-badge">99</div> -->
           <i class="aui-iconfont aui-icon-cart"></i>
           <div class="aui-bar-tab-label">订单</div>
       </div>
       <div class="aui-bar-tab-item" tapmode>
-          <div class="aui-dot"></div>
+          <!-- <div class="aui-dot"></div> -->
           <i style="font-size:24px;"   class="icon iconfont icon-qian"></i>
           <div class="aui-bar-tab-label">赚钱</div>
       </div>
       <div class="aui-bar-tab-item" tapmode>
-          <div class="aui-dot"></div>
+          <!-- <div class="aui-dot"></div> -->
           <i class="aui-iconfont aui-icon-my"></i>
           <div class="aui-bar-tab-label">个人中心</div>
       </div>
@@ -44,15 +44,35 @@
 <script type="text/javascript" src="script/aui-tab.js" ></script>
 <script type="text/javascript">
     apiready = function () {
+
+
+
+      api.closeFrame({
+          name: 'login'
+      });
+
       api.setFrameAttr({
        name: 'index'
-    });
+      });
 
       //存储底部高度
       api.setPrefs({
          key: 'footerHeight',
          value: $api.offset($api.byId('footer')).h
       });
+      if(api.pageParam.direction){
+        api.openFrame({
+            name: 'search',
+            url: './html/search.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: api.winWidth,
+                h: api.winHeight - $api.offset($api.byId('footer')).h
+            }
+          });
+          funIniGroup();
+      }else{
        api.openFrame({
            name: 'main',
            url: './html/main.html',
@@ -64,6 +84,7 @@
            }
          });
         funIniGroup();
+      }
     }
     //初始化frame组
     function funIniGroup(){

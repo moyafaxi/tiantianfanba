@@ -38,7 +38,7 @@
       <a class="aui-pull-left aui-btn">
           <span onclick="goback()" class="aui-iconfont aui-icon-left"></span>
       </a>
-      <div class="aui-title">支付宝账号</div>>
+      <div class="aui-title">修改支付宝账号</div>
     </header>
     <div class="aui-content">
       <ul class="aui-list aui-form-list aui-margin-t-15">
@@ -48,7 +48,7 @@
                       真实姓名:
                   </div>
                   <div class="aui-list-item-input">
-                      <input readonly id="realname" type="text" placeholder="">
+                      <input id="realname" type="text" placeholder="">
                   </div>
               </div>
           </li>
@@ -58,13 +58,13 @@
                       支付宝账号：
                   </div>
                   <div class="aui-list-item-input">
-                      <input readonly id="alipay" type="number" placeholder="">
+                      <input id="alipay" type="number" placeholder="">
                       <!-- <span>获取验证码</span> -->
                   </div>
               </div>
           </li>
         </ul>
-          <div class="aui-margin-t-15 aui-margin-l-15 aui-margin-r-15"><div id="sure" tapmode class="aui-btn aui-btn-success aui-btn-block">修改</div></div>
+          <div class="aui-margin-t-15 aui-margin-l-15 aui-margin-r-15"><div id="sure" tapmode class="aui-btn aui-btn-success aui-btn-block">确认修改</div></div>
       </div>
   </body>
   <script type="text/javascript" src="../script/api.js"></script>
@@ -97,10 +97,27 @@
           var toast = new auiToast({});
           $api.addEvt($api.byId("sure"), 'click', function(){
 
-
+                var alipay = $api.val($api.byId("alipay"));
+                var realname = $api.val($api.byId("realname"));
+                api.ajax({
+                 url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=userupdate',
+                 method: 'post',
+                 data: {
+                     values: {
+                         alipay: alipay,
+                       realname: realname
+                     }
+                 }
+                }, function(ret, err) {
+                 if (ret) {
+                    if(ret.status==1){
+                      toast.success({
+                         title:"修改成功",
+                         duration:1000
+                       });
                        api.openFrame({
-                          name: 'modify_pay',
-                          url: './modify_pay.html',
+                          name: 'person_center',
+                          url: './person_center.html',
                           rect: {
                               x: 0,
                               y: 0,
@@ -109,6 +126,13 @@
                           },
                           reload:true
                       });
+                    }
+                    //  api.alert({ msg: JSON.stringify(ret) });
+
+                 } else {
+                     api.alert({ msg: JSON.stringify(err) });
+                 }
+                });
 
           });
 
