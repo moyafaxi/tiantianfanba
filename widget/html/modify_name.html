@@ -68,7 +68,7 @@
                   }
               }, function(ret, err) {
                   if (ret) {
-                    api.alert({ msg: JSON.stringify(ret) });
+                    // api.alert({ msg: JSON.stringify(ret) });
                       if (ret.status==1) {
                         toast.success({
                            title:"修改成功",
@@ -85,7 +85,9 @@
                           },
                           reload:true
                       });
-                      }
+                    }else{
+                      alert(ret.content)
+                    }
                       // api.alert({ msg: JSON.stringify(ret) });
                   } else {
                       api.alert({ msg: JSON.stringify(err) });

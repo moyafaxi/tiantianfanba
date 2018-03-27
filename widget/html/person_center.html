@@ -57,7 +57,7 @@
             <img id="touxiang" src="" alt="">
           </div>
           <div class="m">
-            <p id="name" class="p1">风气闲云</p>
+            <p id="name" class="p1"></p>
             <p  class="p2"><span id="level">默认等级</span></p>
           </div>
           <!-- <div class="r">
@@ -101,7 +101,7 @@
             <img src="../image/opt-icon5.png" alt="">
             <p>年化利率</p>
           </li>
-          <li>
+          <li onclick="openCommonProblems()" tapmode >
             <img src="../image/opt-icon6.png" alt="">
             <p>常见问题</p>
           </li>
@@ -311,6 +311,20 @@
         api.openFrame({
             name: 'rateof_year',
             url: './rateof_year.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: 'auto'
+            }
+        });
+      }
+
+      //打开常见问题页面
+      function openCommonProblems(){
+        api.openFrame({
+            name: 'common_problems',
+            url: './common_problems.html',
             rect: {
                 x: 0,
                 y: 0,

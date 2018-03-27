@@ -42,8 +42,36 @@
 </html>
 <script type="text/javascript" src="script/api.js"></script>
 <script type="text/javascript" src="script/aui-tab.js" ></script>
+<script type="text/javascript" src="../script/aui-toast.js" ></script>
 <script type="text/javascript">
+      function exitApp() {
+            var toast = new auiToast({});
+            api.addEventListener({
+                    name: 'keyback'
+            }, function(ret, err) {
+                    api.toast({
+                            msg: '再按一次返回键退出',
+                            duration: 2000,
+                            location: 'bottom'
+                    });
+
+                    api.addEventListener({
+                            name: 'keyback'
+                    }, function(ret, err) {
+                            api.closeWidget({
+                                    silent: true
+                            });
+                    });
+
+                    setTimeout(function() {
+                            exitApp();
+                    }, 2000)
+            });
+    }
+
     apiready = function () {
+
+      exitApp();
 
 
 
