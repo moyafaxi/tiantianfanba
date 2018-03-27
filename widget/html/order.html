@@ -48,7 +48,7 @@
             <i style="font-size:24px;" class="icon iconfont icon-kefu"></i>
           </a>
         </header>
-        <div class="aui-tab" id="tab">
+        <div class="aui-tab" id="tab" style="border-bottom:1px solid #ddd;">
             <div class="aui-tab-item aui-active">全部</div>
             <div class="aui-tab-item"><div></div>待存入</div>
             <div class="aui-tab-item">已存入</div>
@@ -97,12 +97,10 @@
             <img class="l" src="{{=data.imgurl}}" alt="">
             <p class="m">{{=data.title}}</p>
             {{? !data.orderID}}
-            <!-- {{?? data.orderID}}
-            <img style="" onclick="openMyCart()" class="r" src="../image/goin.png" alt="">
-            {{??}} -->
-            <img style="" onclick="openMyCart()" tapmode class="r" src="../image/goin.png" alt="">
+            {{?? data.orderID}}
+            <img style="" onclick="openMyOrdersPage()" class="r" src="../image/goin.png" alt="">
+            {{??}}
             {{?}}
-            <!-- <img style="" onclick="openMyCart()" class="r" src="../image/goin.png" alt=""> -->
           </div>
           <div class="time-money clearfix"><span class="l">{{=data.createtime}}</span><span class="r">已存入：<i>{{=data.money}}</i>元</span></div>
         </div>
@@ -215,6 +213,13 @@
         });
 
 
+        function isEmpty(obj){
+          for (var attr in obj) {
+            return false;
+          }
+          return true;
+        }
+
         //获取订单
          function getOrder (index){
            api.ajax({
@@ -230,10 +235,12 @@
                if(ret.status==1){
                 //  alert(ret.content)
                   if(ret.content){
+                    if(isEmpty(ret.content)){
+                      $api.byId("order-wrap").innerHTML="<div style='background:#fff;padding:10px 0 0 10px;'>暂无数据</div>";
+                      return false;
+                    }
                     var tpl= doT.template( $api.byId("tpl").innerHTML );
                     $api.byId("order-wrap").innerHTML=tpl(ret.content);
-                  }else{
-                    $api.byId("order-wrap").innerHTML="<div style='background:#fff;padding:10px 0 0 10px;'>暂无数据</div>"
                   }
 
                }else if (ret.status==2) {
@@ -262,17 +269,18 @@
 }
 
       //打开购物车
-      function openMyCart(){
+      function openMyOrdersPage(){
         var alibaichuan = api.require('alibaichuan');
         var param = {
-            isvcode: "feeling",
+            status: 2,
+            isAllOrder:true,
             nativeview:false
         };
-        alibaichuan.openMyCart(param, function(ret, err) {
+        alibaichuan.myOrdersPage(param, function(ret, err) {
             if (ret) {
-                alert("ret - " + JSON.stringify(ret));
+                // alert("ret - " + JSON.stringify(ret));
             } else {
-                alert("err - " + JSON.stringify(err));
+                // alert("err - " + JSON.stringify(err));
             }
         });
       }

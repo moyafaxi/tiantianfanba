@@ -21,9 +21,9 @@
           .aui-content .aui-list{border-top: 0 !important;}
 
 
-          .aui-list-item-input input{width: 65%;display: inline-block;}
+          .aui-list-item-input input{width: 45%;display: inline-block;}
           .aui-list-item-input span{
-            width: 35%;
+            width: 55%;
             display: inline-block;
             text-align: center;
             border: 1px solid #ff6537;
@@ -38,7 +38,7 @@
       <a class="aui-pull-left aui-btn">
           <span onclick="goback()" class="aui-iconfont aui-icon-left"></span>
       </a>
-      <div class="aui-title">用户电话</div>>
+      <div class="aui-title">用户电话</div>
     </header>
     <div class="aui-content">
       <ul class="aui-list aui-form-list aui-margin-t-15">
@@ -58,7 +58,7 @@
                       验证码：
                   </div>
                   <div class="aui-list-item-input">
-                      <input id="pw" type="password" placeholder=""><span>获取验证码</span>
+                      <input id="pw"  type="password" placeholder=""><span readonly onclick="getCode(this)" >获取验证码</span>
                   </div>
               </div>
           </li>
@@ -126,6 +126,51 @@
           });
 
       };
+
+      //获取验证码
+      function getCode(obj){
+        var mobile = $api.val($api.byId("tel"));
+        if(!mobile){
+          alert("请填写手机号");
+          return false;
+        }
+        if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(mobile))){
+            alert("请填写正确的手机号");
+            return false;
+        }
+        function autostop(){
+        var distime=60;
+        var timer=setInterval(function(){
+            distime--;
+            $api.text(obj,distime+'秒后重新获取');
+            $api.attr(obj,"disabled",true);
+            $api.css(obj,'background:#ddd;border:0;color: #fff;');
+            if(distime<1){
+                clearInterval(timer);
+                $api.attr(obj,"disabled",false);
+                $api.text(obj,'获取验证码');
+                $api.css(obj,'background:#fff;border: 1px solid #ff6537;color: #ff6537;');
+            }
+        },1000);
+        }
+        autostop()
+        api.ajax({
+            url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=messages',
+            method: 'post',
+            data: {
+                values: {
+                    mobile: mobile
+                }
+            }
+        }, function(ret, err) {
+            if (ret) {
+                // api.alert({ msg: JSON.stringify(ret) });
+
+            } else {
+                api.alert({ msg: JSON.stringify(err) });
+            }
+        });
+      }
 
 
       function goback(){
