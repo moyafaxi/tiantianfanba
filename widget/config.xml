@@ -1,9 +1,9 @@
  <widget id="A6075036573180"  version="0.0.1">
-    <name>tiantianfanba</name>
+    <name>天天返吧</name>
     <description>
-        Example For APICloud.
+        tiantianfanba
     </description>
-    <author email="developer@apicloud.com" href="http://www.apicloud.com">
+    <author email="2418140141@qq.com" href="">
         Developer
     </author>
     <content src="index.html" />
