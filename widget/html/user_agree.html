@@ -41,6 +41,14 @@
   <script type="text/javascript">
       apiready = function(){
 
+        api.setFrameAttr({
+         name: 'user_agree'
+        });
+
+        var framenamesArr = $api.getStorage('framenames');
+        framenamesArr.push('user_agree');
+        $api.setStorage('framenames',framenamesArr);
+
         $api.fixStatusBar($api.dom('header'));
 
       };

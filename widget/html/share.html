@@ -95,6 +95,14 @@
   <script type="text/javascript">
       apiready = function(){
 
+        api.setFrameAttr({
+         name: 'share'
+        });
+
+        var framenamesArr = $api.getStorage('framenames');
+        framenamesArr.push('share');
+        $api.setStorage('framenames',framenamesArr);
+
           $api.fixStatusBar($api.dom('.top-area'));
 
           //获取下级数据

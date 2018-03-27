@@ -70,7 +70,15 @@
   <script type="text/javascript" src="../script/doT.min.js" ></script>
   <script type="text/javascript">
       apiready = function(){
-        
+
+        api.setFrameAttr({
+         name: 'consume_detail'
+        });
+
+        var framenamesArr = $api.getStorage('framenames');
+        framenamesArr.push('consume_detail');
+        $api.setStorage('framenames',framenamesArr);
+
         $api.fixStatusBar($api.dom('.top-area'));
 
         api.ajax({

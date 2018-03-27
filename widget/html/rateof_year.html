@@ -78,6 +78,14 @@
   <script type="text/javascript">
       apiready = function(){
 
+        api.setFrameAttr({
+         name: 'rateof_year'
+        });
+
+        var framenamesArr = $api.getStorage('framenames');
+        framenamesArr.push('rateof_year');
+        $api.setStorage('framenames',framenamesArr);
+
          $api.fixStatusBar($api.dom('.top-area'));
 
          api.ajax({

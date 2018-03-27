@@ -58,6 +58,15 @@
   <script type="text/javascript">
       apiready = function(){
 
+
+        api.setFrameAttr({
+         name: 'feedback'
+        });
+
+        var framenamesArr = $api.getStorage('framenames');
+        framenamesArr.push('feedback');
+        $api.setStorage('framenames',framenamesArr);
+
           $api.fixStatusBar($api.dom('header'));
 
           $api.addEvt($api.byId("send"), 'click', function(){

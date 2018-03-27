@@ -45,10 +45,23 @@
 <script type="text/javascript" src="script/aui-toast.js" ></script>
 <script type="text/javascript">
       function exitApp() {
+
+            $api.setStorage('framenames',[]);
+
             var toast = new auiToast({});
             api.addEventListener({
                     name: 'keyback'
             }, function(ret, err) {
+                    if($api.getStorage('framenames').length>0){
+                      var framenamesArr = $api.getStorage('framenames');
+                      api.closeFrame({
+                          name: framenamesArr[framenamesArr.length-1]
+                      });;
+                      framenamesArr.splice(framenamesArr.length-1,1);
+                      $api.setStorage('framenames',framenamesArr);
+                      return false;
+                    }
+
                     api.toast({
                             msg: '再按一次返回键退出',
                             duration: 2000,
@@ -58,9 +71,13 @@
                     api.addEventListener({
                             name: 'keyback'
                     }, function(ret, err) {
-                            api.closeWidget({
-                                    silent: true
-                            });
+                          // if(framenames){
+                          //   api.closeFrame(framenames[1]);
+                          //   framenames.splice(1,1);
+                          // }
+                          api.closeWidget({
+                                  silent: true
+                          });
                     });
 
                     setTimeout(function() {

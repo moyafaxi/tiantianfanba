@@ -44,6 +44,14 @@
   <script type="text/javascript">
       apiready = function(){
 
+        api.setFrameAttr({
+         name: 'common_problems'
+        });
+
+        var framenamesArr = $api.getStorage('framenames');
+        framenamesArr.push('common_problems');
+        $api.setStorage('framenames',framenamesArr);
+
         $api.fixStatusBar($api.dom('header'));
 
       };

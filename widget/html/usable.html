@@ -82,6 +82,14 @@
   <script type="text/javascript">
       apiready = function(){
 
+        api.setFrameAttr({
+         name: 'usable'
+        });
+
+        var framenamesArr = $api.getStorage('framenames');
+        framenamesArr.push('usable');
+        $api.setStorage('framenames',framenamesArr);
+
         $api.fixStatusBar($api.dom('.top-area'));
 
         api.ajax({

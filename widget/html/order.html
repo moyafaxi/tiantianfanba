@@ -81,8 +81,8 @@
   </body>
   <script  type="text/template"  id="tpl" >
     {{~ it:data }}
-        <div class="order-item">
-          <div class="order-identifier clearfix"><span class="order-num">{{=data.orderID? "订单号："+data.orderID : data.remark}}</span>
+        <div class="order-item" tapmode>
+          <div class="order-identifier clearfix"><span class="order-num">{{=data.orderID ? "订单号："+data.orderID : data.remark}}</span>
             {{? !data.status}}
             {{?? data.status == 1}}
             <span class="order-status1">未存入</span>
@@ -96,7 +96,13 @@
           <div class="order-goods clearfix">
             <img class="l" src="{{=data.imgurl}}" alt="">
             <p class="m">{{=data.title}}</p>
-            <img class="r" src="../image/goin.png" alt="">
+            {{? !data.orderID}}
+            <!-- {{?? data.orderID}}
+            <img style="" onclick="openMyCart()" class="r" src="../image/goin.png" alt="">
+            {{??}} -->
+            <img style="" onclick="openMyCart()" tapmode class="r" src="../image/goin.png" alt="">
+            {{?}}
+            <!-- <img style="" onclick="openMyCart()" class="r" src="../image/goin.png" alt=""> -->
           </div>
           <div class="time-money clearfix"><span class="l">{{=data.createtime}}</span><span class="r">已存入：<i>{{=data.money}}</i>元</span></div>
         </div>
@@ -121,29 +127,42 @@
 
         //智齿客服
         zhiChiSobot = api.require('zhiChiSobotMall');
-        function startZhiChiSobot(){
-            var param = {
-                appkey:"108b0ed204874501ae98b8e0fc08a6b8",//必填
-                platformUnionId:"100x",//此id需要付费以后才能有。每个企业一个是必填
-                userId:"00002",
-                nickName:"Your user nickName",
-                phone:"Your user phone",
-                email:"Your user email",
-                customInfo:{"age":"18","uname":"智齿APICloud"},
-                isShowEvaluate:true,
-                isSettingSkillSet:false,
-                skillSetId:"",
-                isShowTansfer:true,
-                backgroundColor:"#f0f0f0",
-                topViewTextColor:"#FFFFFF",
-                isCustomLinkClick:false
-            };
-            zhiChiSobot.startZhiChiSobot(param);
-        }
+        api.ajax({
+            url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=userdowns',
+            method: 'post',
+            data: {
+            }
+        }, function(ret, err) {
+            if (ret) {
+                // api.alert({ msg: JSON.stringify(ret) });
+                if(ret.status==1){
+                  function startZhiChiSobot(){
+                      var param = {
+                          appkey:"108b0ed204874501ae98b8e0fc08a6b8",//必填
+                          platformUnionId:"100x",//此id需要付费以后才能有。每个企业一个是必填
+                          userId:ret.content.id,
+                          nickName:ret.content.userNick,
+                          phone:"Your user phone",
+                          email:"Your user email",
+                          customInfo:{"age":"18","uname":"智齿APICloud"},
+                          isShowEvaluate:true,
+                          isSettingSkillSet:false,
+                          skillSetId:"",
+                          isShowTansfer:true,
+                          backgroundColor:"#f0f0f0",
+                          topViewTextColor:"#FFFFFF",
+                          isCustomLinkClick:false
+                      };
+                      zhiChiSobot.startZhiChiSobot(param);
 
-
-        $api.addEvt($api.byId("customer-service"), 'click', function(){
-          startZhiChiSobot()
+                  }
+                  $api.addEvt($api.byId("customer-service"), 'click', function(){
+                    startZhiChiSobot()
+                  });
+                }
+            } else {
+                api.alert({ msg: JSON.stringify(err) });
+            }
         });
 
 
@@ -241,6 +260,22 @@
 
 
 }
+
+      //打开购物车
+      function openMyCart(){
+        var alibaichuan = api.require('alibaichuan');
+        var param = {
+            isvcode: "feeling",
+            nativeview:false
+        };
+        alibaichuan.openMyCart(param, function(ret, err) {
+            if (ret) {
+                alert("ret - " + JSON.stringify(ret));
+            } else {
+                alert("err - " + JSON.stringify(err));
+            }
+        });
+      }
 
       // function uploadOrder(){
       //   api.ajax({

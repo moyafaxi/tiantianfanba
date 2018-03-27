@@ -100,6 +100,14 @@
   <script type="text/javascript">
       apiready = function(){
 
+        api.setFrameAttr({
+         name: 'withdraw_detail'
+        });
+
+        var framenamesArr = $api.getStorage('framenames');
+        framenamesArr.push('withdraw_detail');
+        $api.setStorage('framenames',framenamesArr);
+
         $api.fixStatusBar($api.dom('.top-area'));
 
         api.ajax({

@@ -79,6 +79,14 @@
   <script type="text/javascript">
       apiready = function(){
 
+        api.setFrameAttr({
+         name: 'deposit'
+        });
+
+        var framenamesArr = $api.getStorage('framenames');
+        framenamesArr.push('deposit');
+        $api.setStorage('framenames',framenamesArr);
+
         $api.fixStatusBar($api.dom('.top-area'));
 
         api.ajax({

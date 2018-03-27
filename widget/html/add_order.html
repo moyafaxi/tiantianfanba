@@ -79,6 +79,16 @@
   <script type="text/javascript" src="../script/api.js"></script>
   <script type="text/javascript">
       apiready = function(){
+
+        api.setFrameAttr({
+         name: 'add_order'
+        });
+
+        var framenamesArr = $api.getStorage('framenames');
+        framenamesArr.push('add_order');
+        $api.setStorage('framenames',framenamesArr);
+
+
           $api.fixStatusBar($api.dom('header'));
 
           $api.addEvt($api.byId("sure"), 'click', function(){

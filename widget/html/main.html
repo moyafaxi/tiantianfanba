@@ -491,30 +491,60 @@
             mmpid: "mm_116105171_0_0",
             nativeview: false
         };
-        alibaichuan.showDetailByURL(param, function(ret, err) {
-            if (ret) {
-              // alert(ret);
-              api.ajax({
-                url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=orderupload',
-                method: 'post',
-                data: {
-                    values: {
-                        order:  ret.ordercode,
-                        uptype:1
+        api.ajax({
+          url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=userdowns',
+          method: 'post',
+          data: {
+          }
+        }, function(ret, err) {
+          if (ret) {
+              if(ret.status==1){
+                alibaichuan.showDetailByURL(param, function(ret, err) {
+                    if (ret) {
+                      // alert(ret);
+                      api.ajax({
+                        url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=orderupload',
+                        method: 'post',
+                        data: {
+                            values: {
+                                order:  ret.ordercode,
+                                uptype:1
+                            }
+                        }
+                      }, function(retu, err) {
+                        if (retu) {
+                            //dosomething
+                        } else {
+                            //dosomething
+                        }
+                      });
+                        // alert(JSON.stringify(ret));
+                    } else {
+                        alert(JSON.stringify(err));
                     }
-                }
-              }, function(retu, err) {
-                if (retu) {
-                    //dosomething
-                } else {
-                    //dosomething
-                }
-              });
-                // alert(JSON.stringify(ret));
-            } else {
-                alert(JSON.stringify(err));
-            }
+                });
+              }else{
+
+                alert("请先登陆账号");
+                api.openFrame({
+                    name: 'login',
+                    url: './login.html',
+                    rect: {
+                        x: 0,
+                        y: 0,
+                        w: 'auto',
+                        h: 'auto'
+                    }
+                });
+              }
+          } else {
+              api.alert({ msg: JSON.stringify(err) });
+          }
         });
+
+
+
+
 
     }
 

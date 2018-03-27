@@ -89,6 +89,15 @@
       apiready = function(){
           // $api.text($api.byId("canWdraw"),api.pageParam.drawnum);
 
+
+          api.setFrameAttr({
+           name: 'withdraw'
+          });
+
+          var framenamesArr = $api.getStorage('framenames');
+          framenamesArr.push('withdraw');
+          $api.setStorage('framenames',framenamesArr);
+
           $api.fixStatusBar($api.dom('header'));
 
           api.ajax({

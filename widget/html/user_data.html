@@ -108,6 +108,15 @@
   <script type="text/javascript">
       apiready = function(){
 
+        api.setFrameAttr({
+         name: 'user_data'
+        });
+
+        var framenamesArr = $api.getStorage('framenames');
+        framenamesArr.push('user_data');
+        $api.setStorage('framenames',framenamesArr);
+
+
         $api.fixStatusBar($api.dom('header'));
 
         $api.text($api.byId("version"),'V'+api.appVersion);

@@ -42,6 +42,14 @@
   <script type="text/javascript">
       apiready = function(){
 
+        api.setFrameAttr({
+         name: 'modify_name'
+        });
+
+        var framenamesArr = $api.getStorage('framenames');
+        framenamesArr.push('modify_name');
+        $api.setStorage('framenames',framenamesArr);
+
           var name = api.pageParam.name;
 
           $api.val($api.byId("input"),name);

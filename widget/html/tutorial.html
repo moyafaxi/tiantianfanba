@@ -45,6 +45,14 @@
   <script type="text/javascript">
       apiready = function(){
 
+        api.setFrameAttr({
+         name: 'tutorial'
+        });
+
+        var framenamesArr = $api.getStorage('framenames');
+        framenamesArr.push('tutorial');
+        $api.setStorage('framenames',framenamesArr);
+
       };
       function goback(){
         api.closeFrame();

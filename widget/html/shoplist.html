@@ -122,9 +122,13 @@
   <script type="text/javascript">
       apiready = function(){
 
+
         api.setFrameAttr({
          name: 'shoplist'
         });
+        var framenamesArr = $api.getStorage('framenames');
+        framenamesArr.push('shoplist');
+        $api.setStorage('framenames',framenamesArr);
 
         $api.fixStatusBar($api.dom('.top'));
 

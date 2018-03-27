@@ -71,38 +71,88 @@
       //智齿客服
       var zhiChiSobotMall = null;
       var zhiChiSobot = null;
+
+
+
+
       apiready = function(){
 
-        api.setFrameAttr({
-         name: 'login'
-      });
+      //   api.setFrameAttr({
+      //    name: 'login'
+      //   });
+      //
+      //   var framenamesArr = $api.getStorage('framenames');
+      //   framenamesArr.push('login');
+      //   $api.setStorage('framenames',framenamesArr);
+      //
+      //
+      //   api.setFrameAttr({
+      //    name: 'login'
+      // });
 
 
       //智齿客服
       zhiChiSobot = api.require('zhiChiSobotMall');
-      function startZhiChiSobot(){
-          var param = {
-              appkey:"108b0ed204874501ae98b8e0fc08a6b8",//必填
-              platformUnionId:"100x",//此id需要付费以后才能有。每个企业一个是必填
-              userId:"00002",
-              nickName:"Your user nickName",
-              phone:"Your user phone",
-              email:"Your user email",
-              customInfo:{"age":"18","uname":"智齿APICloud"},
-              isShowEvaluate:true,
-              isSettingSkillSet:false,
-              skillSetId:"",
-              isShowTansfer:true,
-              backgroundColor:"#f0f0f0",
-              topViewTextColor:"#FFFFFF",
-              isCustomLinkClick:false
-          };
-          zhiChiSobot.startZhiChiSobot(param);
-      }
+      api.ajax({
+          url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=userdowns',
+          method: 'post',
+          data: {
+          }
+      }, function(ret, err) {
+          if (ret) {
+              // api.alert({ msg: JSON.stringify(ret) });
+              if(ret.status==1){
+                function startZhiChiSobot(){
+                    var param = {
+                        appkey:"108b0ed204874501ae98b8e0fc08a6b8",//必填
+                        platformUnionId:"100x",//此id需要付费以后才能有。每个企业一个是必填
+                        userId:ret.content.id,
+                        nickName:ret.content.userNick,
+                        phone:"Your user phone",
+                        email:"Your user email",
+                        customInfo:{"age":"18","uname":"智齿APICloud"},
+                        isShowEvaluate:true,
+                        isSettingSkillSet:false,
+                        skillSetId:"",
+                        isShowTansfer:true,
+                        backgroundColor:"#f0f0f0",
+                        topViewTextColor:"#FFFFFF",
+                        isCustomLinkClick:false
+                    };
+                    zhiChiSobot.startZhiChiSobot(param);
 
+                }
+                $api.addEvt($api.byId("customer-service"), 'click', function(){
+                  startZhiChiSobot()
+                });
+              }else{
+                function startZhiChiSobot(){
+                    var param = {
+                        appkey:"108b0ed204874501ae98b8e0fc08a6b8",//必填
+                        platformUnionId:"100x",//此id需要付费以后才能有。每个企业一个是必填
+                        userId:""+(new Date()).getTime()+Math.random()*10+"",
+                        nickName:"游客",
+                        phone:"Your user phone",
+                        email:"Your user email",
+                        customInfo:{"age":"18","uname":"智齿APICloud"},
+                        isShowEvaluate:true,
+                        isSettingSkillSet:false,
+                        skillSetId:"",
+                        isShowTansfer:true,
+                        backgroundColor:"#f0f0f0",
+                        topViewTextColor:"#FFFFFF",
+                        isCustomLinkClick:false
+                    };
+                    zhiChiSobot.startZhiChiSobot(param);
 
-      $api.addEvt($api.byId("customer-service"), 'click', function(){
-        startZhiChiSobot()
+                }
+                $api.addEvt($api.byId("customer-service"), 'click', function(){
+                  startZhiChiSobot()
+                });
+              }
+          } else {
+              api.alert({ msg: JSON.stringify(err) });
+          }
       });
 
         api.closeFrame({

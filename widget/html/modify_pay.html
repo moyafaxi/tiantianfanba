@@ -72,6 +72,15 @@
   <script type="text/javascript">
       apiready = function(){
 
+
+        api.setFrameAttr({
+         name: 'modify_pay'
+        });
+
+        var framenamesArr = $api.getStorage('framenames');
+        framenamesArr.push('modify_pay');
+        $api.setStorage('framenames',framenamesArr);
+
         $api.fixStatusBar($api.dom('header'));
 
           //填充数据

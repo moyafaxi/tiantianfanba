@@ -34,6 +34,16 @@
   <script type="text/javascript" src="../script/api.js"></script>
   <script type="text/javascript">
       apiready = function(){
+
+        api.setFrameAttr({
+         name: 'operation_guide'
+        });
+
+        var framenamesArr = $api.getStorage('framenames');
+        framenamesArr.push('operation_guide');
+        $api.setStorage('framenames',framenamesArr);
+
+
           $api.fixStatusBar($api.dom("header"));
       };
 
