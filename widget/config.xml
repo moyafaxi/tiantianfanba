@@ -7,7 +7,7 @@
         Developer
     </author>
     <content src="index.html" />
-    <access origin="*" />    <feature name="alibaichuan">     <param name="urlScheme" value="tbopen24809397"/>    </feature><preference name="querySchemes" value="tmall,tbopen" />
+    <access origin="*" />    <feature name="alibaichuan">     <param name="urlScheme" value="tbopen24833870"/>    </feature><preference name="querySchemes" value="tmall,tbopen" />
     <preference name="pageBounce" value="false"/>
 	<preference name="appBackground" value="rgba(0,0,0,0.0)"/>
 	<preference name="windowBackground" value="rgba(0,0,0,0.0)"/>
@@ -19,7 +19,7 @@
 	<preference name="autoUpdate" value="true" />
 	<preference name="smartUpdate" value="false" />
 	<preference name="debug" value="true"/>
-	<preference name="statusBarAppearance" value="true"/>  <preference name="urlScheme" value="tbopen24809397"/ >
+	<preference name="statusBarAppearance" value="true"/>  <preference name="urlScheme" value="tbopen24833870"/ >
 	<permission name="readPhoneState" />
 	<permission name="camera" />
 	<permission name="record" />
