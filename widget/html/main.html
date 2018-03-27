@@ -179,12 +179,12 @@
 
 
 
-
+       #go-top{position: fixed;right: 10px;bottom: 10%;z-index: 999;width: 40px;height: 40px;}
     </style>
 </head>
 
 <body class="wrap">
-
+     <img id="go-top" src="../image/go-top.png" alt="">
     <section class="flex-1">
     <div id="header">
       <img id="search-pic" class="search-pic" src="../image/search-bar.png" alt="" >
@@ -310,6 +310,12 @@
       });
 
 
+      //回到顶部
+      $api.addEvt($api.byId("go-top"), 'click', function(){
+        api.pageUp({top:true},function(ret, err) {});
+      });
+
+
       //商品分类
       var tabItems = $api.byId("kind").children;
       var typeArr = ['女装','男装','美食','内衣','母婴','化妆品','居家','鞋包配饰','文体车品','数码家电']
@@ -419,7 +425,7 @@
             method: 'post',
             data:{
               values:{
-                goodspage:1,
+                goodspage:num,
                 goodstype:0
               }
             }
@@ -487,20 +493,21 @@
         };
         alibaichuan.showDetailByURL(param, function(ret, err) {
             if (ret) {
+              // alert(ret);
               api.ajax({
                 url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=orderupload',
                 method: 'post',
                 data: {
                     values: {
-                        order: ret.ordercode,
+                        order:  ret.ordercode,
                         uptype:1
                     }
                 }
-              }, function(ret, err) {
-                if (ret) {
-                    api.alert({ msg: JSON.stringify(ret) });
+              }, function(retu, err) {
+                if (retu) {
+                    //dosomething
                 } else {
-                    api.alert({ msg: JSON.stringify(err) });
+                    //dosomething
                 }
               });
                 // alert(JSON.stringify(ret));

@@ -122,6 +122,10 @@
   <script type="text/javascript">
       apiready = function(){
 
+        api.setFrameAttr({
+         name: 'shoplist'
+        });
+
         $api.fixStatusBar($api.dom('.top'));
 
         $api.css($api.dom('.list-wrap'),"padding-top:"+$api.offset($api.dom('.top')).h+"px");
@@ -415,7 +419,21 @@
           };
           alibaichuan.showDetailByURL(param, function(ret, err) {
               if (ret) {
-                  alert(JSON.stringify(ret));
+                api.ajax({
+                  url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=orderupload',
+                  method: 'post',
+                  data: {
+                      values: {
+                          order: ret.ordercode,
+                          uptype:1
+                      }
+                  }
+                }, function(retu, err) {
+                  if (retu) {
+                    //dosomething
+                  } else {
+                  }
+                });
               } else {
                   alert(JSON.stringify(err));
               }

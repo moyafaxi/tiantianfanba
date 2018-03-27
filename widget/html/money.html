@@ -106,7 +106,7 @@
              <div class="income-detail">
                <p class="p1">年化收益 (%)</p>
                <p class="p2" id="num1">00.00</p>
-               <p class="p3">2018.03.13</p>
+               <p class="p3" id="nowday">2018.03.13</p>
              </div>
              <div class="opt-btn clearfix"><span onclick="openRateofYear()" tapmode class="l">年化收益率</span><span onclick="openWithDraw()" tapmode  class="r">余额提现</span></div>
              <img class="mask" src="../image/mask.png" alt="">
@@ -156,6 +156,11 @@
       var zhiChiSobotMall = null;
       var zhiChiSobot = null;
       apiready = function(){
+
+      var today=new Date();
+
+      var s=today.getFullYear()+"."+today.getMonth()+"."+today.getDate();
+      $api.text($api.byId("nowday"),s);
 
         //设置frame属性
         api.setFrameAttr({

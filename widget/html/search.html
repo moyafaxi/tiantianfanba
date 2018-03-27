@@ -129,6 +129,10 @@
       var zhiChiSobot = null;
       apiready = function(){
 
+        api.setFrameAttr({
+         name: 'shoplist'
+        });
+
 
 
         //智齿客服
@@ -282,6 +286,9 @@
       function loadSearchHistory(){
         var historyArr = $api.getStorage('history');
         var historyItems = '';
+        if (!historyArr) {
+          return false
+        }
         for (var i = 0; i < historyArr.length; i++) {
           historyItems += "<span class='item'>"+historyArr[i]+"</span>";
         }
