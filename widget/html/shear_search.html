@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <title>title</title>
+      <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+      <style>
+          html,
+          body{
+            background: rgba(0,0,0,0);
+          }
+          .search-area{
+            position: relative;
+            width: 90%;
+            height: auto;
+            background: rgba(0,0,0,.6);
+            margin: 50% auto 0;
+            border-radius: 10px;
+            padding: 10px 0;
+          }
+          .search-area .mask{width: 90%;position: relative;overflow: hidden;margin: 0 auto;}
+          .search-area img{position: absolute;right: 3px;top: 3px;width: 12px;}
+          .search-area .p1{height: 40px;line-height: 40px;color: #eee;width:720px;color: #fcb909;font-size: 18px;}
+          .search-area .p2{height: 30px;line-height: 30px;color: #eee}
+          .search-area .p2 .span1{float: left;font-size: 14px;}
+          .search-area .p2 .span2{
+            float: right;
+            font-size: 14px;
+            background: #fe6307;
+            color: #fff;
+            border-radius: 10px;
+            width: 30%;
+            text-align: center;
+          }
+      </style>
+  </head>
+  <body>
+    <div class="search-area">
+      <img onclick="closeThis()" tapmode src="../image/close.png" alt="">
+      <div class="mask">
+        <p class="p1">检测到复制内容检测到复制内容检测到复制内容检测到复制内容</p>
+        <p class="p2 clearfix"><span class="span1">检测到复制内容</span><span tapmode class="span2">立即搜索</span></p>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript" src="../script/api.js"></script>
+  <script type="text/javascript">
+      apiready = function(){
+        $api.text($api.dom(".p1"),api.pageParam.keyword);
+
+        $api.addEvt($api.dom(".span2"), 'click', function(){
+          api.openFrame({
+              name: 'shoplist',
+              url: './shoplist.html',
+              rect: {
+                  x: 0,
+                  y: 0,
+                  w: 'auto',
+                  h: 'auto'
+              },
+              pageParam: {
+                  keyword: api.pageParam.keyword
+              }
+            });
+        });
+
+      };
+      function closeThis(){
+        api.closeFrame();
+      }
+  </script>
+  </html>

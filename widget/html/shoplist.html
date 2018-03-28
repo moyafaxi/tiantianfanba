@@ -29,6 +29,7 @@
             border-radius: 15px;
             color: #666666;
             padding-left: 20px;
+            padding-right: 20px;
           }
 
           .list-wrap{margin-top: 10px;}
@@ -78,10 +79,10 @@
   <body>
     <img id="go-top" src="../image/go-top.png" alt="">
     <div class="top">
-      <header id="header">
-         <img onclick="goback()" class="img1" src="../image/arrow-left.png" alt="">
+      <header id="header" onclick="goToSearch()" >
+         <img class="img1" src="../image/arrow-left.png" alt="">
          <!-- <img class="img2" src="../image/search-bar.png" alt="" > -->
-         <input onclick="goToSearch()" readonly class="img2" type="text">
+         <input  readonly class="img2" type="text">
       </header>
       <div class="aui-tab" id="tab" style="border-bottom:1px solid #ddd;">
           <div class="aui-tab-item aui-active">综合</div>
@@ -96,7 +97,7 @@
   </body>
   <script  type="text/template"  id="tpl" >
     {{~ it:data }}
-            <div class="item clearfix">
+            <div  itemid="{{=data.itemid}}"  class="item clearfix" onclick="openCouponUrl(this)" tapmode>
                <img class="left" src="{{=data.itempic}}" alt="">
                <div class="right">
                  <h3>{{=data.itemtitle.substring(0,26)}}...</h3>
@@ -108,7 +109,7 @@
                    </div>
                    <div class="r">
                      <span class="span1">存入比例：{{=data.tkrates}}%</span>
-                     <span couponurl="{{=data.couponurl}}" onclick="openCouponUrl(this)" class="span2">领券购买</span>
+                     <span class="span2">领券购买</span>
                    </div>
                  </div>
                </div>
@@ -125,6 +126,10 @@
 
         api.setFrameAttr({
          name: 'shoplist'
+        });
+
+        api.closeFrame({
+            name: 'search'
         });
         var framenamesArr = $api.getStorage('framenames');
         framenamesArr.push('shoplist');
@@ -307,7 +312,7 @@
               if (ret) {
                   // api.alert({ msg: JSON.stringify(ret) });
                   if(ret.status==1){
-                    if(isEmpty(ret.content)){
+                    if(isEmpty(ret.content)&&num==1){
                       $api.byId("tpl-wrap").innerHTML="<div style='background:#fff;padding:10px 0 0 10px;'>暂无数据</div>";
                       return false;
                     }
@@ -430,35 +435,87 @@
 
       //打开优惠券地址
       function openCouponUrl(obj){
-          var tarUrl = $api.attr(obj,"couponurl");
-          var param = {
-              url: tarUrl,
-              mmpid: "mm_116105171_0_0",
-              nativeview: false
-          };
-          alibaichuan.showDetailByURL(param, function(ret, err) {
-              if (ret) {
-                api.ajax({
-                  url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=orderupload',
-                  method: 'post',
-                  data: {
-                      values: {
-                          order: ret.ordercode,
-                          uptype:1
+
+          api.ajax({
+            url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=userdowns',
+            method: 'post',
+            data: {
+            }
+          }, function(ret, err) {
+            if (ret) {
+                if(ret.status==1){
+                  var itemid = $api.attr(obj,"itemid");
+                  api.ajax({
+                      url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=aurl&m=tiger_newhu&lm=2&pid=mm_116105171_43816015_361822318',
+                      method: 'post',
+                      data: {
+                          values: {
+                              itemid: itemid
+                          }
                       }
-                  }
-                }, function(retu, err) {
-                  if (retu) {
-                    //dosomething
-                  } else {
-                  }
-                });
-              } else {
-                  alert(JSON.stringify(err));
-              }
+                  }, function(ret, err) {
+                      if (ret) {
+                          // api.alert({ msg: JSON.stringify(ret) });
+                          if(ret.status==1){
+                            var tarUrl = ret.content;
+                            var param = {
+                                url: tarUrl,
+                                mmpid: "mm_116105171_0_0",
+                                nativeview: false
+                            };
+                            alibaichuan.showDetailByURL(param, function(ret, err) {
+                                if (ret) {
+                                  // alert(ret);
+                                  api.ajax({
+                                    url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=orderupload',
+                                    method: 'post',
+                                    data: {
+                                        values: {
+                                            order:  ret.ordercode,
+                                            uptype:1
+                                        }
+                                    }
+                                  }, function(retu, err) {
+                                    if (retu) {
+                                        //dosomething
+                                    } else {
+                                        //dosomething
+                                    }
+                                  });
+                                    // alert(JSON.stringify(ret));
+                                } else {
+                                    alert(JSON.stringify(err));
+                                }
+                            });
+                          }else{
+                            alert(ret.content);
+                          }
+                      } else {
+                          api.alert({ msg: JSON.stringify(err) });
+                      }
+                  });
+
+
+                }else{
+
+                  alert("请先登陆账号");
+                  api.openFrame({
+                      name: 'login',
+                      url: './login.html',
+                      rect: {
+                          x: 0,
+                          y: 0,
+                          w: 'auto',
+                          h: 'auto'
+                      }
+                  });
+                }
+            } else {
+                api.alert({ msg: JSON.stringify(err) });
+            }
           });
 
-      }
+  }
 
       //打开
       function goToSearch(){

@@ -23,7 +23,7 @@
 
           .search-area{width: 100%;height: auto;position: relative;}
           .search-area .bg{width: 100%;}
-          .search-area .search-bar{position: absolute;width: 90%;top: 64%;margin-left: 5%;height: 40px;}
+          .search-area .search-bar{position: absolute;width: 90%;top: 59%;margin-left: 5%;height: 40px;}
           .search-area .search-bar input[type='text']{
             background: #fff;
             float: left;
@@ -32,6 +32,7 @@
             border-bottom-left-radius: 20px;
             height: 100%;
             padding-left: 15px;
+            padding-right: 15px;
           }
           .search-area .search-bar span{
             background: #ffc207;
@@ -131,6 +132,10 @@
 
         api.setFrameAttr({
          name: 'search'
+        });
+
+        api.closeFrame({
+            name: 'shoplist'
         });
 
 

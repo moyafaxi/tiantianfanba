@@ -66,11 +66,11 @@
            }
 
            .slide_1 {
-               height: 200px;
+               /*height: 200px;*/
                width: 100%;
            }
            .slide_1 img{
-               height: 100%;
+               height:auto;
                width: 100%;
            }
 
@@ -271,7 +271,7 @@
 </body>
 <script  type="text/template"  id="tpl" >
   {{~ it:data }}
-          <div class="item clearfix">
+          <div itemid="{{=data.itemid}}" class="item clearfix" onclick="openCouponUrl(this)" tapmode>
              <img class="left" src="{{=data.itempic}}" alt="">
              <div class="right">
                <h3>{{=data.itemtitle.substring(0,26)}}...</h3>
@@ -283,7 +283,7 @@
                  </div>
                  <div class="r">
                    <span class="span1">存入比例：{{=data.tkrates}}%</span>
-                   <span couponurl="{{=data.couponurl}}" onclick="openCouponUrl(this)" class="span2">领券购买</span>
+                   <span class="span2">领券购买</span>
                  </div>
                </div>
              </div>
@@ -299,15 +299,19 @@
     apiready = function() {
       $api.fixStatusBar($api.byId("header"));
 
+      // api.openFrame({
+      //     name: 'shear_search',
+      //     url: './shear_search.html',
+      //     rect: {
+      //         x: 0,
+      //         y: 0,
+      //         w: 'auto',
+      //         h: 'auto'
+      //     }
+      //   });
 
-      var clipBoard = api.require('clipBoard');
-      clipBoard.setListener(function(ret, err) {
-          if (ret) {
-              alert(JSON.stringify(ret));
-          } else {
-              alert(JSON.stringify(err));
-          }
-      });
+
+
 
 
       //回到顶部
@@ -445,7 +449,7 @@
         });
       }
 
-      var pageNum = 0;
+      var pageNum = 1;
       api.addEventListener({
          name:'scrolltobottom',
          extra:{
@@ -480,17 +484,36 @@
 
 
 
+          var clipBoard = api.require('clipBoard');
+          var footerHeight = api.getPrefs({sync: true,key: 'footerHeight'});
+            clipBoard.setListener(function(ret, err) {
+                if (ret) {
+                  api.openFrame({
+                      name: 'shear_search',
+                      url: './shear_search.html',
+                      rect: {
+                          x: 0,
+                          y: 0,
+                          w: api.winWidth,
+                          h: api.winHeight - footerHeight
+                      },
+                      pageParam: {
+                          keyword: ret.value
+                      }
+                    });
+                } else {
+                    alert(JSON.stringify(err));
+                }
+            });
+
+
+
     };
 
 
     //打开优惠券地址
     function openCouponUrl(obj){
-        var tarUrl = $api.attr(obj,"couponurl");
-        var param = {
-            url: tarUrl,
-            mmpid: "mm_116105171_0_0",
-            nativeview: false
-        };
+
         api.ajax({
           url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=userdowns',
           method: 'post',
@@ -499,30 +522,58 @@
         }, function(ret, err) {
           if (ret) {
               if(ret.status==1){
-                alibaichuan.showDetailByURL(param, function(ret, err) {
+                var itemid = $api.attr(obj,"itemid");
+                api.ajax({
+                    url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=aurl&m=tiger_newhu&lm=2&pid=mm_116105171_43816015_361822318',
+                    method: 'post',
+                    data: {
+                        values: {
+                            itemid: itemid
+                        }
+                    }
+                }, function(ret, err) {
                     if (ret) {
-                      // alert(ret);
-                      api.ajax({
-                        url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=orderupload',
-                        method: 'post',
-                        data: {
-                            values: {
-                                order:  ret.ordercode,
-                                uptype:1
-                            }
+                        // api.alert({ msg: JSON.stringify(ret) });
+                        if(ret.status==1){
+                          var tarUrl = ret.content;
+                          var param = {
+                              url: tarUrl,
+                              mmpid: "mm_116105171_0_0",
+                              nativeview: false
+                          };
+                          alibaichuan.showDetailByURL(param, function(ret, err) {
+                              if (ret) {
+                                // alert(ret);
+                                api.ajax({
+                                  url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=orderupload',
+                                  method: 'post',
+                                  data: {
+                                      values: {
+                                          order:  ret.ordercode,
+                                          uptype:1
+                                      }
+                                  }
+                                }, function(retu, err) {
+                                  if (retu) {
+                                      //dosomething
+                                  } else {
+                                      //dosomething
+                                  }
+                                });
+                                  // alert(JSON.stringify(ret));
+                              } else {
+                                  alert(JSON.stringify(err));
+                              }
+                          });
+                        }else{
+                          alert(ret.content);
                         }
-                      }, function(retu, err) {
-                        if (retu) {
-                            //dosomething
-                        } else {
-                            //dosomething
-                        }
-                      });
-                        // alert(JSON.stringify(ret));
                     } else {
-                        alert(JSON.stringify(err));
+                        api.alert({ msg: JSON.stringify(err) });
                     }
                 });
+
+
               }else{
 
                 alert("请先登陆账号");
@@ -542,11 +593,7 @@
           }
         });
 
-
-
-
-
-    }
+}
 
 
 

@@ -13,6 +13,7 @@
     </style>
 </head>
 <body>
+
   <footer class="aui-bar aui-bar-tab" id="footer" style="border-top:1px solid #ddd;">
       <div class="aui-bar-tab-item aui-active" tapmode>
           <i class="aui-iconfont aui-icon-home"></i>
@@ -20,7 +21,7 @@
       </div>
       <div class="aui-bar-tab-item" tapmode>
           <i class="aui-iconfont aui-icon-search"></i>
-          <div class="aui-bar-tab-label">搜索</div>
+          <div class="aui-bar-tab-label">搜券返</div>
       </div>
       <div class="aui-bar-tab-item" tapmode>
           <!-- <div class="aui-badge">99</div> -->
@@ -86,9 +87,14 @@
             });
     }
 
+
+
     apiready = function () {
 
       exitApp();
+
+
+
 
 
 
@@ -116,7 +122,7 @@
                 h: api.winHeight - $api.offset($api.byId('footer')).h
             }
           });
-          funIniGroup();
+          funIniGroup(2);
       }else{
        api.openFrame({
            name: 'main',
@@ -128,11 +134,11 @@
                h: api.winHeight - $api.offset($api.byId('footer')).h
            }
          });
-        funIniGroup();
+        funIniGroup(1);
       }
     }
     //初始化frame组
-    function funIniGroup(){
+    function funIniGroup(idx){
         framesName = ['main','search','order','money','person_center'];
         // frames = [];
         // for (var i = 0,len = framesName.length;i<len; i++) {
@@ -147,7 +153,7 @@
         //底部tab栏
          var tab = new auiTab({
              element:document.getElementById("footer"),
-             index:1,
+             index:idx,
              repeatClick:false
          },function(ret){
            api.openFrame({
