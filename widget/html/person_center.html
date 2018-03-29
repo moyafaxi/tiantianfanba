@@ -76,7 +76,7 @@
           <span onclick="openWithDraw()" tapmode>提现</span>
         </div>
       </div>
-      <div class="enjoy-share">
+      <div  onclick="openInvitation()" tapmode class="enjoy-share">
          <img src="../image/enjoy-share.png" alt="">
       </div>
       <div class="other-opt">
@@ -246,6 +246,21 @@
 
 
       };
+
+
+      //打开邀请好友有利页面
+      function openInvitation(){
+        api.openFrame({
+          name: 'invitation',
+          url: './invitation.html',
+          rect: {
+              x: 0,
+              y: 0,
+              w: 'auto',
+              h: 'auto'
+          }
+      });
+      }
 
       //打开用户信息页面
       function openUserData(){

@@ -17,7 +17,6 @@
           .aui-bar-nav.aui-bar-light .aui-iconfont {
             color: #fff !important;
           }
-
           .cont-wrap{background: #fff;}
           .cont-wrap .cont{width: 92%;margin: 0 auto;}
           .cont p{text-indent: 2em;padding-top: 5px;}
@@ -28,15 +27,21 @@
       <a class="aui-pull-left aui-btn">
           <span onclick="goback()" class="aui-iconfont aui-icon-left"></span>
       </a>
-      <div class="aui-title">操作指南</div>
+      <div class="aui-title">邀请好友有利</div>
     </header>
     <div class="cont-wrap">
        <div class="cont">
           <p>
-            1.如何搜索优惠券吗？
+            1.如何邀请好友？
           </p>
           <p>
-            打开手机淘宝,打开您想购买的礼物,复制宝贝标题,打开天天返吧APP即可进行搜索
+            打开天天返吧App,进入个人中心页面分享转存款栏目，分享海报给您的好友或分享至朋友圈
+          </p>
+          <p>
+            2.怎样才能获得收益？
+          </p>
+          <p>
+            好友通过扫描你分享海报的二维码，下载天天返吧品牌App，并且在24小时后登陆天天返吧，领取新人200元红包，计算成功邀请的好友，在天天饭吧每天消费存入金额10%
           </p>
         </div>
     </div>
@@ -46,15 +51,15 @@
       apiready = function(){
 
         api.setFrameAttr({
-         name: 'operation_guide'
+         name: 'common_problems'
         });
 
         var framenamesArr = $api.getStorage('framenames');
-        framenamesArr.push('operation_guide');
+        framenamesArr.push('common_problems');
         $api.setStorage('framenames',framenamesArr);
 
+        $api.fixStatusBar($api.dom('header'));
 
-          $api.fixStatusBar($api.dom("header"));
       };
 
 
