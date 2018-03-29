@@ -174,17 +174,6 @@
 
 
         //下拉刷新
-        api.setRefreshHeaderInfo({
-            loadingImg: 'widget://image/refresh.png',
-            bgColor: '#ccc',
-            textColor: '#fff',
-            textDown: '下拉刷新...',
-            textUp: '松开刷新...'
-        }, function(ret, err) {
-            //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
-          getData();
-
-        });
 
         getData();
         function getData(){
@@ -218,8 +207,6 @@
                        } else {
                          console.error(demo.error);
                        }
-
-                       api.refreshHeaderLoadDone();
                    }else if (ret.status==2) {
                      alert("请先登陆账号");
                      //先关闭首页
