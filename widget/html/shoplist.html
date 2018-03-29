@@ -36,7 +36,7 @@
           .list-wrap .item{background: #FFF;height: 142px;border-bottom: 3px solid #f5f5f5;}
           .list-wrap .item .left{float: left;width: 20%;margin-top: 25px;margin-left: 10px;}
           .list-wrap .item .right{float: right;width: 75%;}
-          .list-wrap .item .right h3{margin-top: 10px;font-size: 14px;}
+          .list-wrap .item .right h3{margin-top: 10px;font-size: 16px;font-weight: bold;}
           .list-wrap .item .right .wrap .l{float: left;width: 60%;}
           .list-wrap .item .right .wrap .l .p1 {font-size:10px;color: #939393;margin-top: 6px;}
           .list-wrap .item .right .wrap .l .p1 .p-l{float: left;margin-top: 2px;}
@@ -98,12 +98,12 @@
   <script  type="text/template"  id="tpl" >
     {{~ it:data }}
             <div  itemid="{{=data.itemid}}"  class="item clearfix" onclick="openCouponUrl(this)" tapmode>
-               <img class="left" src="{{=data.itempic}}" alt="">
+               <img class="left" onerror="this.src='../image/shoplist-tp.png'" src="{{=data.itempic}}" alt="">
                <div class="right">
                  <h3>{{=data.itemtitle.substring(0,26)}}...</h3>
                  <div class="wrap clearfix">
                    <div class="l">
-                      <P class="p1 clearfix"><span class="p-l">天猫价￥{{=data.itemprice}}</span><span class="p-r">立减<span>{{=data.couponmoney}}</span>元</span></P>
+                      <P class="p1 clearfix"><span class="p-l">{{=data.shoptype=="B" ? "天猫价" : "淘宝价"}}￥{{=data.itemprice}}</span><span class="p-r">立减<span>{{=data.couponmoney}}</span>元</span></P>
                       <P class="p2">剩余 {{=data.couponsurplus}}</P>
                       <P class="p3">券后价<span>￥{{=((data.itemprice*100-data.couponmoney*100)/100).toFixed(2)}}</span></P>
                    </div>
