@@ -271,14 +271,14 @@
 </body>
 <script  type="text/template"  id="tpl" >
   {{~ it:data }}
-          <div itemid="{{=data.itemid}}" class="item clearfix" onclick="openCouponUrl(this)" tapmode>
+          <div itemid="{{=data.itemid}}" pid="{{=data.pid}}" lm="{{=data.lm}}" class="item clearfix" onclick="openCouponUrl(this)" tapmode>
              <img class="left" onerror="this.src='../image/shoplist-tp.png'" src="{{=data.itempic}}" alt="">
              <div class="right">
                <h3>{{=data.itemtitle.substring(0,26)}}...</h3>
                <div class="wrap clearfix">
                  <div class="l">
                     <P class="p1 clearfix"><span class="p-l">{{=data.shoptype=="B" ? "天猫价" : "淘宝价"}}￥{{=data.itemprice}}</span><span class="p-r">立减<span>{{=data.couponmoney}}</span>元</span></P>
-                    <P class="p2">剩余 {{=data.couponsurplus}}</P>
+                    <P class="p2">销量 {{=data.itemsale }}</P>
                     <P class="p3">券后价<span>￥{{=((data.itemprice*100-data.couponmoney*100)/100).toFixed(2)}}</span></P>
                  </div>
                  <div class="r">
@@ -523,12 +523,16 @@
           if (ret) {
               if(ret.status==1){
                 var itemid = $api.attr(obj,"itemid");
+                var pid = $api.attr(obj,"pid");
+                var lm = $api.attr(obj,"lm");
                 api.ajax({
-                    url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=aurl&m=tiger_newhu&lm=2&pid=mm_116105171_43816015_361822318',
+                    url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=aurl&m=tiger_newhu',
                     method: 'post',
                     data: {
                         values: {
-                            itemid: itemid
+                            itemid: itemid,
+                            pid:pid,
+                            lm:lm
                         }
                     }
                 }, function(ret, err) {

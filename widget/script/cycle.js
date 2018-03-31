@@ -8,6 +8,8 @@
 					this.bgColor = options.bgColor;
 					this.barColor = options.barColor;
 					this.textColor = options.textColor;
+					this.startAngle = options.startAngle ? options.startAngle : 0 - Math.PI/2;
+					this.endAngle = options.endAngle ? options.endAngle : 0;
 				};
 				Cycle.prototype = {
 					contructor: Cycle,
@@ -39,7 +41,7 @@
 						context.beginPath();
 						context.lineWidth = this.border;
 						context.strokeStyle = this.barColor;
-						context.arc(this.width / 2, this.height / 2, (this.width / 2 - this.border / 2), 0 - Math.PI / 2, deg - Math.PI / 2);
+						context.arc(this.width / 2, this.height / 2, (this.width / 2 - this.border / 2), this.startAngle, this.endAngle ? this.endAngle : deg - Math.PI / 2);
 						context.stroke();
 						context.beginPath();
 						context.fillStyle = this.textColor;
