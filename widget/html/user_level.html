@@ -118,14 +118,14 @@
     <div class="level-detail">
       <div class="detail-wrap">
         <div class="now-level">
-           <p class="p1">当前推广等级<img src="../image/primary.png" alt=""></p>
+           <p class="p1">当前推广等级<img id="level-pic" src="../image/chuji.png" alt=""></p>
            <p class="p2">升级推广员条件</p>
            <div class="target-wrap">
              <div class="target clearfix">
                <div class="cycle" id="cycle1"></div>
                <div class="right">
-                 <p>最近60天邀请人数</p>
-                 <p>0人 (目标总人数10人)</p>
+                 <p>邀请人数</p>
+                 <p><span id="haoyou">0</span>人 (目标总人数<span id="mbhaoyou"></span>人)</p>
                </div>
              </div>
            </div>
@@ -133,16 +133,26 @@
              <div class="target clearfix">
                <div class="cycle" id="cycle2"></div>
                <div class="right">
-                 <p>最近60天邀请人数</p>
-                 <p>0人 (目标总人数10人)</p>
+                 <p>最近30天邀请总下单</p>
+                 <p><span id="dan">0</span>单 (目标总单数<span id="mbdan"></span>单)</p>
+               </div>
+             </div>
+           </div>
+           <div class="target-wrap">
+             <div class="target clearfix">
+               <div class="cycle" id="cycle3"></div>
+               <div class="right">
+                 <p>最近30天邀请人总下单金额<</p>
+                 <p><span id="money">0</span>元 (目标总金额<span id="mbmoney"></span>元)</p>
                </div>
              </div>
            </div>
         </div>
         <div class="level-instructions">
           <h3>邀请奖励等级说明</h3>
-          <div class="senior">
-            <p class="title"><img src="../image/senior.png" alt="">邀请奖励提成比例</p>
+          <div class="level-instructions-wrap"></div>
+          <!-- <div class="senior">
+            <p class="title"><img src="../image/chuji.png" alt="">邀请奖励提成比例</p>
             <ul class="clearfix">
               <li>
                 <div class="circle-wrap">
@@ -169,98 +179,153 @@
             <div class="exam-wrap">
               例如：您的《直接邀请》好友,消费了100块钱，您便能获得储存金<span>100*20%=20</span>元奖励
             </div>
-          </div>
-          <div class="senior">
-            <p class="title"><img src="../image/middle.png" alt="">邀请奖励提成比例</p>
-            <ul class="clearfix">
-              <li>
-                <div class="circle-wrap">
-                  <p>20%</p>
-                  <p>存入</p>
-                </div>
-                <p>直接邀请</p>
-              </li>
-              <li>
-                <div class="circle-wrap">
-                  <p>20%</p>
-                  <p>存入</p>
-                </div>
-                <p>二级会员</p>
-              </li>
-              <li style="margin-right:0;">
-                <div class="circle-wrap">
-                  <p>20%</p>
-                  <p>存入</p>
-                </div>
-                <p>三级会员</p>
-              </li>
-            </ul>
-            <div class="exam-wrap">
-              例如：您的《直接邀请》好友,消费了100块钱，您便能获得储存金<span>100*20%=20</span>元奖励
-            </div>
-          </div>
-          <div class="senior">
-            <p class="title"><img src="../image/primary.png" alt="">邀请奖励提成比例</p>
-            <ul class="clearfix">
-              <li>
-                <div class="circle-wrap">
-                  <p>20%</p>
-                  <p>存入</p>
-                </div>
-                <p>直接邀请</p>
-              </li>
-              <li>
-                <div class="circle-wrap">
-                  <p>20%</p>
-                  <p>存入</p>
-                </div>
-                <p>二级会员</p>
-              </li>
-              <li style="margin-right:0;">
-                <div class="circle-wrap">
-                  <p>20%</p>
-                  <p>存入</p>
-                </div>
-                <p>三级会员</p>
-              </li>
-            </ul>
-            <div class="exam-wrap">
-              例如：您的《直接邀请》好友,消费了100块钱，您便能获得储存金<span>100*20%=20</span>元奖励
-            </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
   </body>
+  <script  type="text/template"  id="tpl" >
+    {{~ it:data }}
+    <div class="senior">
+      <p class="title">
+        {{? !data.id}}
+        {{?? data.id == '1'}}
+        <img src="../image/diji.png" alt="">
+        {{?? data.id == '2'}}
+        <img src="../image/chuji.png" alt="">
+        {{?? data.id == '3'}}
+        <img src="../image/zhongji.png" alt="">
+        {{?? data.id == '4'}}
+        <img src="../image/gaoji.png" alt="">
+        {{?? data.id == '5'}}
+        <img src="../image/teji.png" alt="">
+        {{?? data.id == '6'}}
+        <img src="../image/hehuoren.png" alt="">
+        {{?}}
+        邀请奖励提成比例</p>
+      <ul class="clearfix">
+        <li>
+          <div class="circle-wrap">
+            <p>{{=data.fenxiao1}}%</p>
+            <p>存入</p>
+          </div>
+          <p>直接邀请</p>
+        </li>
+        <li>
+          <div class="circle-wrap">
+            <p>{{=data.fenxiao2}}%</p>
+            <p>存入</p>
+          </div>
+          <p>二级会员</p>
+        </li>
+        <li style="margin-right:0;">
+          <div class="circle-wrap">
+            <p>{{=data.fenxiao3}}%</p>
+            <p>存入</p>
+          </div>
+          <p>三级会员</p>
+        </li>
+      </ul>
+      <div class="exam-wrap">
+        例如：您的《直接邀请》好友,消费了100块钱，您便能获得储存金<span>100*{{=data.fenxiao1}}={{=data.fenxiao1*1}}</span>元奖励
+      </div>
+    </div>
+  {{~}}
+  </script>
   <script type="text/javascript" src="../script/api.js"></script>
   <script type="text/javascript" src="../script/cycle.js"></script>
+  <script type="text/javascript" src="../script/doT.min.js" ></script>
   <script type="text/javascript">
       apiready = function(){
         $api.fixStatusBar($api.dom('header'));
+        api.ajax({
+            url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=shengji',
+            method: 'post',
+            data: {
+            }
+        }, function(ret, err) {
+            if (ret) {
+                api.alert({ msg: JSON.stringify(ret) });
+                if(ret.status==1){
+                  var tpl= doT.template( $api.byId("tpl").innerHTML );
+                  $api.dom(".level-instructions-wrap").innerHTML=tpl(ret.content.levels);
+
+                   switch (ret.content.user.level) {
+                     case '1':
+                       $api.attr($api.dom("#level-pic"),"src","../image/diji.png");
+                       break;
+                     case '2':
+                       $api.attr($api.dom("#level-pic"),"src","../image/chuji.png");
+                       break;
+                     case '3':
+                       $api.attr($api.dom("#level-pic"),"src","../image/zhongji.png");
+                       break;
+                     case '4':
+                       $api.attr($api.dom("#level-pic"),"src","../image/gaoji.png");
+                       break;
+                     case '5':
+                       $api.attr($api.dom("#level-pic"),"src","../image/teji.png");
+                       break;
+                     case '6':
+                       $api.attr($api.dom("#level-pic"),"src","../image/hehuoren.png");
+                       break;
+                     default:
+
+                   }
+                   $api.text($api.dom("#haoyou"), ret.content.user.haoyou);
+                   $api.text($api.dom("#mbhaoyou"), ret.content.user.mbhaoyou);
+                   $api.text($api.dom("#money"), ret.content.user.money);
+                   $api.text($api.dom("#mbmoney"), ret.content.user.mbmoney);
+                   $api.text($api.dom("#dan"), ret.content.user.dan);
+                   $api.text($api.dom("#mbdan"), ret.content.user.mbdan);
+
+                   var opts1 = {
+                      id: "cycle1",
+                      width: "60",
+                      height: "60",
+                      percent: ret.content.user.haoyou<=ret.content.user.mbhaoyou ? ret.content.user.haoyou/ret.content.user.mbhaoyou : 100,
+                      border: "3",
+                      bgColor: "#e5e5e5",
+                      barColor: "#fd6308",
+                      textColor: "#fd6308"
+                    };
+                  new Cycle(opts1).init();
+
+                  var opts2 = {
+                     id: "cycle2",
+                     width: "60",
+                     height: "60",
+                     percent: ret.content.user.danu<=ret.content.user.mbdan ? ret.content.user.danu/ret.content.user.mbdan : 100,
+                     border: "3",
+                     bgColor: "#e5e5e5",
+                     barColor: "#fd6308",
+                     textColor: "#fd6308"
+                   };
+                 new Cycle(opts2).init();
+
+                 var opts3 = {
+                    id: "cycle3",
+                    width: "60",
+                    height: "60",
+                    percent: ret.content.user.money<=ret.content.user.mbmoney ? ret.content.user.money/ret.content.user.mbmoney : 100,
+                    border: "3",
+                    bgColor: "#e5e5e5",
+                    barColor: "#fd6308",
+                    textColor: "#fd6308"
+                  };
+                new Cycle(opts3).init();
 
 
-        var opts1 = {
-           id: "cycle1",
-           width: "60",
-           height: "60",
-           percent: "20",
-           border: "3",
-           bgColor: "#e5e5e5",
-           barColor: "#fd6308",
-           textColor: "#fd6308"
-         };
-       new Cycle(opts1).init();
-       var opts2 = {
-          id: "cycle2",
-          width: "60",
-          height: "60",
-          percent: "20",
-          border: "3",
-          bgColor: "#e5e5e5",
-          barColor: "#fd6308",
-          textColor: "#fd6308"
-        };
-      new Cycle(opts2).init();
+
+
+
+                }
+            } else {
+                api.alert({ msg: JSON.stringify(err) });
+            }
+        });
+
+
       };
 
 

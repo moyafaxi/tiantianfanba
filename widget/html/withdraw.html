@@ -53,7 +53,7 @@
                       支付宝:
                   </div>
                   <div class="aui-list-item-input">
-                      <input id="pay" type="text" placeholder=""><span>更换</span>
+                      <input id="pay" type="text" placeholder=""><span onclick="openModifyPay()">更换</span>
                   </div>
               </div>
           </li>
@@ -63,7 +63,7 @@
                       手机号：
                   </div>
                   <div class="aui-list-item-input">
-                      <input id="mobile" type="text" placeholder=""><span>更换</span>
+                      <input id="mobile" type="text" placeholder=""><span onclick="openModifyTel()">更换</span>
                   </div>
               </div>
           </li>
@@ -79,7 +79,7 @@
           </li>
 
         </ul>
-        <div class="aui-margin-t-10 aui-margin-l-15 aui-margin-r-15 can-wdraw">可提现金额：<span id="canWdraw">1.06</span> 元</div>
+        <div class="aui-margin-t-10 aui-margin-l-15 aui-margin-r-15 can-wdraw">可提现金额：<span id="canWdraw"></span> 元</div>
       <p class="aui-margin-t-15"><div id="withdraw" tapmode class="aui-btn aui-btn-success aui-btn-block">提交申请</div></p>
       <div class="aui-margin-t-15 warm-prompt"><span>温馨提示：</span>最低提现金额为1元</div>
       </div>
@@ -87,7 +87,7 @@
   <script type="text/javascript" src="../script/api.js"></script>
   <script type="text/javascript">
       apiready = function(){
-          // $api.text($api.byId("canWdraw"),api.pageParam.drawnum);
+          $api.text($api.byId("canWdraw"),api.pageParam.drawnum);
 
 
           api.setFrameAttr({
@@ -172,6 +172,36 @@
 
 
       };
+
+
+      //打开修改电话页面
+      function openModifyPay(){
+        api.openFrame({
+           name: 'modify_tel',
+           url: './modify_tel.html',
+           rect: {
+               x: 0,
+               y: 0,
+               w: 'auto',
+               h: 'auto'
+           }
+       });
+      }
+
+
+      //打开修改支付宝页面
+      function openModifyTel(){
+        api.openFrame({
+           name: 'modify_pay',
+           url: './modify_pay.html',
+           rect: {
+               x: 0,
+               y: 0,
+               w: 'auto',
+               h: 'auto'
+           }
+       });
+      }
 
        //打开提现记录
        function openWithDrawDet(){
