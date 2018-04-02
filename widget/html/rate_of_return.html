@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <title>title</title>
+      <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+      <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+      <link rel="stylesheet" type="text/css" href="../css/iconfont.css"/>
+      <style>
+          body{
+
+          }
+          header{
+            background:#ea620b !important;
+            color: #fff !important;
+          }
+      </style>
+  </head>
+  <body>
+    <header class="aui-bar aui-bar-nav aui-bar-light">
+      <a class="aui-pull-left aui-btn">
+          <span onclick="goback()" class="aui-iconfont aui-icon-left"></span>
+      </a>
+      <div class="aui-title">年化收益率</div>
+      <a  id="customer-service" class="aui-pull-right aui-btn">
+          <i style="font-size:24px;" class="icon iconfont icon-kefu"></i>
+      </a>
+    </header>
+  </body>
+  <script type="text/javascript" src="../script/api.js"></script>
+  <script type="text/javascript">
+      apiready = function(){
+          $api.fixStatusBar($api.dom('header'));
+
+      };
+
+
+      function goback(){
+        api.closeFrame();
+      }
+  </script>
+  </html>

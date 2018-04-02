@@ -56,21 +56,22 @@
 
           $api.fixStatusBar($api.dom("header"));
 
-          // api.openFrame({
-          //     name: 'operation_guide_wl',
-          //     url: 'https://www.sogou.com/',
-          //     rect: {
-          //         x: 0,
-          //         y: $api.offset($api.dom("header")).h,
-          //         w: 'auto',
-          //         h: 'auto'
-          //     }
-          // });
+          api.openFrame({
+              name: 'operation_guide_wl',
+              url: 'https://www.sogou.com/',
+              rect: {
+                  x: 0,
+                  y: $api.offset($api.dom("header")).h,
+                  w: 'auto',
+                  h: 'auto'
+              }
+          });
       };
 
 
       function goback(){
         api.closeFrame({name: 'operation_guide_wl'});
+        api.closeFrame({name: 'operation_guide'});
       }
   </script>
   </html>

@@ -299,16 +299,16 @@
     apiready = function() {
       $api.fixStatusBar($api.byId("header"));
 
-      // api.openFrame({
-      //     name: 'user_level',
-      //     url: 'user_level.html',
-      //     rect: {
-      //         x: 0,
-      //         y: 0,
-      //         w: 'auto',
-      //         h: 'auto'
-      //     }
-      //   });
+      api.openFrame({
+          name: 'rate_of_return',
+          url: 'rate_of_return.html',
+          rect: {
+              x: 0,
+              y: 0,
+              w: 'auto',
+              h: 'auto'
+          }
+        });
 
 
 
@@ -625,7 +625,7 @@
     function openOperationGuide(){
       api.openFrame({
           name: 'operation_guide',
-          url: './operation_guide.html',
+          url: 'operation_guide.html',
           rect: {
               x: 0,
               y: 0,

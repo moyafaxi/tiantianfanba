@@ -86,7 +86,12 @@
 
 
     apiready = function () {
-      api.removeLaunchView();
+      api.removeLaunchView({
+          animation: {
+              type: 'fade',
+              duration: 500
+          }
+      });
 
       exitApp();
 
