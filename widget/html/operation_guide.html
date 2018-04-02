@@ -30,7 +30,7 @@
       </a>
       <div class="aui-title">操作指南</div>
     </header>
-    <div class="cont-wrap">
+    <!-- <div class="cont-wrap">
        <div class="cont">
           <p>
             1.如何搜索优惠券吗？
@@ -39,7 +39,7 @@
             打开手机淘宝,打开您想购买的礼物,复制宝贝标题,打开天天返吧APP即可进行搜索
           </p>
         </div>
-    </div>
+    </div> -->
   </body>
   <script type="text/javascript" src="../script/api.js"></script>
   <script type="text/javascript">
@@ -55,11 +55,22 @@
 
 
           $api.fixStatusBar($api.dom("header"));
+
+          // api.openFrame({
+          //     name: 'operation_guide_wl',
+          //     url: 'https://www.sogou.com/',
+          //     rect: {
+          //         x: 0,
+          //         y: $api.offset($api.dom("header")).h,
+          //         w: 'auto',
+          //         h: 'auto'
+          //     }
+          // });
       };
 
 
       function goback(){
-        api.closeFrame();
+        api.closeFrame({name: 'operation_guide_wl'});
       }
   </script>
   </html>

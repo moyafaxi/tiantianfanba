@@ -128,7 +128,7 @@
              <div class="target clearfix">
                <div class="cycle" id="cycle1"></div>
                <div class="right">
-                 <p>邀请人数</p>
+                 <p>最近30天邀请总人数</p>
                  <p><span id="haoyou">0</span>人 (目标总人数<span id="mbhaoyou"></span>人)</p>
                </div>
              </div>
@@ -270,7 +270,7 @@
                      id: "cycle2",
                      width: "60",
                      height: "60",
-                     percent: ret.content.user.danu<=ret.content.user.mbdan ? ret.content.user.danu/ret.content.user.mbdan : 100,
+                     percent: ret.content.user.dan<=ret.content.user.mbdan ? ret.content.user.danu/ret.content.user.mbdan : 100,
                      border: "3",
                      bgColor: "#e5e5e5",
                      barColor: "#fd6308",
