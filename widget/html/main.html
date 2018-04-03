@@ -351,23 +351,6 @@
 
 
 
-    //   api.openFrame({
-    //     name: 'shoplist',
-    //     url: './shoplist.html',
-    //     rect: {
-    //         x: 0,
-    //         y: 0,
-    //         w: 'auto',
-    //         h: 'auto'
-    //     },
-    //     pageParam: {
-    //         name: 'test'
-    //     }
-    // });
-
-
-
-
       alibaichuan = api.require('alibaichuan');
         var param = {
             isvcode: "feeling"
@@ -416,6 +399,13 @@
                 h: api.winHeight-footerHeight
             }
         });
+
+
+        var jsfun = 'funIniGroup(2);';
+        api.execScript({
+            script: jsfun
+        });
+
 
       });
 

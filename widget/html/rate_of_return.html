@@ -15,8 +15,13 @@
             background:#ea620b !important;
             color: #fff !important;
           }
-          .triangle{width: 100%;height: auto;}
+          .triangle{width: 100%;height: auto;background:#fff;position: relative;}
           .triangle img{width: 100%;height: auto;}
+          .triangle .rate{position: absolute;top: 60.5%;width: 100%;}
+          .triangle .rate p{text-align: center;font-size: 12px;color: #fff}
+
+          .rate-level{background: #fff;margin-top: 0;}
+          .rate-level h3{text-align: center;}
       </style>
   </head>
   <body>
@@ -30,13 +35,21 @@
       </a>
     </header>
     <div class="triangle">
-      <img src="image/rateofreturn-bg1.png" alt="">
+      <img src="../image/rateofreturn-bg1.png" alt="">
+      <div class="rate">
+        <p>17.05</p>
+        <p>年化收益(%)</p>
+      </div>
+    </div>
+    <div class="rate-level">
+      <h3>我的年化收益等级</h3>
     </div>
   </body>
   <script type="text/javascript" src="../script/api.js"></script>
   <script type="text/javascript">
       apiready = function(){
           $api.fixStatusBar($api.dom('header'));
+          $api.css($api.dom('.triangle'),"padding-top:"+$api.offset($api.dom('header')).h+"px");
 
       };
 

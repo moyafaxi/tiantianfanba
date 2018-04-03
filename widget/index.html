@@ -86,12 +86,9 @@
 
 
     apiready = function () {
-      // api.removeLaunchView({
-      //     animation: {
-      //         type: 'fade',
-      //         duration: 500
-      //     }
-      // });
+
+
+
 
       exitApp();
 
@@ -142,15 +139,7 @@
     //初始化frame组
     function funIniGroup(idx){
         framesName = ['main','search','order','money','person_center'];
-        // frames = [];
-        // for (var i = 0,len = framesName.length;i<len; i++) {
-        //   frames.push({
-        //     name: framesName[i],
-        //     url: './html/'+framesName[i]+'.html',
-        //     bgColor : 'rgba(0,0,0,.2)',
-        //     bounces:true
-        //   })
-        // }
+
 
         //底部tab栏
          var tab = new auiTab({
@@ -169,33 +158,13 @@
                 }
               });
          });
+    }
+    function alertTabIdx(){
 
-        // api.openFrameGroup({
-        //     name: 'group',
-        //     scrollEnabled: false,
-        //     rect: {
-        //         x: 0,
-        //         y: 0,
-        //         w: api.winWidth,
-        //         h: api.winHeight - $api.offset($api.byId('footer')).h
-        //     },
-        //     index: 0,
-        //     frames: frames
-        // }, function (ret, err) {
-        //
-        // });
+        alert('2');
+
     }
 
-    // //底部tab栏
-    //  var tab = new auiTab({
-    //      element:document.getElementById("footer"),
-    //      index:1,
-    //      repeatClick:false
-    //  },function(ret){
-    //      api.setFrameGroupIndex({
-    //          name: 'group',
-    //          index: ret.index-1
-    //      });
-    //  });
+
 
 </script>
