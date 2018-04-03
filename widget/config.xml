@@ -1,30 +1,1 @@
- <?xml version="0.0.1" encoding="UTF-8"?> <widget id="A6075036573180"  version="0.0.1">
-    <name>tiantianfanba</name>
-    <description>
-        tiantianfanba
-    </description>
-    <author email="2418140141@qq.com" href="">
-        Developer
-    </author>
-    <content src="index.html" />
-  <preference name="pageBounce" value="false"/>
-	<preference name="appBackground" value="rgba(0,0,0,0.0)"/>
-	<preference name="windowBackground" value="rgba(0,0,0,0.0)"/>
-	<preference name="frameBackgroundColor" value="rgba(0,0,0,0.0)"/>
-	<preference name="hScrollBarEnabled" value="false"/>
-	<preference name="vScrollBarEnabled" value="false"/>
-	<preference name="autoLaunch" value="true"/>
-	<preference name="fullScreen" value="false"/>
-	<preference name="autoUpdate" value="true" />
-	<preference name="smartUpdate" value="false" />
-	<preference name="debug" value="true"/>
-	<preference name="statusBarAppearance" value="true"/>  <preference name="urlScheme" value="tbopen24833870"/>  <preference name="appCertificateVerify" value="true" />  <preference name="querySchemes" value="tmall,tbopen" />
-	<permission name="readPhoneState" />
-	<permission name="camera" />
-	<permission name="record" />
-	<permission name="location" />
-	<permission name="fileSystem" />
-	<permission name="internet" />
-	<permission name="bootCompleted" />
-	<permission name="hardware" />  <access origin="*" />  <feature name="alibaichuan">  <param name="urlScheme" value="tbopen24833870"/>  </feature>
-</widget>
+<?xml version="1.0" encoding="UTF-8"?><widget id="A6075036573180" version="0.0.1">  <name>天天返吧</name>  <description>天天返吧</description>  <author email="2418140141@qq.com" href="http://www.yunmell.com">王瑞</author>  <content src="index.html"/>  <preference name="pageBounce" value="false"/>  <preference name="appBackground" value="rgba(0,0,0,0.0)"/>  <preference name="windowBackground" value="rgba(0,0,0,0.0)"/>  <preference name="frameBackgroundColor" value="rgba(0,0,0,0.0)"/>  <preference name="hScrollBarEnabled" value="false"/>  <preference name="vScrollBarEnabled" value="false"/>  <preference name="autoLaunch" value="true"/>  <preference name="fullScreen" value="false"/>  <preference name="autoUpdate" value="true"/>  <preference name="smartUpdate" value="false"/>  <preference name="debug" value="true"/>  <preference name="statusBarAppearance" value="true"/>  <preference name="querySchemes" value="tmall,tbopen"/>  <permission name="readPhoneState"/>  <permission name="camera"/>  <permission name="record"/>  <permission name="location"/>  <permission name="fileSystem"/>  <permission name="internet"/>  <permission name="bootCompleted"/>  <permission name="hardware"/>  <access origin="*"/>  <feature name="alibaichuan">    <param name="urlScheme" value="tbopen24833870"/>   </feature></widget>
