@@ -17,26 +17,25 @@
   <script type="text/javascript" src="../script/api.js"></script>
   <script type="text/javascript">
       apiready = function(){
-         var intro_ist = $api.getStorage('isfirst');
-         alert(intro_ist);
-        //  if (! intro_ist) {
-        //    api.openWin({
-        //       name: 'index_c',
-        //       url: './index_c.html',
-        //       pageParam: {
-        //           name: 'test'
-        //       }
-        //   });
-        //
-        // }else {
-        //   api.openWin({
-        //       name: 'index',
-        //       url: './index.html',
-        //       pageParam: {
-        //           name: 'test1'
-        //       }
-        //   });
-        // } ;
+         var isfirst = $api.getStorage('isfirst');
+         alert(isfirst);
+         if (!isfirst) {
+          api.openWin({
+              name: 'index',
+              url: './index.html',
+              pageParam: {
+                  name: 'test1'
+              }
+          });
+        }else {
+          api.openWin({
+             name: 'index_c',
+             url: './index_c.html',
+             pageParam: {
+                 name: 'test'
+             }
+         });
+        } ;
       };
   </script>
   </html>
