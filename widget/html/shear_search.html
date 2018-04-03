@@ -37,7 +37,7 @@
   </head>
   <body>
     <div class="search-area">
-      <img onclick="closeThis()" tapmode src="../image/close.png" alt="">
+      <img tapmode  onclick="closeThis()" tapmode src="../image/close.png" alt="">
       <div class="mask">
         <p class="p1">检测到复制内容检测到复制内容检测到复制内容检测到复制内容</p>
         <p class="p2 clearfix"><span class="span1">检测到复制内容</span><span tapmode class="span2">立即搜索</span></p>
@@ -63,6 +63,8 @@
                   keyword: api.pageParam.keyword
               }
             });
+
+            api.closeFrame();
         });
 
       };

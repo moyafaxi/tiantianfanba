@@ -59,10 +59,10 @@
   <body>
     <header class="aui-bar aui-bar-nav aui-bar-light">
       <a class="aui-pull-left aui-btn">
-          <span onclick="goback()" class="aui-iconfont aui-icon-left"></span>
+          <span onclick="goback()" tapmode class="aui-iconfont aui-icon-left"></span>
       </a>
       <div class="aui-title">添加订单</div>
-      <a class="aui-pull-right aui-btn">
+      <a  id="customer-service" tapmode  class="aui-pull-right aui-btn">
         <i style="font-size:24px;" class="icon iconfont icon-kefu"></i>
       </a>
     </header>
@@ -71,14 +71,57 @@
         <input id="order" class="text" type="text"><img class="record-icon" src="../image/record-icon.png" alt="">
       </div>
       <!-- <input class="sure" value="确认" type="text"> -->
-      <p id="sure" class="sure">确认</p>
+      <p id="sure" tapmode class="sure">确认</p>
       <p class="tip">*如果系统十分钟未收录你的购物订单，可以自主提交你的淘宝订单号</p>
     </div>
     <div class="exam"><img src="../image/exam.png" alt=""></div>
   </body>
   <script type="text/javascript" src="../script/api.js"></script>
   <script type="text/javascript">
+      //智齿客服
+      var zhiChiSobotMall = null;
+      var zhiChiSobot = null;
       apiready = function(){
+
+        //智齿客服
+        zhiChiSobot = api.require('zhiChiSobotMall');
+        api.ajax({
+            url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=userdowns',
+            method: 'post',
+            data: {
+            }
+        }, function(ret, err) {
+            if (ret) {
+                // api.alert({ msg: JSON.stringify(ret) });
+                if(ret.status==1){
+                  function startZhiChiSobot(){
+                      var param = {
+                          appkey:"108b0ed204874501ae98b8e0fc08a6b8",//必填
+                          platformUnionId:"100x",//此id需要付费以后才能有。每个企业一个是必填
+                          userId:ret.content.id,
+                          nickName:ret.content.userNick,
+                          phone:"Your user phone",
+                          email:"Your user email",
+                          customInfo:{"age":"18","uname":"智齿APICloud"},
+                          isShowEvaluate:true,
+                          isSettingSkillSet:false,
+                          skillSetId:"",
+                          isShowTansfer:true,
+                          backgroundColor:"#f0f0f0",
+                          topViewTextColor:"#FFFFFF",
+                          isCustomLinkClick:false
+                      };
+                      zhiChiSobot.startZhiChiSobot(param);
+
+                  }
+                  $api.addEvt($api.byId("customer-service"), 'click', function(){
+                    startZhiChiSobot()
+                  });
+                }
+            } else {
+                api.alert({ msg: JSON.stringify(err) });
+            }
+        });
 
         api.setFrameAttr({
          name: 'add_order'
