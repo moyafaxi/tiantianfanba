@@ -18,7 +18,7 @@
 	<preference name="autoUpdate" value="true" />
 	<preference name="smartUpdate" value="false" />
 	<preference name="debug" value="true"/>
-	<preference name="statusBarAppearance" value="true"/>  <preference name="urlScheme" value="tbopen24833870"/ >  <preference name="appCertificateVerify" value="true" />  <preference name="querySchemes" value="tmall,tbopen" />
+	<preference name="statusBarAppearance" value="true"/>  <preference name="urlScheme" value="tbopen24833870"/>  <preference name="appCertificateVerify" value="true" />  <preference name="querySchemes" value="tmall,tbopen" />
 	<permission name="readPhoneState" />
 	<permission name="camera" />
 	<permission name="record" />
