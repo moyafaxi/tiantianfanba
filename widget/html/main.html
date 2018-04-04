@@ -474,29 +474,34 @@
 
 
 
+
           var clipBoard = api.require('clipBoard');
           var footerHeight = api.getPrefs({sync: true,key: 'footerHeight'});
-            clipBoard.setListener(function(ret, err) {
-                if (ret) {
-                  api.openFrame({
-                      name: 'shear_search',
-                      url: './shear_search.html',
-                      rect: {
-                          x: 0,
-                          y: 0,
-                          w: api.winWidth,
-                          h: api.winHeight - footerHeight
-                      },
-                      pageParam: {
-                          keyword: ret.value
-                      }
-                    });
-                } else {
-                    alert(JSON.stringify(err));
-                }
-            });
 
-
+          api.addEventListener({
+              name:'resume'
+          }, function(ret, err){
+              $api.setStorage('isResume',true);
+          });
+          clipBoard.setListener(function(ret, err) {
+              if ($api.getStorage('isResume')&&ret) {
+                api.openFrame({
+                    name: 'shear_search',
+                    url: './shear_search.html',
+                    rect: {
+                        x: 0,
+                        y: 0,
+                        w: api.winWidth,
+                        h: api.winHeight - footerHeight
+                    },
+                    pageParam: {
+                        keyword: ret.value
+                    }
+                  });
+              } else {
+                  alert(JSON.stringify(err));
+              }
+          });
 
     };
 
