@@ -481,27 +481,60 @@
           api.addEventListener({
               name:'resume'
           }, function(ret, err){
-              $api.setStorage('isResume',true);
+              clipBoard.get(function(ret, err) {
+                  if (ret) {
+                      // alert(JSON.stringify(ret));
+                      if(ret.value){
+                        if(/^\d{18,}$/.test(ret.value)){
+                          return false;
+                        }
+                        api.openFrame({
+                            name: 'shear_search',
+                            url: './shear_search.html',
+                            rect: {
+                                x: 0,
+                                y: 0,
+                                w: api.winWidth,
+                                h: api.winHeight - footerHeight
+                            },
+                            pageParam: {
+                                keyword: ret.value
+                            }
+                          });
+                          clipBoard.set({
+                              value: ''
+                          }, function(ret, err) {
+                              if (ret) {
+                                  // alert(JSON.stringify(ret));
+                              } else {
+                                  alert(JSON.stringify(err));
+                              }
+                          });
+                      }
+                  } else {
+                      alert(JSON.stringify(err));
+                  }
+              });
           });
-          clipBoard.setListener(function(ret, err) {
-              if ($api.getStorage('isResume')&&ret) {
-                api.openFrame({
-                    name: 'shear_search',
-                    url: './shear_search.html',
-                    rect: {
-                        x: 0,
-                        y: 0,
-                        w: api.winWidth,
-                        h: api.winHeight - footerHeight
-                    },
-                    pageParam: {
-                        keyword: ret.value
-                    }
-                  });
-              } else {
-                  alert(JSON.stringify(err));
-              }
-          });
+          // clipBoard.setListener(function(ret, err) {
+          //     if ($api.getStorage('isResume')&&ret) {
+          //       api.openFrame({
+          //           name: 'shear_search',
+          //           url: './shear_search.html',
+          //           rect: {
+          //               x: 0,
+          //               y: 0,
+          //               w: api.winWidth,
+          //               h: api.winHeight - footerHeight
+          //           },
+          //           pageParam: {
+          //               keyword: ret.value
+          //           }
+          //         });
+          //     } else {
+          //         alert(JSON.stringify(err));
+          //     }
+          // });
 
     };
 

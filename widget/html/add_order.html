@@ -36,6 +36,7 @@
         border: 0 !important;
       }
       .add-area .record-icon{position: absolute;width: 22px;left: 5%;top: 17px;}
+      .add-area span{position: absolute;right: 5%;top: 20px;font-size: 14px;}
 
       .sure{
         width: 95%;
@@ -68,7 +69,7 @@
     </header>
     <div class="bgf">
       <div class="add-area">
-        <input id="order" class="text" type="text"><img class="record-icon" src="../image/record-icon.png" alt="">
+        <input id="order" class="text" type="text"><span id="paste" tapmode>点击粘贴</span><img class="record-icon" src="../image/record-icon.png" alt="">
       </div>
       <!-- <input class="sure" value="确认" type="text"> -->
       <p id="sure" tapmode class="sure">确认</p>
@@ -82,6 +83,19 @@
       var zhiChiSobotMall = null;
       var zhiChiSobot = null;
       apiready = function(){
+
+        var clipBoard = api.require('clipBoard');
+        $api.addEvt($api.byId("paste"), 'click', function(){
+          clipBoard.get(function(ret, err) {
+              if (ret) {
+                  // alert(JSON.stringify(ret));
+                 $api.val($api.byId("order"),ret.value);
+              } else {
+                  alert(JSON.stringify(err));
+              }
+          });
+        });
+
 
         //智齿客服
         zhiChiSobot = api.require('zhiChiSobotMall');

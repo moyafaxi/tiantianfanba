@@ -15,13 +15,23 @@
             background:#ea620b !important;
             color: #fff !important;
           }
+          .aui-bar-nav.aui-bar-light .aui-iconfont {
+            color: #fff !important;
+          }
           .triangle{width: 100%;height: auto;background:#fff;position: relative;}
           .triangle img{width: 100%;height: auto;}
           .triangle .rate{position: absolute;top: 60.5%;width: 100%;}
           .triangle .rate p{text-align: center;font-size: 12px;color: #fff}
 
-          .rate-level{background: #fff;margin-top: 0;}
+          .rate-level{background: #fff;padding-top: 10px;}
           .rate-level h3{text-align: center;}
+          .rate-level .level-pic img{display: block;width: 90%;margin: 20px auto 0;}
+          .rate-level .tip-title{width: 90%;margin: 30px auto 0;}
+          .rate-level .tip-title img{height: 30px;}
+
+          .rate-level .tip-cont{width: 90%;margin: 20px auto 0;}
+          .rate-level .tip-cont p img{display: inline;width: 8px;margin-right: 10px;}
+          .rate-level .tip-cont p span{color: #ff0103;}
       </style>
   </head>
   <body>
@@ -30,19 +40,36 @@
           <span tapmode  onclick="goback()" class="aui-iconfont aui-icon-left"></span>
       </a>
       <div class="aui-title">年化收益率</div>
-      <a  id="customer-service" class="aui-pull-right aui-btn">
+      <a  id="customer-service" tapmode class="aui-pull-right aui-btn">
           <i style="font-size:24px;" class="icon iconfont icon-kefu"></i>
       </a>
     </header>
     <div class="triangle">
       <img src="../image/rateofreturn-bg1.png" alt="">
       <div class="rate">
-        <p>17.05</p>
+        <p id="rate"></p>
         <p>年化收益(%)</p>
       </div>
     </div>
     <div class="rate-level">
       <h3>我的年化收益等级</h3>
+      <div class="level-pic">
+        <img id="level-pic" src="../image/jiaocha.png" alt="">
+      </div>
+      <div class="tips">
+        <div class="tip-title"><img src="../image/calculate.png" alt=""></div>
+        <div class="tip-cont">
+          <p><img src="../image/black-dot.png" alt="">例如您通过天天返吧进入淘宝累计消费了<span>1000</span>元，年化率是<span>17%</span>,您的年收入是1000*0.17=<span>170</span>元,每日收入170/365=<span>0.4657元</span></p>
+        </div>
+      </div>
+      <div class="tips">
+        <div class="tip-title"><img src="../image/calculate.png" alt=""></div>
+        <div class="tip-cont">
+          <p><img src="../image/black-dot.png" alt="">频繁使用天天返吧购物</p>
+          <p><img src="../image/black-dot.png" alt="">多消费天天返吧APP上面的商品</p>
+          <p><img src="../image/black-dot.png" alt="">邀请好友使用天天返吧，也会增加收益</p>
+        </div>
+      </div>
     </div>
   </body>
   <script type="text/javascript" src="../script/api.js"></script>
@@ -50,6 +77,88 @@
       apiready = function(){
           $api.fixStatusBar($api.dom('header'));
           $api.css($api.dom('.triangle'),"padding-top:"+$api.offset($api.dom('header')).h+"px");
+
+          api.setFrameAttr({
+           name: 'rate_of_return'
+          });
+
+          var framenamesArr = $api.getStorage('framenames');
+          framenamesArr.push('rate_of_return');
+          $api.setStorage('framenames',framenamesArr);
+
+
+          //智齿客服
+          zhiChiSobot = api.require('zhiChiSobotMall');
+          api.ajax({
+              url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=userdowns',
+              method: 'post',
+              data: {
+              }
+          }, function(ret, err) {
+              if (ret) {
+                  // api.alert({ msg: JSON.stringify(ret) });
+                  if(ret.status==1){
+                    function startZhiChiSobot(){
+                        var param = {
+                            appkey:"108b0ed204874501ae98b8e0fc08a6b8",//必填
+                            platformUnionId:"100x",//此id需要付费以后才能有。每个企业一个是必填
+                            userId:ret.content.id,
+                            nickName:ret.content.userNick,
+                            phone:"Your user phone",
+                            email:"Your user email",
+                            customInfo:{"age":"18","uname":"智齿APICloud"},
+                            isShowEvaluate:true,
+                            isSettingSkillSet:false,
+                            skillSetId:"",
+                            isShowTansfer:true,
+                            backgroundColor:"#f0f0f0",
+                            topViewTextColor:"#FFFFFF",
+                            isCustomLinkClick:false
+                        };
+                        zhiChiSobot.startZhiChiSobot(param);
+
+                    }
+                    $api.addEvt($api.byId("customer-service"), 'click', function(){
+                      startZhiChiSobot()
+                    });
+                  }
+              } else {
+                  api.alert({ msg: JSON.stringify(err) });
+              }
+          });
+
+
+          api.ajax({
+            url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=zhuandata',
+            method: 'post',
+            data: {
+                values: {
+                    datatype: 6
+                }
+            }
+          }, function(ret, err) {
+            if (ret) {
+                if(ret.status==1){
+                  $api.text($api.byId("rate"),ret.content.todaymoney);
+
+                  if(parseFloat(ret.content.todaymoney)<7.5){
+                    $api.attr($api.byId("level-pic"), 'src', '../image/jiaocha.png');
+                  }else if (parseFloat(ret.content.todaymoney)>=7.5 && parseFloat(ret.content.todaymoney)<15) {
+                    $api.attr($api.byId("level-pic"), 'src', '../image/yiban.png');
+                  }else if (parseFloat(ret.content.todaymoney)>=15 && parseFloat(ret.content.todaymoney)<22.5) {
+                    $api.attr($api.byId("level-pic"), 'src', '../image/hao.png');
+                  }else if (parseFloat(ret.content.todaymoney)>=22.5 && parseFloat(ret.content.todaymoney)<=30) {
+                    $api.attr($api.byId("level-pic"), 'src', '../image/youxiu.png');
+                  }
+
+                }else{
+                  alert(ret.content)
+                }
+               //  api.alert({ msg: JSON.stringify(ret) });
+            } else {
+                api.alert({ msg: JSON.stringify(err) });
+            }
+          });
 
       };
 

@@ -160,8 +160,23 @@
                   }
               }, function(ret, err) {
                   if (ret) {
+                    if (ret.status==1) {
+                       alert(ret.content);
+                       api.openFrame({
+                         name: 'withdraw_detail',
+                         url: './withdraw_detail.html',
+                         rect: {
+                             x: 0,
+                             y: 0,
+                             w: api.winWidth,
+                             h: api.winHeight
+                         }
+                     });
+                    }else {
+                      alert(ret.content)
+                    }
 
-                      api.alert({ msg: JSON.stringify(ret) });
+                      // api.alert({ msg: JSON.stringify(ret) });
                   } else {
                       api.alert({ msg: JSON.stringify(err) });
                   }

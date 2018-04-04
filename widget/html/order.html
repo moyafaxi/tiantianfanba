@@ -16,6 +16,9 @@
           color: #fff !important;
           /*position: fixed !important;*/
         }
+        .total-tab{height: 40px;}
+        .total-tab .myorder{float: left;width: 50%;height:100%;box-sizing: border-box;background: #ffffff;color: #fa6a00;line-height: 40px;text-align: center;}
+        .total-tab .taoborder{float: left;width: 50%;height:100%;box-sizing: border-box;background: #dcd8d7;color: #7c7b79;line-height: 40px;text-align: center;}
 
         .top{
           width: 100%;
@@ -37,7 +40,10 @@
         .order-item .time-money .r{float: right;color: #a9a7a7;font-size: 14px;}
         .order-item .time-money .r i{color: #eb4444;font-size: 16px;}
 
-        #add-btn{position: fixed;right: 10px;bottom:8%;width: 40px;}
+        #add-btn{position: fixed;right: 10px;bottom:8%;width: 55px;}
+
+        .operating-tutorial{background: #ff9f65;color: #fff;width: 100%;text-align: center;height: 40px;line-height: 40px;font-size: 16px;}
+        .operating-tutorial span{color: #f8ff0c;}
       </style>
   </head>
   <body>
@@ -48,35 +54,23 @@
             <i style="font-size:24px;" class="icon iconfont icon-kefu"></i>
           </a>
         </header>
-        <div class="aui-tab" id="tab" style="border-bottom:1px solid #ddd;">
+        <div class="total-tab">
+          <div class="myorder">我的订单</div>
+          <div onclick="openMyOrdersPagen()" tapmode class="taoborder">淘宝订单</div>
+        </div>
+        <div class="aui-tab" id="tab">
             <div class="aui-tab-item aui-active">全部</div>
             <div class="aui-tab-item"><div></div>待存入</div>
             <div class="aui-tab-item">已存入</div>
             <div class="aui-tab-item">已失效</div>
         </div>
+        <div onclick="openOperationOrder()" tapmode class="operating-tutorial" >
+          下单付款后不显示？<span>《查看操作教程》</span>
+        </div>
       </div>
+
       <img id="add-btn" src="../image/add-order.png" alt="">
       <div class="order-wrap" id="order-wrap">
-
-        <!-- <div class="order-item">
-          <div class="order-identifier clearfix"><span class="order-num">订单号：0000000000000000000</span><span class="order-status">已存入</span></div>
-          <div class="order-goods clearfix">
-            <img class="l" src="../image/order-img1.png" alt="">
-            <p class="m">vivo9s手机壳步步高 x9plus 套女款全包边防摔薄款</p>
-            <img class="r" src="../image/goin.png" alt="">
-          </div>
-          <div class="time-money clearfix"><span class="l">18-03-06 13:14</span><span class="r">已存入：<i>8.88</i>元</span></div>
-        </div>
-        <div class="order-item">
-          <div class="order-identifier clearfix"><span class="order-num">订单号：0000000000000000000</span><span class="order-status">已存入</span></div>
-          <div class="order-goods clearfix">
-            <img class="l" src="../image/order-img1.png" alt="">
-            <p class="m">vivo9s手机壳步步高 x9plus 套女款全包边防摔薄款</p>
-            <img class="r" src="../image/goin.png" alt="">
-          </div>
-          <div class="time-money clearfix"><span class="l">18-03-06 13:14</span><span class="r">已存入：<i>8.88</i>元</span></div>
-        </div> -->
-
       </div>
   </body>
   <script  type="text/template"  id="tpl" >
@@ -98,7 +92,7 @@
             <p class="m">{{=data.title}}</p>
             {{? !data.orderID}}
             {{?? data.orderID}}
-            <img style="" onclick="openMyOrdersPage()" class="r" src="../image/goin.png" alt="">
+            <img style="" onclick="openMyOrdersPageh()" class="r" src="../image/goin.png" alt="">
             {{??}}
             {{?}}
           </div>
@@ -268,13 +262,31 @@
 
 }
 
-      //打开购物车
-      function openMyOrdersPage(){
+      //app内打开订单
+      function openMyOrdersPageh(){
         var alibaichuan = api.require('alibaichuan');
         var param = {
-            status: 2,
+            status: 0,
             isAllOrder:true,
             nativeview:false
+        };
+        alibaichuan.myOrdersPage(param, function(ret, err) {
+            if (ret) {
+                // alert("ret - " + JSON.stringify(ret));
+            } else {
+                // alert("err - " + JSON.stringify(err));
+            }
+        });
+      }
+
+
+      //跳转淘宝打开订单
+      function openMyOrdersPagen(){
+        var alibaichuan = api.require('alibaichuan');
+        var param = {
+            status: 0,
+            isAllOrder:true,
+            nativeview:true
         };
         alibaichuan.myOrdersPage(param, function(ret, err) {
             if (ret) {
@@ -302,6 +314,21 @@
       //       }
       //   });
       // }
+
+
+      //打开操作指南页面
+      function openOperationOrder(){
+        api.openFrame({
+            name: 'operation_order',
+            url: 'operation_order.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: 'auto'
+            }
+        });
+      }
 
 
       //获取订单

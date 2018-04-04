@@ -25,8 +25,8 @@
   </head>
   <body>
     <header class="aui-bar aui-bar-nav aui-bar-light">
-      <a class="aui-pull-left aui-btn">
-          <span tapmode onclick="goback()" class="aui-iconfont aui-icon-left"></span>
+      <a  tapmode onclick="goback()" class="aui-pull-left aui-btn">
+        <span tapmode onclick="goback()" class="aui-iconfont aui-icon-left"></span>
       </a>
       <div class="aui-title">操作指南</div>
     </header>
@@ -35,20 +35,11 @@
   <script type="text/javascript">
       apiready = function(){
 
-        api.setFrameAttr({
-         name: 'operation_guide'
-        });
-
-        var framenamesArr = $api.getStorage('framenames');
-        framenamesArr.push('operation_guide');
-        $api.setStorage('framenames',framenamesArr);
-
-
           $api.fixStatusBar($api.dom("header"));
 
           api.openFrame({
               name: 'operation_guide_wl',
-              url: 'https://www.sogou.com/',
+              url: 'http://tbk.yunmell.com/addons/tiger_newhu/caozuo/',
               rect: {
                   x: 0,
                   y: $api.offset($api.dom("header")).h,

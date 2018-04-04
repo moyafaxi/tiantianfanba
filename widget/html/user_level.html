@@ -113,10 +113,7 @@
       <a class="aui-pull-left aui-btn">
           <span tapmode onclick="goback()" class="aui-iconfont aui-icon-left"></span>
       </a>
-      <div class="aui-title">用户资料</div>
-      <a id="customer-service" tapmode class="aui-pull-right aui-btn">
-          <span class="aui-iconfont aui-icon-phone"></span>
-      </a>
+      <div class="aui-title">用户等级</div>
     </header>
     <div class="top-pic"><img src="../image/user-level-bg1.jpg" alt=""></div>
     <div class="level-detail">
@@ -213,6 +210,9 @@
   <script type="text/javascript">
       apiready = function(){
         $api.fixStatusBar($api.dom('header'));
+        // $api.css($api.dom('.top-pic'),"padding-top:"+$api.offset($api.dom('header')).h+"px");
+
+
         api.ajax({
             url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=shengji',
             method: 'post',
@@ -258,7 +258,7 @@
                       id: "cycle1",
                       width: "60",
                       height: "60",
-                      percent: ret.content.user.haoyou<=ret.content.user.mbhaoyou ? ret.content.user.haoyou/ret.content.user.mbhaoyou : 100,
+                      percent: ret.content.user.haoyou<=ret.content.user.mbhaoyou ? (ret.content.user.haoyou/ret.content.user.mbhaoyou)*100 : 100,
                       border: "3",
                       bgColor: "#e5e5e5",
                       barColor: "#fd6308",
@@ -270,7 +270,7 @@
                      id: "cycle2",
                      width: "60",
                      height: "60",
-                     percent: ret.content.user.dan<=ret.content.user.mbdan ? ret.content.user.danu/ret.content.user.mbdan : 100,
+                     percent: ret.content.user.dan<=ret.content.user.mbdan ? (ret.content.user.dan/ret.content.user.mbdan)*100 : 100,
                      border: "3",
                      bgColor: "#e5e5e5",
                      barColor: "#fd6308",
@@ -282,7 +282,7 @@
                     id: "cycle3",
                     width: "60",
                     height: "60",
-                    percent: ret.content.user.money<=ret.content.user.mbmoney ? ret.content.user.money/ret.content.user.mbmoney : 100,
+                    percent: ret.content.user.money<=ret.content.user.mbmoney ? (ret.content.user.money/ret.content.user.mbmoney)*100 : 100,
                     border: "3",
                     bgColor: "#e5e5e5",
                     barColor: "#fd6308",

@@ -6,7 +6,6 @@
       <title>title</title>
       <link rel="stylesheet" type="text/css" href="../css/api.css"/>
       <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
-      <link rel="stylesheet" type="text/css" href="../css/iconfont.css"/>
       <style>
           body{
 
@@ -18,39 +17,51 @@
           .aui-bar-nav.aui-bar-light .aui-iconfont {
             color: #fff !important;
           }
+
+          .cont-wrap{background: #fff;}
+          .cont-wrap .cont{width: 92%;margin: 0 auto;}
+          .cont p{text-indent: 2em;padding-top: 5px;}
       </style>
   </head>
   <body>
     <header class="aui-bar aui-bar-nav aui-bar-light">
       <a  tapmode onclick="goback()" class="aui-pull-left aui-btn">
-          <i style="" class="icon iconfont icon-cha"></i>
+        <span tapmode onclick="goback()" class="aui-iconfont aui-icon-left"></span>
       </a>
-      <div class="aui-title">常见问题</div>
+      <div class="aui-title">操作指南</div>
     </header>
   </body>
   <script type="text/javascript" src="../script/api.js"></script>
   <script type="text/javascript">
       apiready = function(){
-        $api.fixStatusBar($api.dom('header'));
 
-        api.openFrame({
-            name: 'common_problems_wl',
-            url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&m=ewei_shopv2&do=mobile&r=qa',
-            rect: {
-                x: 0,
-                y: $api.offset($api.dom("header")).h,
-                w: 'auto',
-                h: 'auto'
-            }
+        api.setFrameAttr({
+         name: 'operation_order'
         });
 
+        var framenamesArr = $api.getStorage('framenames');
+        framenamesArr.push('operation_order');
+        $api.setStorage('framenames',framenamesArr);
+
+
+          $api.fixStatusBar($api.dom("header"));
+
+          api.openFrame({
+              name: 'operation_order_wl',
+              url: 'http://tbk.yunmell.com/addons/tiger_newhu/order/',
+              rect: {
+                  x: 0,
+                  y: $api.offset($api.dom("header")).h,
+                  w: 'auto',
+                  h: 'auto'
+              }
+          });
       };
 
 
       function goback(){
-        api.closeFrame({name: 'common_problems_wl'});
-        api.closeFrame({name: 'common_problems'});
-
+        api.closeFrame({name: 'operation_order_wl'});
+        api.closeFrame({name: 'operation_order'});
       }
   </script>
   </html>
