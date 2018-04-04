@@ -299,20 +299,6 @@
     apiready = function() {
       $api.fixStatusBar($api.byId("header"));
 
-      // api.openFrame({
-      //     name: 'rate_of_return',
-      //     url: 'rate_of_return.html',
-      //     rect: {
-      //         x: 0,
-      //         y: 0,
-      //         w: 'auto',
-      //         h: 'auto'
-      //     }
-      //   });
-
-
-
-
 
       //回到顶部
       $api.addEvt($api.byId("go-top"), 'click', function(){
@@ -430,11 +416,13 @@
                   var tpl= doT.template( $api.byId("tpl").innerHTML );
                    $api.append($api.byId("tpl-wrap"),tpl(ret.content));
                    api.refreshHeaderLoadDone();
+                }else {
+                  alert(ret.content)
                 }
 
 
             } else {
-                api.alert({ msg: JSON.stringify(err) });
+              //dosomething
             }
         });
       }
@@ -594,7 +582,9 @@
                                 });
                                   // alert(JSON.stringify(ret));
                               } else {
-                                  alert(JSON.stringify(err));
+                                if(err.code==3002){
+                                  alert("未获取到订单,请手动添加！")
+                                }
                               }
                           });
                         }else{
@@ -621,7 +611,7 @@
                 });
               }
           } else {
-              api.alert({ msg: JSON.stringify(err) });
+            api.alert({ msg: JSON.stringify(err) });
           }
         });
 

@@ -488,7 +488,9 @@
                                   });
                                     // alert(JSON.stringify(ret));
                                 } else {
-                                    alert(JSON.stringify(err));
+                                  if(err.code==3002){
+                                    alert("未获取到订单,请手动添加！")
+                                  } 
                                 }
                             });
                           }else{
