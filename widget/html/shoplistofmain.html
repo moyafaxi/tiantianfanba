@@ -79,8 +79,8 @@
   <body>
     <img id="go-top" src="../image/go-top.png" alt="">
     <div class="top">
-      <header id="header" tapmode onclick="goToSearch()" >
-         <img class="img1" src="../image/arrow-left.png" alt="">
+      <header id="header"  >
+         <img class="img1" tapmode onclick="goToMain()" src="../image/arrow-left.png" alt="">
          <!-- <img class="img2" src="../image/search-bar.png" alt="" > -->
          <input  readonly class="img2" type="text">
       </header>
@@ -524,7 +524,7 @@
   }
 
       //打开
-      function goToSearch(){
+      function goToMain(){
         // var footerHeight = api.getPrefs({sync: true,key: 'footerHeight'});
         api.openFrame({
            name: 'index',
@@ -535,10 +535,7 @@
                w: api.winWidth,
                h: api.winHeight
            },
-           reload:true,
-           pageParam: {
-                   direction: 'search'
-               }
+           reload:true
        });
       }
 

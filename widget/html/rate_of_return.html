@@ -59,7 +59,7 @@
       <div class="tips">
         <div class="tip-title"><img src="../image/calculate.png" alt=""></div>
         <div class="tip-cont">
-          <p><img src="../image/black-dot.png" alt="">例如您通过天天返吧进入淘宝累计消费了<span>1000</span>元，年化率是<span>17%</span>,您的年收入是1000*0.17=<span>170</span>元,每日收入170/365=<span>0.4657元</span></p>
+          <p><img src="../image/black-dot.png" alt="">例如您通过天天返吧进入淘宝累计消费了<span>1000</span>元，年化率是<span id="rateofyear">17%</span>,您的年收入是<span id="incomeofyear">1000*0.17=170</span>元,每日收入<span id="incomeofday">170/365=0.4657元</span></p>
         </div>
       </div>
       <div class="tips">
@@ -140,6 +140,9 @@
             if (ret) {
                 if(ret.status==1){
                   $api.text($api.byId("rate"),ret.content.todaymoney);
+                  $api.text($api.byId("rateofyear"),ret.content.todaymoney);
+                  $api.text($api.byId("incomeofyear"),"1000*"+ret.content.todaymoney+"="+10*parseFloat(ret.content.todaymoney));
+                  $api.text($api.byId("incomeofday"),10*parseFloat(ret.content.todaymoney)+"/365="+(10*parseFloat(ret.content.todaymoney)/365).toFixed(4));
 
                   if(parseFloat(ret.content.todaymoney)<7.5){
                     $api.attr($api.byId("level-pic"), 'src', '../image/jiaocha.png');

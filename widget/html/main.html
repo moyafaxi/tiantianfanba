@@ -316,8 +316,8 @@
             // alert(parseInt(this.getAttribute("data-item-order")));
             var num = parseInt(this.getAttribute("data-item-order"));
             api.openFrame({
-                name: 'shoplist',
-                url: './shoplist.html',
+                name: 'shoplistofmain',
+                url: './shoplistofmain.html',
                 rect: {
                     x: 0,
                     y: 0,
@@ -583,7 +583,7 @@
                                   // alert(JSON.stringify(ret));
                               } else {
                                 if(err.code==3002){
-                                  alert("未获取到订单,请手动添加！")
+                                  alert("下单付款后如未存入订单，请在添加订单处手动添加！")
                                 }
                               }
                           });
@@ -622,8 +622,8 @@
     //打开活动商品页面
     function openShoplist(num,type){
       api.openFrame({
-          name: 'shoplist',
-          url: './shoplist.html',
+          name: 'shoplistofmain',
+          url: './shoplistofmain.html',
           rect: {
               x: 0,
               y: 0,
