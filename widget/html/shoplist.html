@@ -31,6 +31,7 @@
             padding-left: 20px;
             padding-right: 20px;
           }
+          header .img3{position: absolute;right: 12px;width: 22px;top: 15px;}
 
           .list-wrap{margin-top: 10px;}
           .list-wrap .item{background: #FFF;padding-bottom:10px;border-bottom: 3px solid #f5f5f5;}
@@ -73,16 +74,76 @@
             border-radius: 3px;
           }
 
+
+
+          .list-wrap2{margin-top: 10px;}
+          .list-wrap2 .item{
+            background: #FFF;
+            padding-bottom:10px;
+            border-bottom: 3px solid #f5f5f5;
+            float: left;
+            width: 49%;
+            box-sizing: border-box;
+            margin: 0  0.25%;
+          }
+          .list-wrap2 .item .left{width: 100%;padding: 10px;}
+          .list-wrap2 .item .right{;width:100%;}
+          .list-wrap2 .item .right h3{
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            overflow: hidden;
+            width: 500px;
+            padding-left: 10px;
+          }
+          .list-wrap2 .item .right .wrap .l{float: left;width: 55%;padding-left: 10px;}
+          .list-wrap2 .item .right .wrap .l .p1 {font-size:10px;color: #939393;margin-top: 6px;}
+          .list-wrap2 .item .right .wrap .l .p1 .p-l{float: left;margin-top: 2px;}
+          .list-wrap2 .item .right .wrap .l .p1 .p-r{float: left;margin-left: 5px;font-size:10px;}
+          .list-wrap2 .item .right .wrap .l .p1 .p-r span{color: #fd6308;font-size:12px;}
+          .list-wrap2 .item .right .wrap .l .p2 {font-size:10px;color: #939393;}
+          .list-wrap2 .item .right .wrap .l .p3 {font-size:10px;color: #fd6308;margin-top: 6px;}
+          .list-wrap2 .item .right .wrap .l .p3 span{font-size: 14px;}
+
+
+          .list-wrap2 .item .right .wrap .r{float: right;width: 45%;}
+          .list-wrap2 .item .right .wrap .r .span1{
+            display: block;
+            border: 1px solid #fd6308;
+            color: #fd6308;
+            font-size: 10px;
+            width: 95%;
+            margin-top: 10px;
+            border-radius: 15px;
+            text-align: center;
+          }
+          .list-wrap2 .item .right .wrap .r .span2{
+            display: block;
+            background: #fd6308;
+            font-size: 12px;
+            float: left;
+            width: 95%;
+            margin-top: 10px;
+            color:#FFF;
+            margin-top: 12px;
+            text-align: center;
+            height:30px;
+            line-height: 30px;
+            border-radius: 3px;
+          }
+
+
           #go-top{position: fixed;right: 10px;bottom: 10%;z-index: 999;width: 40px;height: 40px;}
       </style>
   </head>
   <body>
     <img id="go-top" src="../image/go-top.png" alt="">
     <div class="top">
-      <header id="header" tapmode onclick="goToSearch()" >
-         <img class="img1" src="../image/arrow-left.png" alt="">
+      <header id="header" >
+         <img  tapmode onclick="goToSearch()"class="img1" src="../image/arrow-left.png" alt="">
          <!-- <img class="img2" src="../image/search-bar.png" alt="" > -->
-         <input  readonly class="img2" type="text">
+         <input  tapmode onclick="goToSearch()" readonly class="img2" type="text">
+         <img tapmode onclick="changeList()" class="img3" src="../image/type.png" alt="">
       </header>
       <div class="aui-tab" id="tab" style="border-bottom:1px solid #ddd;">
           <div class="aui-tab-item aui-active">综合</div>
@@ -91,10 +152,34 @@
           <div class="aui-tab-item">价格</div>
       </div>
     </div>
-    <div id="tpl-wrap" class="list-wrap">
+    <div id="tpl-wrap" class="list-wrap" >
+
+    </div>
+    <div id="tpl-wrap2" class="list-wrap2" style="display:none;">
 
     </div>
   </body>
+  <script  type="text/template"  id="tpl2" >
+    {{~ it:data }}
+            <div  itemid="{{=data.itemid}}" pid="{{=data.pid}}" lm="{{=data.lm}}" class="item clearfix" onclick="openCouponUrl(this)" tapmode>
+               <img class="left" onerror="this.src='../image/shoplist-tp.png'" src="{{=data.itempic}}" alt="">
+               <div class="right">
+                 <h3>{{=data.itemtitle.substring(0,12)}}...</h3>
+                 <div class="wrap clearfix">
+                   <div class="l">
+                      <P class="p1 clearfix"><span class="p-l">{{=data.shoptype=="B" ? "天猫价" : "淘宝价"}}￥{{=data.itemprice}}</span></P>
+                      <P class="p2">销量 {{=data.itemsale}}</P>
+                      <P class="p3">券后价<span>￥{{=((data.itemprice*100-data.couponmoney*100)/100).toFixed(2)}}</span></P>
+                   </div>
+                   <div class="r">
+                     <span class="span1">{{=data.tkrates==100 ? "全额返还" : "存入比例："+data.tkrates+"%"}}</span>
+                   </div>
+                 </div>
+               </div>
+            </div>
+
+    {{~}}
+  </script>
   <script  type="text/template"  id="tpl" >
     {{~ it:data }}
             <div  itemid="{{=data.itemid}}" pid="{{=data.pid}}" lm="{{=data.lm}}" class="item clearfix" onclick="openCouponUrl(this)" tapmode>
@@ -138,6 +223,7 @@
         $api.fixStatusBar($api.dom('.top'));
 
         $api.css($api.dom('.list-wrap'),"padding-top:"+$api.offset($api.dom('.top')).h+"px");
+        $api.css($api.dom('.list-wrap2'),"padding-top:"+$api.offset($api.dom('.top')).h+"px");
 
         $api.val($api.dom(".img2"),api.pageParam.keyword ? api.pageParam.keyword : '')
 
@@ -314,10 +400,15 @@
                   if(ret.status==1){
                     if(isEmpty(ret.content)&&num==1){
                       $api.byId("tpl-wrap").innerHTML="<div style='background:#fff;padding:10px 0 0 10px;'>暂无数据</div>";
+                      $api.byId("tpl-wrap2").innerHTML="<div style='background:#fff;padding:10px 0 0 10px;'>暂无数据</div>";
                       return false;
                     }
                     var tpl= doT.template( $api.byId("tpl").innerHTML );
                      $api.append($api.byId("tpl-wrap"),tpl(ret.content));
+
+
+                     var tpl2= doT.template( $api.byId("tpl2").innerHTML );
+                      $api.append($api.byId("tpl-wrap2"),tpl2(ret.content));
 
 
                   }
@@ -351,10 +442,14 @@
                   if(ret.status==1){
                     if(isEmpty(ret.content)){
                       $api.byId("tpl-wrap").innerHTML="<div style='background:#fff;padding:10px 0 0 10px;'>暂无数据</div>";
+                      $api.byId("tpl-wrap2").innerHTML="<div style='background:#fff;padding:10px 0 0 10px;'>暂无数据</div>";
                       return false;
                     }
                     var tpl = doT.template( $api.byId("tpl").innerHTML );
                     $api.byId("tpl-wrap").innerHTML = tpl(ret.content);
+
+                    var tpl2= doT.template( $api.byId("tpl2").innerHTML );
+                     $api.byId("tpl-wrap2").innerHTML = tpl2(ret.content);
                     // $api.append($api.byId("tpl-wrap"),tpl(ret.content));
                   }
 
@@ -540,6 +635,19 @@
                    direction: 'search'
                }
        });
+      }
+
+
+
+      //切换列表样式
+      function changeList(){
+        if($api.cssVal($api.dom('.list-wrap'),'display')=='none'){
+          $api.css($api.dom('.list-wrap'),'display:block');
+          $api.css($api.dom('.list-wrap2'),'display:none');
+        }else{
+          $api.css($api.dom('.list-wrap'),'display:none');
+          $api.css($api.dom('.list-wrap2'),'display:block');
+        }
       }
 
       function goback(){

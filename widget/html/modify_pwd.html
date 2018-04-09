@@ -116,17 +116,17 @@
                        title:"修改成功",
                        duration:1000
                      });
-                    //  api.openFrame({
-                    //     name: 'user_data',
-                    //     url: './user_data.html',
-                    //     rect: {
-                    //         x: 0,
-                    //         y: 0,
-                    //         w: 'auto',
-                    //         h: 'auto'
-                    //     },
-                    //     reload:true
-                    // });
+                     api.openFrame({
+                        name: 'user_data',
+                        url: './user_data.html',
+                        rect: {
+                            x: 0,
+                            y: 0,
+                            w: 'auto',
+                            h: 'auto'
+                        },
+                        reload:true
+                    });
                   }else {
                     alert(ret.content)
                   }
@@ -181,7 +181,7 @@
                 }else {
                   alert(ret.content);
                 }
-                api.alert({ msg: JSON.stringify(ret) });
+                // api.alert({ msg: JSON.stringify(ret) });
 
             } else {
                 api.alert({ msg: JSON.stringify(err) });

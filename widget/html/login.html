@@ -62,8 +62,8 @@
       <p class="aui-margin-t-15"><div id="login" class="aui-btn aui-btn-success aui-btn-block">登陆</div></p>
       </div>
       <div class="aui-list-item-inner aui-margin-l-15 aui-margin-r-15 yhxy clearfix">
-            <span onclick="openLogin()" class="l">立即注册</span>
-            <span class="r">忘记密码</span>
+            <span onclick="openLogin()" tapmode class="l">立即注册</span>
+            <span onclick="openCheckTel()" tapmode  class="r">忘记密码</span>
       </div>
   </body>
   <script type="text/javascript" src="../script/api.js"></script>
@@ -303,6 +303,21 @@
                   h: 'auto'
               }
           });
+      }
+
+
+      //验证手机
+      function openCheckTel(){
+        api.openFrame({
+            name: 'checktel',
+            url: './checktel.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: 'auto'
+            }
+        });
       }
 
 

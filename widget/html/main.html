@@ -88,7 +88,7 @@
 
 
 
-        #kinds {background: #fff;}
+        #kinds {background: #fff;padding-bottom: 10px}
         #kinds ul:after{
           content: "";
           display: block;
@@ -100,9 +100,10 @@
           margin: 8px 0
         }
         #kinds ul li img{
-          height: 45px;
+          height: 60px;
           display: block;
           margin: 0 auto;
+
         }
 
 
@@ -190,7 +191,7 @@
       <img id="search-pic" class="search-pic" src="../image/search-bar.png" alt="" >
       <div id="swipe" class="swipe">
               <div class="swipe-wrap">
-                  <div class=" swipe-page">
+                  <!-- <div class=" swipe-page">
                       <div class="slide_1">
                           <img src="../image/index-lunbo1.png" alt="">
                       </div>
@@ -209,13 +210,13 @@
                       <div class="slide_1">
                           <img src="../image/index-lunbo1.png" alt="">
                       </div>
-                  </div>
+                  </div> -->
               </div>
               <ul id="swipeIndicator">
-                  <li class="active"></li>
+                  <!-- <li class="active"></li>
                   <li></li>
                   <li></li>
-                  <li></li>
+                  <li></li> -->
               </ul>
               <img class="mask" src="../image/mask.png" alt="">
       </div>
@@ -269,6 +270,15 @@
     </div>
     </section>
 </body>
+<script type="text/template" id="tpl2">
+  {{~ it:data }}
+    <div class=" swipe-page"  itemid="{{=data.itemid}}" pid="{{=data.pid}}"  lm="1" onclick="openCouponUrl(this)" tapmode>
+        <div class="slide_1">
+            <img src="{{=data.img}}" alt="">
+        </div>
+    </div>
+  {{~}}
+</script>
 <script  type="text/template"  id="tpl" >
   {{~ it:data }}
           <div itemid="{{=data.itemid}}" pid="{{=data.pid}}" lm="{{=data.lm}}" class="item clearfix" onclick="openCouponUrl(this)" tapmode>
@@ -299,11 +309,55 @@
     apiready = function() {
       $api.fixStatusBar($api.byId("header"));
 
-
+      api.setFrameAttr({
+       name: 'main'
+      });
+      api.closeFrame({
+          name: 'shoplistofmain'
+      });
       //回到顶部
       $api.addEvt($api.byId("go-top"), 'click', function(){
         api.pageUp({top:true},function(ret, err) {});
       });
+
+
+
+
+      //轮播图
+      api.ajax({
+            url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=lunbo',
+            method: 'post',
+            data: {
+                values: {
+                }
+            }
+        }, function(ret, err) {
+            if (ret) {
+                // api.alert({ msg: JSON.stringify(ret) });
+                if(ret.status==1){
+
+                  var tpl2 = doT.template( $api.byId("tpl2").innerHTML );
+                  $api.dom(".swipe-wrap").innerHTML = tpl2(ret.content);
+
+                   var html = "<li class='active'></li>";
+                   for (var i = 0; i < ret.content.length-1; i++) {
+                     html+="<li></li>"
+                   }
+
+                   $api.byId('swipeIndicator').innerHTML=html;
+
+                   fnChange();
+
+
+                }else {
+                  alert(JSON.stringify(ret));
+                }
+            } else {
+                api.alert({ msg: JSON.stringify(err) });
+            }
+        });
+
+
 
 
       //商品分类
@@ -357,7 +411,7 @@
         //     }
         // });
 
-      fnChange();
+
       getData(0,0);
 
 
@@ -394,6 +448,9 @@
 
 
       });
+
+
+
 
 
 

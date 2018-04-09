@@ -85,7 +85,8 @@
            <h3>分享规则</h3>
            <ul>
              <li><img src="../image/circle-dot.png" alt=""><p>新人领取100元体验红包，就算成功邀请的好友，在天天返吧每消费一笔，根据您的推广等级对应存入一定的消费存款，每天给您返还收益！</p></li>
-
+             <li><img src="../image/circle-dot.png" alt=""><p>好友邀请关系一旦建立是长期有效并且不可更改的，邀请者邀请好友拿永久收益，享受多级奖励分成，且能提升年化收益率。建议您尽快邀请好友一起使用天天返吧</p></li>
+             <li><img src="../image/circle-dot.png" alt=""><p>本活动最终解释权归天天返吧所有</p></li>
            </ul>
          </div>
       </div>
@@ -126,6 +127,34 @@
 
 
           var wx = api.require('wx');
+          function shareFn(ret,scene){
+            if(scene==1){
+              wx.shareImage({
+                  apiKey: '',
+                  scene: 'session',
+                  contentUrl: ret.savePath
+              }, function(ret, err) {
+                  if (ret.status) {
+                      alert('分享成功');
+                  } else {
+                      alert(err.code);
+                  }
+              });
+            }else if (scene==2) {
+              wx.shareImage({
+                  apiKey: '',
+                  scene: 'timeline',
+                  contentUrl: ret.savePath
+              }, function(ret, err) {
+                  if (ret.status) {
+                      alert('分享成功');
+                  } else {
+                      alert(err.code);
+                  }
+              });
+            }
+
+          }
 
 
          //分享图片
@@ -143,18 +172,29 @@
            }, function(ret, err) {
                if (ret) {
                    if(ret.status==1){
-                     wx.shareImage({
-                         apiKey: '',
-                         scene: 'session',
-                         thumb: 'widget://image/yd1.jpg',
-                         contentUrl: 'widget://image/yd1.jpg'
-                     }, function(ret, err) {
-                         if (ret.status) {
-                             alert('分享成功');
-                         } else {
-                             alert(err.code);
-                         }
-                     });
+                     api.download({
+                          url: ret.content,
+                          encode:false,
+                          report: true,
+                          cache: true,
+                          allowResume: true
+                      }, function(retult, err) {
+                          if (retult.state == 1) {
+                            // alert('success');
+                            api.actionSheet({
+                              title: '分享海报',
+                              cancelTitle: '取消',
+                              buttons: ['分享给朋友', '分享朋友圈']
+                            }, function(ret, err) {
+                              var index = ret.buttonIndex;
+                              shareFn(retult,index);
+                            });
+
+                          } else {
+                            //  alert(JSON.stringify(err));
+                          }
+                      });
+
                    }
                    // api.alert({ msg: JSON.stringify(ret) });
                } else {

@@ -65,17 +65,17 @@
           .com-refs{background: #fff;padding-top: 15px;padding: 0 5%;}
           .com-refs .ser-history p{padding: 20px 0;}
           .com-refs .ser-history p .l{float: left;font-size: 16px;color: #000;}
-          /*.com-refs .ser-history .item-wrap{margin-top: 15px;}
+          .com-refs .ser-history .item-wrap{margin-top: 15px;}
           .com-refs .ser-history .item-wrap .item{
             float: left;
             background: #f5f5f5;
             color: #636363;
-            padding: 3px 8px;
+            padding: 3px 5px;
             margin-right: 10px;
+            margin-bottom: 10px;
             border-radius: 8px;
-          }*/
-
-          /*.cont{padding-top: 60px;}*/
+            font-size: 12px;
+          }
 
           .cont img{display: block;}
       </style>
@@ -100,15 +100,22 @@
     <div class="person-refs">
       <div class="ser-history">
         <p class="clearfix"><span class="l">历史搜索</span><span id="clearStorage" class="r">清除历史记录</span></p>
-        <div class="item-wrap clearfix">
+        <div class="item-wrap clearfix" id="item-wrap1">
+        </div>
+      </div>
+    </div>
+    <div class="com-refs">
+      <div class="ser-history">
+        <p class="clearfix"><span class="l">大家都在找</span></p>
+        <div class="item-wrap clearfix" id="item-wrap2">
+           <span class='item'>雪纺裙</span><span class='item'>收纳</span><span class='item'>洗面奶</span>
         </div>
       </div>
     </div>
     <div class="com-refs">
       <div class="ser-history">
         <p class="clearfix"><span class="l">查券教程</span></p>
-        <div class="item-wrap clearfix">
-        </div>
+
       </div>
     </div>
     <div class="cont">
@@ -198,12 +205,44 @@
               for (var i = 0; i < historyArr.length; i++) {
                 historyItems += "<span class='item'>"+historyArr[i]+"</span>";
               }
-              $api.dom('.item-wrap').innerHTML=historyItems;
+              $api.dom('#item-wrap1').innerHTML=historyItems;
             }else {
-              $api.dom('.item-wrap').innerHTML='';
+              $api.dom('#item-wrap1').innerHTML='';
             }
 
           }
+
+          //加载热词
+          api.ajax({
+                url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=keywords',
+                method: 'post',
+                data: {
+                    values: {
+                    }
+                }
+            }, function(ret, err) {
+                if (ret) {
+                    // api.alert({ msg: JSON.stringify(ret) });
+                    if(ret.status==1){
+                      var historyItems = '';
+                      for (var i = 0; i < ret.content.length; i++) {
+                        historyItems += "<span class='item'>"+ret.content[i]+"</span>";
+                      }
+                      $api.dom('#item-wrap2').innerHTML=historyItems;
+                      
+                      var historyItems = document.querySelectorAll('span.item');
+                      if(historyItems){
+                        for (var i = 0; i < historyItems.length; i++) {
+                          $api.addEvt(historyItems[i], 'click',function(){
+                            goShopList($api.text(this))
+                          });
+                        }
+                      }
+                    }
+                } else {
+                    api.alert({ msg: JSON.stringify(err) });
+                }
+            });
 
 
 
@@ -306,7 +345,7 @@
         for (var i = 0; i < historyArr.length; i++) {
           historyItems += "<span class='item'>"+historyArr[i]+"</span>";
         }
-        $api.dom('.item-wrap').innerHTML=historyItems;
+        $api.dom('#item-wrap1').innerHTML=historyItems;
         var historyItems = document.querySelectorAll('span.item');
         if(historyItems){
           for (var i = 0; i < historyItems.length; i++) {

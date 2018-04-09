@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <title>注册</title>
+      <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+      <link rel="stylesheet" type="text/css" href="../css/aui.css"/>
+      <style>
+          html,
+          body{
+            background: #f2f2f2;
+            height: 100%;
+          }
+          .logo-area{width: 100%;height:120px;background: #f2f2f2;}
+          .logo-area img{display: block;margin: 30px auto 0;width: 20%;}
+          .yhxy label{font-size:14px;float: left;}
+          .yhxy span{float: right;font-size: 14px;}
+
+          .aui-list-item-input input.l{width: 35%;display: inline-block;}
+          /*.aui-list-item-input span{
+            width: 30%;
+            display: inline-block;
+            text-align: center;
+            border: 1px solid #ff6537;
+            border-radius: 5px;
+            color: #ff6537;
+          }*/
+          .aui-list-item-input input.r{
+            width: 60%;
+            display: inline-block;
+            height: 30px;
+            text-align: center;
+            border: 1px solid #ff6537;
+            border-radius: 5px;
+            color: #ff6537;
+          }
+      </style>
+  </head>
+  <body>
+    <header class="aui-bar aui-bar-nav aui-bar-light">
+      <a tapmode onclick="goback()" class="aui-pull-left aui-btn">
+          <span class="aui-iconfont aui-icon-left"></span>
+      </a>
+      <div class="aui-title">验证手机</div>
+      <a tapmode id="customer-service" class="aui-pull-right aui-btn">
+          <span class="aui-iconfont aui-icon-phone"></span>
+      </a>
+    </header>
+    <div class="logo-area">
+        <img src="../image/logo.png" alt="">
+    </div>
+    <div class="aui-content aui-margin-b-15 aui-margin-l-15 aui-margin-r-15">
+      <ul class="aui-list aui-form-list">
+          <li class="aui-list-item">
+              <div class="aui-list-item-inner">
+                  <div class="aui-list-item-label">
+                      手机号:
+                  </div>
+                  <div class="aui-list-item-input">
+                      <input id="tel" type="text" placeholder="">
+                  </div>
+              </div>
+          </li>
+          <li class="aui-list-item">
+              <div class="aui-list-item-inner">
+                  <div class="aui-list-item-label">
+                      验证码：
+                  </div>
+                  <div class="aui-list-item-input">
+                      <input class="l" id="code" type="number" placeholder="">
+                      <!-- <span  class="r" onclick="getCode(this)">验证码</span> -->
+                      <input class="r" readonly onclick="getCode(this)" type="text" value="获取验证码">
+                  </div>
+              </div>
+          </li>
+
+        </ul>
+      <p class="aui-margin-t-15"><div id="sign-in" tapmode class="aui-btn aui-btn-success aui-btn-block">验证</div></p>
+      </div>
+  </body>
+  <script type="text/javascript" src="../script/api.js"></script>
+  <script type="text/javascript">
+      //智齿客服
+      var zhiChiSobotMall = null;
+      var zhiChiSobot = null;
+      apiready = function(){
+            $api.fixStatusBar($api.dom('header'));
+
+            //智齿客服
+            zhiChiSobot = api.require('zhiChiSobotMall');
+            api.ajax({
+                url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=userdowns',
+                method: 'post',
+                data: {
+                }
+            }, function(ret, err) {
+                if (ret) {
+                    // api.alert({ msg: JSON.stringify(ret) });
+                    if(ret.status==1){
+                      function startZhiChiSobot(){
+                          var param = {
+                              appkey:"108b0ed204874501ae98b8e0fc08a6b8",//必填
+                              platformUnionId:"100x",//此id需要付费以后才能有。每个企业一个是必填
+                              userId:ret.content.id,
+                              nickName:ret.content.userNick,
+                              phone:"Your user phone",
+                              email:"Your user email",
+                              customInfo:{"age":"18","uname":"智齿APICloud"},
+                              isShowEvaluate:true,
+                              isSettingSkillSet:false,
+                              skillSetId:"",
+                              isShowTansfer:true,
+                              backgroundColor:"#f0f0f0",
+                              topViewTextColor:"#FFFFFF",
+                              isCustomLinkClick:false
+                          };
+                          zhiChiSobot.startZhiChiSobot(param);
+
+                      }
+                      $api.addEvt($api.byId("customer-service"), 'click', function(){
+                        startZhiChiSobot()
+                      });
+                    }else{
+                      function startZhiChiSobot(){
+                          var param = {
+                              appkey:"108b0ed204874501ae98b8e0fc08a6b8",//必填
+                              platformUnionId:"100x",//此id需要付费以后才能有。每个企业一个是必填
+                              userId:""+(new Date()).getTime()+Math.random()*10+"",
+                              nickName:"游客",
+                              phone:"Your user phone",
+                              email:"Your user email",
+                              customInfo:{"age":"18","uname":"智齿APICloud"},
+                              isShowEvaluate:true,
+                              isSettingSkillSet:false,
+                              skillSetId:"",
+                              isShowTansfer:true,
+                              backgroundColor:"#f0f0f0",
+                              topViewTextColor:"#FFFFFF",
+                              isCustomLinkClick:false
+                          };
+                          zhiChiSobot.startZhiChiSobot(param);
+
+                      }
+                      $api.addEvt($api.byId("customer-service"), 'click', function(){
+                        startZhiChiSobot()
+                      });
+                    }
+                } else {
+                    api.alert({ msg: JSON.stringify(err) });
+                }
+            });
+
+
+            //检测手机号码
+            function checkMobile(tel){
+              if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(tel))){
+                  alert("请填写正确的手机号");
+                  return false;
+              }
+              }
+
+            $api.addEvt($api.byId("sign-in"), 'click', function(){
+                var mobile = $api.val($api.byId("tel"));
+                var code = $api.val($api.byId("code"));
+
+                if(!mobile){
+                   alert('请输入手机号');
+                   return false;
+                }
+                if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(mobile))){
+                    alert("请填写正确的手机号");
+                    return false;
+                }
+
+                api.ajax({
+                    url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=login',
+                    method: 'post',
+                    data: {
+                        values: {
+                            mobile: mobile,
+                            code:code,
+                            way:'defined'
+                        }
+                    }
+                }, function(ret, err) {
+                    if (ret) {
+                        if(ret.status==0){
+                          alert(ret.content);
+                        }else if (ret.status==1) {
+                          alert("验证通过");
+                          api.openFrame({
+                              name: 'modify_pwd',
+                              url: './modify_pwd.html',
+                              rect: {
+                                  x: 0,
+                                  y: 0,
+                                  w: 'auto',
+                                  h: 'auto'
+                              },
+                              pageParam: {
+                                  tel: mobile
+                              }
+                          });
+                        }
+                        // api.alert({ msg: JSON.stringify(ret) });
+                    } else {
+                        // api.alert({ msg: JSON.stringify(err) });
+                    }
+                });
+            });
+
+      };
+
+      //获取验证码
+      function getCode(obj){
+        var mobile = $api.val($api.byId("tel"));
+        if(!mobile){
+          alert("请填写手机号");
+          return false;
+        }
+        if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(mobile))){
+            alert("请填写正确的手机号");
+            return false;
+        }
+        function autostop(){
+        var distime=60;
+        var timer=setInterval(function(){
+            distime--;
+            $api.val(obj,distime+'秒后重新获取');
+            $api.attr(obj,"disabled",true);
+            $api.css(obj,'background:#ddd;border:0;color: #fff;');
+            if(distime<1){
+                clearInterval(timer);
+                $api.attr(obj,"disabled",false);
+                $api.val(obj,'获取验证码');
+                $api.css(obj,'background:#fff;border: 1px solid #ff6537;color: #ff6537;');
+            }
+        },1000);
+        }
+        autostop()
+        api.ajax({
+            url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=messages',
+            method: 'post',
+            data: {
+                values: {
+                    mobile: mobile
+                }
+            }
+        }, function(ret, err) {
+            if (ret) {
+                alert(ret.content);
+
+            } else {
+                // api.alert({ msg: JSON.stringify(err) });
+                alert(err.content)
+            }
+        });
+      }
+
+      //打开登陆页面
+      function openLogin(){
+        api.openFrame({
+            name: 'login',
+            url: './login.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: 'auto'
+            }
+        });
+      }
+
+
+      //回到首页
+      // function goIndex(){
+      //   api.openFrame({
+      //       name: 'index',
+      //       url: '../index.html',
+      //       rect: {
+      //           x: 0,
+      //           y: 0,
+      //           w: 'auto',
+      //           h: 'auto'
+      //       }
+      //   });
+      // }
+
+
+      //打开用户服务协议页面
+
+      function openUserAgree(){
+        api.openFrame({
+            name: 'user_agree',
+            url: './user_agree.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: 'auto'
+            }
+        });
+      }
+
+
+
+      function goback(){
+        api.closeFrame();
+      }
+  </script>
+  </html>
