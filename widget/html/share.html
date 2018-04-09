@@ -180,6 +180,18 @@
                       alert(err.code);
                   }
               });
+            }else if (scene==3) {
+              wx.shareImage({
+                  apiKey: '',
+                  scene: 'favorite',
+                  contentUrl: ret.savePath
+              }, function(ret, err) {
+                  if (ret.status) {
+                      alert('收藏成功');
+                  } else {
+                      alert(err.code);
+                  }
+              });
             }
 
           }
@@ -212,7 +224,7 @@
                             api.actionSheet({
                               title: '分享海报',
                               cancelTitle: '取消',
-                              buttons: ['分享给朋友', '分享朋友圈']
+                              buttons: ['分享给朋友', '分享朋友圈','收藏']
                             }, function(ret, err) {
                               var index = ret.buttonIndex;
                               shareFn(retult,index);
