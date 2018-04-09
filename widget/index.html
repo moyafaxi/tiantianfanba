@@ -94,15 +94,13 @@
 
 
 
-      function registerDeviceToken() {
-            var param = {
-                deviceToken: api.deviceToken,
-            };
-            uzgetuisdk.registerDeviceToken(param, function(ret, err) {
-                var log = 'registerDeviceToken:' + ret.result;
-                console.log(log);
-            });
-        }
+     api.require('tencentPush').registerPush(function(ret, err) {
+     if (ret.status) {
+         alert("注册成功，token为：" + ret.token);
+     } else {
+         alert("注册失败，错误码：" + err.code + "，错误信息：" + err.msg);
+     }
+  });
 
       // api.openFrame({
       //     name: 'shoplist',
