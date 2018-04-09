@@ -14,13 +14,15 @@
           header{
             background:#ea620b !important;
             color: #fff !important;
+            position: fixed !important;
+            top: 0;
           }
           .aui-bar-nav.aui-bar-light .aui-iconfont {
             color: #fff !important;
           }
           .triangle{width: 100%;height: auto;background:#fff;position: relative;}
           .triangle img{width: 100%;height: auto;}
-          .triangle .rate{position: absolute;top: 60.5%;width: 100%;}
+          .triangle .rate{position: absolute;top: 62%;width: 100%;}
           .triangle .rate p{text-align: center;font-size: 12px;color: #fff}
 
           .rate-level{background: #fff;padding-top: 10px;padding-bottom:40px;}
@@ -76,7 +78,7 @@
   <script type="text/javascript">
       apiready = function(){
           $api.fixStatusBar($api.dom('header'));
-          $api.css($api.dom('.triangle'),"padding-top:"+$api.offset($api.dom('header')).h+"px");
+          $api.css($api.dom('.triangle'),"padding-top:"+($api.offset($api.dom('header')).h+20)+"px");
 
           api.setFrameAttr({
            name: 'rate_of_return'

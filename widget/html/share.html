@@ -13,29 +13,56 @@
           }
           .top-area{
             width: 100%;
-            height:600px;
+            position: relative;
+            /*height:600px;
             background: url(../image/top-bg.png) bottom center;
-            background-size: 100% 100%;
+            background-size: 100% 100%;*/
+
           }
-          .top-area .header{height: 40px;line-height: 40px;text-align: center;color: #fff;font-size: 22px;}
+          .top-area .bg{width: 100%;height: auto;}
+          .top-area .header{
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            color: #fff;
+            font-size: 22px;
+            position: absolute;
+            top: 0;
+            width: 100%;
+          }
           .top-area .header .img1{float: left;width: 15px;margin-left: 10px;margin-top: 5px;}
           .top-area .header .img2{float: right;width: 20px;margin-right: 10px;margin-top: 8px;}
-          .top-area .share-btn{width: 92%;display: block;margin:420px auto 0;}
+          .top-area .share-btn{width: 92%;display: block;position: absolute;bottom: 18%;left:4%;}
           .out-wrap{
-            width: 300px;
+            width: 92%;
             background: rgba(255,255,255,.3);
-            height:55px;
+
             margin: 10px auto 0;
             border-radius: 5px;
             box-sizing: content-box;
             padding: 4px 0;
+            position: absolute;
+            bottom: 3%;
+            left:4%;
           }
-          .out-wrap .in-wrap{width: 286px;background: #fff;margin: 0 auto 0;border-radius: 5px;height: 55px;}
-          .out-wrap .in-wrap .l{float:left;box-sizing: border-box;border-right: 1px solid #fdbea4;width: 50%;margin-top: 8px;}
+          .out-wrap .in-wrap{width:97%;background: #fff;margin: 0 auto 0;border-radius: 5px;}
+          .out-wrap .in-wrap .l{
+            float:left;
+            box-sizing: border-box;
+            border-right: 1px solid #fdbea4;
+            width: 50%;
+            margin-top: 8px;
+          }
           .out-wrap .in-wrap .l p{text-align: center;}
           .out-wrap .in-wrap .l .p1{font-size: 14px;}
           .out-wrap .in-wrap .r{
-            float:right;box-sizing: border-box;width: 50%;border-left: 1px solid #fdbea4;position: relative;margin-top: 8px;}
+            float:right;
+            box-sizing: border-box;
+            width: 50%;
+            border-left: 1px solid #fdbea4;
+            position: relative;
+            margin-top: 8px;
+          }
           .out-wrap .in-wrap .r p{text-align: center;}
           .out-wrap .in-wrap .r .p1{font-size: 14px;}
           .out-wrap .in-wrap .r img{position: absolute;right: 5px;top: 12px;width: 20px;}
@@ -64,6 +91,7 @@
   </head>
   <body>
       <div class="top-area">
+         <img class="bg" src="../image/top-bg.png" alt="">
          <div class="header clearfix"><img class="img1" tapmode  onclick="goback()" src="../image/arrow-left.png" alt=""><span>分享</span><img onclick="goback()" tapmode  class="img2" src="../image/close.png" alt=""></div>
          <img id="share-btn"  tapmode  class="share-btn" src="../image/share-btn.png" alt="">
          <div class="out-wrap">

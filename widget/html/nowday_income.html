@@ -14,6 +14,8 @@
           header{
             background:#ea620b !important;
             color: #fff !important;
+            position: fixed !important;
+            top: 0;
           }
           .aui-bar-nav.aui-bar-light .aui-iconfont {
           	color: #fff !important;
@@ -82,6 +84,7 @@
         $api.setStorage('framenames',framenamesArr);
 
        $api.fixStatusBar($api.dom('header'));
+       $api.css($api.dom('.detail-wrap'),"padding-top:"+($api.offset($api.dom('header')).h)+"px");
 
         var headerHeight = $api.offset($api.byId('header')).h;
 
