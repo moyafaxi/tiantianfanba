@@ -153,6 +153,7 @@
               }
           });
 
+          var qq = api.require('qq');
 
           var wx = api.require('wx');
           function shareFn(ret,scene){
@@ -192,6 +193,12 @@
                       alert(err.code);
                   }
               });
+            }else if (scene==4) {
+              qq.shareImage({
+                  title: 'test',
+                  description: 'testd',
+                  imgPath: ret.savePath
+              });
             }
 
           }
@@ -224,7 +231,7 @@
                             api.actionSheet({
                               title: '分享海报',
                               cancelTitle: '取消',
-                              buttons: ['分享给朋友', '分享朋友圈','收藏']
+                              buttons: ['分享给朋友', '分享朋友圈','收藏','分享qq']
                             }, function(ret, err) {
                               var index = ret.buttonIndex;
                               shareFn(retult,index);
