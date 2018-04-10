@@ -155,12 +155,17 @@
 
 
           var wx = api.require('wx');
-          var qq = api.require('qq');
-          qq.login(function(ret, err) {
-              api.alert({
-                  title: 'id和token',
-                  msg: ret.openId + ret.accessToken
-              });
+
+          var qq = api.require('QQPlus');
+          qq.shareImage({
+              type : 'QFriend',
+              imgPath: 'widget://image/close.png'
+          },function(ret,err){
+            if (ret.status){
+              alert("分享成功！");
+            } else {
+              api.alert({msg: JSON.stringify(err)});
+            }
           });
 
           function shareFn(ret,scene){
@@ -201,11 +206,8 @@
                   }
               });
             }else if (scene==4) {
-              qq.shareImage({
-                  title: 'test',
-                  description: 'testd',
-                  imgPath: ret.savePath
-              });
+              // alert(ret.savePath);
+
             }
 
           }
