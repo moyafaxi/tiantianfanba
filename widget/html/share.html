@@ -131,7 +131,7 @@
         framenamesArr.push('share');
         $api.setStorage('framenames',framenamesArr);
 
-          $api.fixStatusBar($api.dom('.top-area'));
+          $api.fixStatusBar($api.dom('.header'));
 
           //获取下级数据
           api.ajax({
@@ -153,7 +153,6 @@
               }
           });
 
-          var qq = api.require('qq');
 
           var wx = api.require('wx');
           function shareFn(ret,scene){
@@ -193,12 +192,6 @@
                       alert(err.code);
                   }
               });
-            }else if (scene==4) {
-              qq.shareImage({
-                  title: 'test',
-                  description: 'testd',
-                  imgPath: ret.savePath
-              });
             }
 
           }
@@ -231,7 +224,7 @@
                             api.actionSheet({
                               title: '分享海报',
                               cancelTitle: '取消',
-                              buttons: ['分享给朋友', '分享朋友圈','收藏','分享qq']
+                              buttons: ['分享给朋友', '分享朋友圈','收藏']
                             }, function(ret, err) {
                               var index = ret.buttonIndex;
                               shareFn(retult,index);
