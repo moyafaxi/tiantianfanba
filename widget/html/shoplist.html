@@ -88,12 +88,12 @@
           }
           .list-wrap2 .item .left{width: 100%;padding: 10px;}
           .list-wrap2 .item .right{;width:100%;}
+          .list-wrap2 .item .right .h3-wrap{width: 100%;overflow: hidden;}
           .list-wrap2 .item .right h3{
             margin-top: 10px;
             font-size: 16px;
             font-weight: bold;
-            overflow: hidden;
-            width: 500px;
+            width: 1000px;
             padding-left: 10px;
           }
           .list-wrap2 .item .right .wrap .l{float: left;width: 55%;padding-left: 10px;}
@@ -164,7 +164,7 @@
             <div  itemid="{{=data.itemid}}" pid="{{=data.pid}}" lm="{{=data.lm}}" class="item clearfix" onclick="openCouponUrl(this)" tapmode>
                <img class="left" onerror="this.src='../image/shoplist-tp.png'" src="{{=data.itempic}}" alt="">
                <div class="right">
-                 <h3>{{=data.itemtitle.substring(0,12)}}...</h3>
+                 <div class="h3-wrap"><h3>{{=data.itemtitle.substring(0,12)}}...</h3></div>
                  <div class="wrap clearfix">
                    <div class="l">
                       <P class="p1 clearfix"><span class="p-l">{{=data.shoptype=="B" ? "天猫价" : "淘宝价"}}￥{{=data.itemprice}}</span></P>
