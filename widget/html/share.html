@@ -157,16 +157,7 @@
           var wx = api.require('wx');
 
           var qq = api.require('QQPlus');
-          qq.shareImage({
-              type : 'QFriend',
-              imgPath: 'widget://image/close.png'
-          },function(ret,err){
-            if (ret.status){
-              alert("分享成功！");
-            } else {
-              api.alert({msg: JSON.stringify(err)});
-            }
-          });
+
 
           function shareFn(ret,scene){
             if(scene==1){
@@ -206,8 +197,16 @@
                   }
               });
             }else if (scene==4) {
-              // alert(ret.savePath);
-
+              qq.shareImage({
+                  type : 'QFriend',
+                  imgPath: ret.savePath
+              },function(ret,err){
+                if (ret.status){
+                  alert("分享成功！");
+                } else {
+                  api.alert({msg: JSON.stringify(err)});
+                }
+              });
             }
 
           }
@@ -240,7 +239,7 @@
                             api.actionSheet({
                               title: '分享海报',
                               cancelTitle: '取消',
-                              buttons: ['分享给朋友', '分享朋友圈','收藏','qq']
+                              buttons: ['分享给朋友', '分享朋友圈','收藏','分享至qq']
                             }, function(ret, err) {
                               var index = ret.buttonIndex;
                               shareFn(retult,index);
