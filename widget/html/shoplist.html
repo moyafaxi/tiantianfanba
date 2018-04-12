@@ -577,7 +577,10 @@
                                     }
                                   }, function(retu, err) {
                                     if (retu) {
-                                        //dosomething
+                                      var jsfun = 'reloadData()';
+                                      api.execScript({
+                                          script: jsfun
+                                      });
                                     } else {
                                         //dosomething
                                     }

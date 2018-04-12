@@ -76,7 +76,7 @@
   <script  type="text/template"  id="tpl" >
     {{~ it:data }}
         <div class="order-item" tapmode>
-          <div class="order-identifier clearfix"><span class="order-num">{{=data.orderID ? "订单号："+data.orderID : data.remark}}</span>
+          <div class="order-identifier clearfix"><span class="order-num">{{=data.type==1 ? "订单号："+data.orderID : data.remark}}</span>
             {{? !data.status}}
             {{?? data.status == 1}}
             <span class="order-status1">未存入</span>
@@ -230,7 +230,7 @@
                 //  alert(ret.content)
                   if(ret.content){
                     if(isEmpty(ret.content)){
-                      $api.byId("order-wrap").innerHTML="<div style='background:#fff;padding:10px 0 0 10px;'>暂无数据</div>";
+                      $api.byId("order-wrap").innerHTML="<div style='background:#fff;padding:10px 0 0 10px;'>暂无数据,您可以尝试复制商品链接搜索</div>";
                       return false;
                     }
                     var tpl= doT.template( $api.byId("tpl").innerHTML );

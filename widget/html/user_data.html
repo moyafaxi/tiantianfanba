@@ -158,6 +158,16 @@
             }, function(ret, err) {
               if (ret) {
                   if(ret.status==1){
+                      //退出阿里百川
+                      var alibaichuan = api.require('alibaichuan');
+                      alibaichuan.logout(function(ret, err) {
+                          if (ret) {
+                              // alert("ret - " + JSON.stringify(ret));
+                          } else {
+                              // alert("err - " + JSON.stringify(err));
+                          }
+                      });
+
                       var footerHeight = api.getPrefs({sync: true,key: 'footerHeight'});
                       // var jsfun = 'reloadData();';
                       // api.execScript({

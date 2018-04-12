@@ -429,6 +429,12 @@
       });
 
       $api.addEvt($api.byId('search-pic'), 'click', function(){
+
+        var jsfun = 'funIniGroup(2)';
+        api.execScript({
+            script: jsfun
+        });
+
         var footerHeight = api.getPrefs({sync: true,key: 'footerHeight'});
         api.openFrame({
             name: 'search',
@@ -442,10 +448,7 @@
         });
 
 
-        var jsfun = 'funIniGroup(2);';
-        api.execScript({
-            script: jsfun
-        });
+
 
 
       });
