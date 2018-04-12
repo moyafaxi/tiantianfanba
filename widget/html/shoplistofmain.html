@@ -400,8 +400,8 @@
                   // api.alert({ msg: JSON.stringify(ret) });
                   if(ret.status==1){
                     if(isEmpty(ret.content)&&num==1){
-                      $api.byId("tpl-wrap").innerHTML="<div style='background:#fff;padding:10px 0 0 10px;'>暂无数据</div>";
-                      $api.byId("tpl-wrap2").innerHTML="<div style='background:#fff;padding:10px 0 0 10px;'>暂无数据</div>";
+                      $api.byId("tpl-wrap").innerHTML="<div style='background:#fff;padding:10px 0 0 10px;'>暂无数据,请尝试复制商品链接搜索</div>";
+                      $api.byId("tpl-wrap2").innerHTML="<div style='background:#fff;padding:10px 0 0 10px;'>暂无数据,请尝试复制商品链接搜索</div>";
                       return false;
                     }
                     var tpl= doT.template( $api.byId("tpl").innerHTML );
@@ -442,8 +442,8 @@
                   // api.alert({ msg: JSON.stringify(ret) });
                   if(ret.status==1){
                     if(isEmpty(ret.content)){
-                      $api.byId("tpl-wrap").innerHTML="<div style='background:#fff;padding:10px 0 0 10px;'>暂无数据</div>";
-                      $api.byId("tpl-wrap2").innerHTML="<div style='background:#fff;padding:10px 0 0 10px;'>暂无数据</div>";
+                      $api.byId("tpl-wrap").innerHTML="<div style='background:#fff;padding:10px 0 0 10px;'>暂无数据,请尝试复制商品链接搜索</div>";
+                      $api.byId("tpl-wrap2").innerHTML="<div style='background:#fff;padding:10px 0 0 10px;'>暂无数据,请尝试复制商品链接搜索</div>";
                       return false;
                     }
                     var tpl = doT.template( $api.byId("tpl").innerHTML );

@@ -230,7 +230,7 @@
                 //  alert(ret.content)
                   if(ret.content){
                     if(isEmpty(ret.content)){
-                      $api.byId("order-wrap").innerHTML="<div style='background:#fff;padding:10px 0 0 10px;'>暂无数据,您可以尝试复制商品链接搜索</div>";
+                      $api.byId("order-wrap").innerHTML="<div style='background:#fff;padding:10px 0 0 10px;'>暂无数据</div>";
                       return false;
                     }
                     var tpl= doT.template( $api.byId("tpl").innerHTML );
@@ -367,5 +367,6 @@
          }
       });
   }
+
   </script>
   </html>

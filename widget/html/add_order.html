@@ -149,6 +149,11 @@
           $api.fixStatusBar($api.dom('header'));
 
           $api.addEvt($api.byId("sure"), 'click', function(){
+            var jsfun = 'reloadData();';
+            api.execScript({
+                frameName: 'order',
+                script: jsfun
+            });
             var orderNum = $api.val($api.byId("order"));
             api.ajax({
                   url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=orderupload',
@@ -164,6 +169,8 @@
                     if(ret.status==1){
                       alert("订单提交成功");
                       $api.val($api.byId("order"),'');
+
+
                     }else {
                       alert(ret.content);
                     }
