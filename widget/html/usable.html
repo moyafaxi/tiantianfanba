@@ -16,7 +16,11 @@
             background-size: 100% 100%;
           }
           .top-area .header{height: 50px;line-height: 50px;text-align: center;color: #fff;font-size: 18px;border-bottom: 1px solid #f9b588;}
-          .top-area .header .img1{float: left;width: 12px;margin-left: 10px;margin-top: 15px;}
+          .top-area .header .left{
+            width: 40px;
+            position: absolute;
+          }
+          .top-area .header .img1{width: 12px;margin-left: 10px;margin-top: 15px;}
           .top-area .header .img2{float: right;width: 20px;margin-right: 10px;margin-top: 18px;}
 
           .top-area .wrap .left{float: left;color: #fff;width: 40%;margin-left: 5%;}
@@ -45,14 +49,14 @@
   </head>
   <body>
     <div class="top-area">
-       <div class="header clearfix"><img onclick="goback()" tapmode class="img1" src="../image/arrow-left.png" alt=""><span>可用余额明细</span></div>
+       <div class="header clearfix"><div class="left" onclick="goback()" tapmode><img class="img1" src="../image/arrow-left.png" alt=""></div><span>可用余额明细</span></div>
        <div class="wrap clearfix">
          <div class="left">
            <p class="p1">余额明细 (元)</p>
            <p id="sum" class="p2">0.00</p>
          </div>
          <div class="right">
-           <span  onclick="openWithDraw()" tapmode  >提现</span>
+           <span  onclick="openWithDraw()" tapmode>提现</span>
          </div>
        </div>
     </div>

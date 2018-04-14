@@ -207,6 +207,17 @@
                   // api.alert({msg: JSON.stringify(err)});
                 }
               });
+            }else if (scene==5) {
+              qq.shareImage({
+                  type : 'QZone',
+                  imgPath: ret.savePath
+              },function(ret,err){
+                if (ret.status){
+                  alert("分享成功！");
+                } else {
+                  // api.alert({msg: JSON.stringify(err)});
+                }
+              });
             }
 
           }
@@ -239,7 +250,7 @@
                             api.actionSheet({
                               title: '分享海报',
                               cancelTitle: '取消',
-                              buttons: ['分享给朋友', '分享朋友圈','收藏','分享至qq']
+                              buttons: ['分享给朋友', '分享朋友圈','收藏','分享给qq好友','分享至qq空间']
                             }, function(ret, err) {
                               var index = ret.buttonIndex;
                               shareFn(retult,index);

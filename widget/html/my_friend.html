@@ -111,9 +111,27 @@
           }, function(ret, err) {
               if (ret) {
                   if(ret.status==1){
-                    // alert(rert.content);
-                    var tpl= doT.template( $api.byId("tpl").innerHTML );
-                    $api.byId("list-wrap").innerHTML=tpl(ret.content);
+                    // alert(ret.content);
+                    if(!ret.content){
+                      var tpl= doT.template( $api.byId("tpl").innerHTML );
+                      $api.byId("list-wrap").innerHTML=tpl(ret.content);
+                    }else{
+                      switch (index) {
+                        case 1:
+                          $api.byId("list-wrap").innerHTML="<img src='../image/first-level.png' style='display:block;margin:20px auto 0;width:100%;' alt='' />";
+                          break;
+                        case 2:
+                          $api.byId("list-wrap").innerHTML="<img src='../image/second-level.png' style='display:block;margin:20px auto 0;width:100%;' alt='' />";
+                          break;
+                        case 3:
+                          $api.byId("list-wrap").innerHTML="<img src='../image/third-level.png' style='display:block;margin:20px auto 0;width:100%;' alt='' />";
+                          break;
+                        default:
+
+                      }
+
+                    }
+
                   }
                   // api.alert({ msg: JSON.stringify(ret) });
               } else {

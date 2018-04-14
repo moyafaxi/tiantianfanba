@@ -571,7 +571,7 @@
                                     method: 'post',
                                     data: {
                                         values: {
-                                            order:  ret.ordercode,
+                                            order:ret.ordercode,
                                             uptype:1
                                         }
                                     }
@@ -587,9 +587,9 @@
                                   });
                                     // alert(JSON.stringify(ret));
                                 } else {
-                                  if(err.code==3002){
-                                    alert("下单付款后如未存入订单，请在添加订单处手动添加！")
-                                  }
+                                  // if(err.code==3002){
+                                  //   alert("下单付款后如未存入订单，请在添加订单处手动添加！")
+                                  // }
                                 }
                             });
                           }else{

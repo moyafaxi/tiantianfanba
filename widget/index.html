@@ -96,18 +96,18 @@
 
      api.require('tencentPush').registerPush(function(ret, err) {
      if (ret.status) {
-        //  console.log("注册成功，token为：" + ret.token);
+         console.log("注册成功，token为：" + ret.token);
      } else {
         //  alert("注册失败，错误码：" + err.code + "，错误信息：" + err.msg);
      }
   });
 
 
- //  var resultCallback = function(ret, err) {
- //    alert("收到通知被点击的回调，title：" + ret.title + "，content：" + ret.content + "，customContent：" + ret.customContent + ",activity:" + ret.activity + ",actionType:" + ret.actionType + ",msgid:" + ret.msgid);
- // }
- //  var params = { name: "notifactionClick" };
- //   api.require('tencentPush').setListener(params, resultCallback);
+  var resultCallback = function(ret, err) {
+    alert("收到通知被点击的回调，title：" + ret.title + "，content：" + ret.content + "，customContent：" + ret.customContent + ",activity:" + ret.activity + ",actionType:" + ret.actionType + ",msgid:" + ret.msgid);
+ }
+  var params = { name: "notifactionClick" };
+   api.require('tencentPush').setListener(params, resultCallback);
 
 
 
