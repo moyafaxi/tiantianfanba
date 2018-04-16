@@ -75,7 +75,7 @@
       </div>
       <div class="right">
         <p class="p1">{{=data.userNick}}</p>
-        <p class="p2 clearfix"><span class="l">存入总额(元)：{{=data.credit}}</span><span class="r">奖励存入总额(元)：<span>{{=data.yong}}</span></span></p>
+        <p class="p2 clearfix"><span class="l">存入总额(元)：{{=data.credit}}</span><span class="r">奖励存入(元)：<span>{{=data.yong}}</span></span></p>
       </div>
     </div>
     {{~}}
@@ -112,7 +112,7 @@
               if (ret) {
                   if(ret.status==1){
                     // alert(ret.content);
-                    if(!ret.content){
+                    if(ret.content){
                       var tpl= doT.template( $api.byId("tpl").innerHTML );
                       $api.byId("list-wrap").innerHTML=tpl(ret.content);
                     }else{
