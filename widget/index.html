@@ -103,12 +103,6 @@
   });
 
 
-  var resultCallback = function(ret, err) {
-    alert("收到通知被点击的回调，title：" + ret.title + "，content：" + ret.content + "，customContent：" + ret.customContent + ",activity:" + ret.activity + ",actionType:" + ret.actionType + ",msgid:" + ret.msgid);
- }
-  var params = { name: "notifactionClick" };
-   api.require('tencentPush').setListener(params, resultCallback);
-
 
 
       // api.openFrame({
