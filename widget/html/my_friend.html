@@ -112,7 +112,7 @@
               if (ret) {
                   if(ret.status==1){
                     // alert(ret.content);
-                    if(ret.content){
+                    if(ret.content.length != 0){
                       var tpl= doT.template( $api.byId("tpl").innerHTML );
                       $api.byId("list-wrap").innerHTML=tpl(ret.content);
                     }else{

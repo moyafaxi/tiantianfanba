@@ -130,17 +130,32 @@
          value: $api.offset($api.byId('footer')).h
       });
       if(api.pageParam.direction){
-        api.openFrame({
-            name: 'search',
-            url: './html/search.html',
-            rect: {
-                x: 0,
-                y: 0,
-                w: api.winWidth,
-                h: api.winHeight - $api.offset($api.byId('footer')).h
-            }
-          });
-          funIniGroup(2);
+        if(api.pageParam.direction=='search'){
+          api.openFrame({
+              name: 'search',
+              url: './html/search.html',
+              rect: {
+                  x: 0,
+                  y: 0,
+                  w: api.winWidth,
+                  h: api.winHeight - $api.offset($api.byId('footer')).h
+              }
+            });
+            funIniGroup(2);
+        }else if(api.pageParam.direction=='center'){
+          api.openFrame({
+              name: 'person_center',
+              url: './html/person_center.html',
+              rect: {
+                  x: 0,
+                  y: 0,
+                  w: api.winWidth,
+                  h: api.winHeight - $api.offset($api.byId('footer')).h
+              }
+            });
+            funIniGroup(5);
+        }
+
       }else{
        api.openFrame({
            name: 'main',

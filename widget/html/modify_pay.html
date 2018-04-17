@@ -124,16 +124,20 @@
                          title:"修改成功",
                          duration:1000
                        });
+                       api.closeFrame({name:'pay'});
                        api.openFrame({
-                          name: 'person_center',
-                          url: './person_center.html',
+                          name: 'index',
+                          url: '../index.html',
                           rect: {
                               x: 0,
                               y: 0,
-                              w: 'auto',
-                              h: 'auto'
+                              w: api.winWidth,
+                              h: api.winHeight
                           },
-                          reload:true
+                          reload:true,
+                          pageParam: {
+                                  direction: 'center'
+                              }
                       });
                     }
                     //  api.alert({ msg: JSON.stringify(ret) });

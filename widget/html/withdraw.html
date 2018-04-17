@@ -81,7 +81,7 @@
         </ul>
         <div class="aui-margin-t-10 aui-margin-l-15 aui-margin-r-15 can-wdraw">可提现金额：<span id="canWdraw"></span> 元</div>
       <p class="aui-margin-t-15"><div id="withdraw" tapmode class="aui-btn aui-btn-success aui-btn-block">提交申请</div></p>
-      <div class="aui-margin-t-15 warm-prompt"><span>温馨提示：</span>最低提现金额为1元</div>
+      <div class="aui-margin-t-15 warm-prompt"><span>温馨提示：</span>最低提现金额为<span id="minimum"></span>元</div>
       </div>
   </body>
   <script type="text/javascript" src="../script/api.js"></script>
@@ -115,6 +115,7 @@
                     if(ret.content.alipay&&ret.content.mobile){
                       $api.val($api.byId("pay"),ret.content.alipay);
                       $api.val($api.byId("mobile"),ret.content.mobile);
+                      $api.text($api.byId("minimum"),ret.content.drawmoney)
                     }else if(!ret.content.mobile){
                       alert("请先绑定手机号");
                       api.openFrame({

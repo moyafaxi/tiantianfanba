@@ -141,18 +141,19 @@
           }, function(ret, err) {
             if (ret) {
                 if(ret.status==1){
-                  $api.text($api.byId("rate"),ret.content.todaymoney);
-                  $api.text($api.byId("rateofyear"),ret.content.todaymoney);
-                  $api.text($api.byId("incomeofyear"),"1000*"+ret.content.todaymoney+"="+10*parseFloat(ret.content.todaymoney));
-                  $api.text($api.byId("incomeofday"),10*parseFloat(ret.content.todaymoney)+"/365="+(10*parseFloat(ret.content.todaymoney)/365).toFixed(4));
+                  var rateofyear = ret.content.todaymoney=='暂未收益' ? 0 : ret.content.todaymoney;
+                  $api.text($api.byId("rate"),rateofyear);
+                  $api.text($api.byId("rateofyear"),rateofyear+"%");
+                  $api.text($api.byId("incomeofyear"),"1000*"+rateofyear+"%="+(10*parseFloat(rateofyear)).toFixed(4));
+                  $api.text($api.byId("incomeofday"),10*parseFloat(rateofyear)+"/365="+(10*parseFloat(rateofyear)/365).toFixed(4));
 
-                  if(parseFloat(ret.content.todaymoney)<7.5){
+                  if(parseFloat(rateofyear)<7.5){
                     $api.attr($api.byId("level-pic"), 'src', '../image/jiaocha.png');
-                  }else if (parseFloat(ret.content.todaymoney)>=7.5 && parseFloat(ret.content.todaymoney)<15) {
+                  }else if (parseFloat(rateofyear)>=7.5 && parseFloat(rateofyear)<15) {
                     $api.attr($api.byId("level-pic"), 'src', '../image/yiban.png');
-                  }else if (parseFloat(ret.content.todaymoney)>=15 && parseFloat(ret.content.todaymoney)<22.5) {
+                  }else if (parseFloat(rateofyear)>=15 && parseFloat(rateofyear)<22.5) {
                     $api.attr($api.byId("level-pic"), 'src', '../image/hao.png');
-                  }else if (parseFloat(ret.content.todaymoney)>=22.5 && parseFloat(ret.content.todaymoney)<=30) {
+                  }else if (parseFloat(rateofyear)>=22.5 && parseFloat(rateofyear)<=30) {
                     $api.attr($api.byId("level-pic"), 'src', '../image/youxiu.png');
                   }
 
