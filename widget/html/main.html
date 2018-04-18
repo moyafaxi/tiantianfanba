@@ -301,6 +301,41 @@
       api.closeFrame({
           name: 'shoplistofmain'
       });
+
+
+      //判断是否绑定手机
+      api.ajax({
+        url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=userdowns',
+        method: 'post',
+        data: {
+        }
+      }, function(ret, err) {
+        if (ret) {
+            if(ret.status==1){
+              if(!ret.content.mobile){
+                alert("当前未绑定手机,请绑定");
+                api.openFrame({
+                   name: 'bind_tel',
+                   url: './bind_tel.html',
+                   rect: {
+                       x: 0,
+                       y: 0,
+                       w: 'auto',
+                       h: 'auto'
+                   },
+                   reload:true
+               });
+              }
+
+              //  api.alert({ msg: JSON.stringify(ret) });
+
+            }
+
+        } else {
+            api.alert({ msg: JSON.stringify(err) });
+        }
+      });
+
       //回到顶部
       $api.addEvt($api.byId("go-top"), 'click', function(){
         api.pageUp({top:true},function(ret, err) {});

@@ -118,7 +118,7 @@
         }, function(ret, err) {
           if (ret) {
               if(ret.status==1){
-                // $api.text($api.byId("sum"),ret.content.sum);
+                $api.text($api.byId("sum"),ret.content.sum);
                 var tpl= doT.template( $api.byId("tpl").innerHTML );
                 $api.byId("detail-list").innerHTML=tpl(ret.content.list);
               }else {
