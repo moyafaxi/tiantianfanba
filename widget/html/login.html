@@ -240,10 +240,6 @@
       function showLogin() {
           alibaichuan.showLogin(function(ret, err) {
               if (ret) {
-                // var userNick = ret.userNick;
-                // var avatarUrl = ret.avatarUrl;
-                // var userId = ret.userId;
-                // +"&userNick="+userNick+"&avatarUrl="+avatarUrl+"&userId="+userId
                 api.ajax({
                     url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=autologin',
                     method: 'post',
@@ -273,17 +269,25 @@
                            }
                        });
                      }else{
-                       alert(ret.content)
+                      //  alert(ret.content)
                      }
                         // api.alert({ msg: JSON.stringify(ret) });
                     } else {
-                        api.alert({ msg: JSON.stringify(err) });
+                        // api.alert({ msg: JSON.stringify(err) });
                     }
                   });
 
                   // alert("登录success:" + JSON.stringify(ret));
               } else {
-                  alert("登录出错,请重新尝试");
+                  // alert("登录出错,请重新尝试");
+                  // showLogin();
+                  alibaichuan.getUserInfo(function(ret, err) {
+                    if (ret) {
+                        alert("用户信息 ret - " + JSON.stringify(ret));
+                    } else {
+                        alert("用户信息 err - " + JSON.stringify(err));
+                    }
+                });
               }
           });
       }
