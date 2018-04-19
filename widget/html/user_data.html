@@ -138,14 +138,6 @@
             });
         });
 
-
-        api.addEventListener({
-            name:'viewappear'
-        }, function(ret, err){
-            alert('window显示');
-        });
-
-
         //绑定退出登陆
         $api.addEvt($api.byId("exit"), 'click', function(){
             api.ajax({
