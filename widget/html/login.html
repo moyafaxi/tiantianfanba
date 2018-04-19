@@ -250,9 +250,9 @@
                             userId:ret.userId
                         }
                     }
-                  }, function(ret, err) {
-                    if (ret) {
-                       if(ret.status==1){
+                  }, function(ret1, err) {
+                    if (ret1) {
+                       if(ret1.status==1){
                          alert("授权登陆成功");
                          var footerHeight = api.getPrefs({sync: true,key: 'footerHeight'});
                          api.closeFrame({
@@ -269,9 +269,9 @@
                            }
                        });
                      }else{
-                      //  alert(ret.content)
+                      //  alert(ret1.content)
                      }
-                        // api.alert({ msg: JSON.stringify(ret) });
+                        // api.alert({ msg: JSON.stringify(ret1) });
                     } else {
                         // api.alert({ msg: JSON.stringify(err) });
                     }
@@ -280,14 +280,50 @@
                   // alert("登录success:" + JSON.stringify(ret));
               } else {
                   // alert("登录出错,请重新尝试");
-                  // showLogin();
-                  alibaichuan.getUserInfo(function(ret, err) {
-                    if (ret) {
-                        alert("用户信息 ret - " + JSON.stringify(ret));
-                    } else {
-                        alert("用户信息 err - " + JSON.stringify(err));
-                    }
-                });
+                  setTimeout(function(){
+                    alibaichuan.getUserInfo(function(ret, err) {
+                        if (ret) {
+                          api.ajax({
+                              url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=autologin',
+                              method: 'post',
+                              data: {
+                                  values: {
+                                      userNick: ret.userNick,
+                                      avatarUrl:ret.avatarUrl,
+                                      userId:ret.userId
+                                  }
+                              }
+                            }, function(ret1, err) {
+                              if (ret1) {
+                                 if(ret1.status==1){
+                                   alert("授权登陆成功");
+                                   var footerHeight = api.getPrefs({sync: true,key: 'footerHeight'});
+                                   api.closeFrame({
+                                       name: 'index'
+                                   });
+                                   api.openFrame({
+                                     name: 'index',
+                                     url: '../index.html',
+                                     rect: {
+                                         x: 0,
+                                         y: 0,
+                                         w: api.winWidth,
+                                         h: api.winHeight
+                                     }
+                                 });
+                               }else{
+                                //  alert(ret1.content)
+                               }
+                                  // api.alert({ msg: JSON.stringify(ret1) });
+                              } else {
+                                  // api.alert({ msg: JSON.stringify(err) });
+                              }
+                            });
+                        } else {
+                            alert("用户信息 err - " + JSON.stringify(err));
+                        }
+                    });
+                  },900);
               }
           });
       }
