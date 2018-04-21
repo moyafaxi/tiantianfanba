@@ -18,7 +18,11 @@
             z-index: 999;
           }
           header{background: #fd6308;height: 50px;position: relative;}
-          header .img1{position: absolute;left: 15px;width: 12px;top: 15px;}
+          header .img1{
+            width: 12px;
+            margin-left: 12px;
+            margin-top: 13px;
+          }
           header .img2{
             display: block;
             margin: 0 auto;
@@ -33,6 +37,11 @@
             padding-right: 20px;
           }
           header .img3{position: absolute;right: 12px;width: 22px;top: 15px;}
+          header .left{
+            width: 40px;
+            height: 100%;
+            position: absolute;
+          }
 
           .list-wrap{margin-top: 10px;}
           .list-wrap .item{background: #FFF;padding-bottom:10px;border-bottom: 3px solid #f5f5f5;}
@@ -141,7 +150,8 @@
     <img id="go-top" src="../image/go-top.png" alt="">
     <div class="top">
       <header id="header" >
-         <img class="img1" tapmode onclick="goToMain()" src="../image/arrow-left.png" alt="">
+         <!-- <img class="img1" tapmode onclick="goToMain()" src="../image/arrow-left.png" alt=""> -->
+         <div class="left" onclick="goToMain()" tapmode><img class="img1" src="../image/arrow-left.png" alt=""></div>
          <!-- <img class="img2" src="../image/search-bar.png" alt="" > -->
          <input  tapmode onclick="goToSearch()" readonly class="img2" type="text">
          <img tapmode onclick="changeList()" class="img3" src="../image/type.png" alt="">
@@ -255,9 +265,9 @@
        var keyword = api.pageParam.keyword;
       //  alert(keyword);
 
-       var num = api.pageParam.num ? api.pageParam.num : -1;
+       var num = api.pageParam.num || api.pageParam.num == 0 ? api.pageParam.num : -1;
 
-
+       console.log(num);
        switch (num) {
          case -1:
            getData(1,1,undefined,keyword)
@@ -383,7 +393,7 @@
           var num = num||1;
           var type = type||1;
           var sort = sort||1;
-          var keyword = keyword;
+          var keyword = keyword||'';
           api.ajax({
               url: 'http://tbk.yunmell.com/app/index.php?i=1&c=entry&do=index&m=tiger_newhu&do=api&type=homegoods',
               method: 'post',
